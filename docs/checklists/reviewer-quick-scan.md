@@ -2,7 +2,7 @@
 
 ### Intent
 Fast pass to spot risky changes before a deeper review.
-+
+
 ### Quick scan
 - One purpose and small scope
 - Boundaries respected (feature -> data-access -> util)
