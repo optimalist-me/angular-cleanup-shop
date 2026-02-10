@@ -2,8 +2,10 @@
 
 Typical engagements:
 - 1-day cleanup audit
-- Cleanup sprint (1–2 weeks)
+- Cleanup sprint (2–4 sessions; spans more than one sprint in calendar time)
 - 1 day/week continuous hygiene
+
+Note: Because work happens one day per week, onboarding and cleanup guidance is organized by sessions, not calendar weeks.
 
 Deliverables:
 - Findings report
