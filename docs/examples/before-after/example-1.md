@@ -1,0 +1,1 @@
+Example: extracting state to signals.
