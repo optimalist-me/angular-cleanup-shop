@@ -28,6 +28,27 @@ libs/
     util-cleaning-format/
 ```
 
+### Domain-based libraries (DDD note)
+Domain-driven design (DDD) organizes software around business domains and bounded contexts. It is most useful when:
+- The domain is complex and evolving
+- Multiple teams contribute to the same product
+- Business rules change frequently
+
+Even without full DDD, domain-based library folders are a good idea because they:
+- Clarify ownership and intent
+- Reduce cross-feature coupling
+- Make boundaries enforceable with lint rules
+
+Recommended structure:
+
+```
+libs/<domain>/
+  feature-*/
+  data-access-*/
+  ui-*/
+  util-*/
+```
+
 ### Example (feature + ui + data-access)
 
 Feature component lives in `feature-*`:

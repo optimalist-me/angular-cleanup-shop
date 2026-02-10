@@ -159,3 +159,27 @@ AI agents must treat this repository as a **constraint system**.
 
 The objective is not to be clever.
 The objective is to make Angular codebases feel **calm, predictable, and boring in the best possible way**.
+
+---
+
+## Workspace Conventions (when libs are introduced)
+
+Use domain-based library folders:
+
+```
+libs/<domain>/
+  feature-*/
+  data-access-*/
+  ui-*/
+  util-*/
+```
+
+Example:
+
+```
+libs/booking/
+  feature-booking-flow/
+  data-access-booking/
+  ui-booking-summary/
+  util-booking-date/
+```
