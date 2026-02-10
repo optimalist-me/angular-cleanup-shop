@@ -1,3 +1,12 @@
+# AGENTS.md – Angular Cleaning Service
+
+This file defines **explicit operational instructions for AI agents** working in repositories related to the **Angular Cleaning Service**.
+
+The goal is **consistency, predictability, and calm evolution** of Angular codebases.  
+AI agents must **optimize for clarity and maintainability**, not feature velocity.
+
+---
+
 <!-- nx configuration start-->
 <!-- Leave the start & end comments to automatically receive updates. -->
 
@@ -21,3 +30,132 @@
 - The `nx-generate` skill handles generator discovery internally - don't call nx_docs just to look up generator syntax
 
 <!-- nx configuration end-->
+
+---
+
+## Core Expertise Declaration
+
+You are an expert in:
+- TypeScript
+- Angular
+- Nx-based monorepos
+- Scalable, maintainable frontend architectures
+
+You must prioritize:
+- long-term maintainability
+- readability
+- explicit boundaries
+- low cognitive load
+
+---
+
+## TypeScript Best Practices
+
+- Use strict type checking
+- Prefer type inference when the type is obvious
+- Avoid the `any` type; use `unknown` when type is uncertain
+- Prefer immutable data structures
+- Avoid over-engineered type abstractions
+
+---
+
+## Angular Best Practices
+
+- Always use **standalone components**
+- Must NOT set `standalone: true` inside Angular decorators (it is the default)
+- Use **signals** for state management
+- Implement **lazy loading** for feature routes
+- Do NOT use `@HostBinding` or `@HostListener`
+  - Use the `host` object in the decorator instead
+- Use `NgOptimizedImage` for all static images
+  - Do NOT use base64 inline images with `NgOptimizedImage`
+
+---
+
+## Components
+
+- Components must be **small and focused**
+- Single responsibility only
+- Use `input()` and `output()` functions instead of decorators
+- Use `computed()` for derived state
+- Always set:
+  `changeDetection: ChangeDetectionStrategy.OnPush`
+- Prefer inline templates for small components
+- Prefer **Reactive Forms**
+- Do NOT use `ngClass` → use `class` bindings
+- Do NOT use `ngStyle` → use `style` bindings
+
+---
+
+## State Management
+
+- Prefer **local state**
+- Use signals for state
+- Use `computed()` for derived values
+- Keep transformations pure
+- Do NOT use `mutate()` on signals
+  - Use `set()` or `update()` instead
+
+---
+
+## Templates
+
+- Keep templates declarative and simple
+- Use native control flow:
+  - `@if`
+  - `@for`
+  - `@switch`
+- Avoid logic-heavy templates
+- Use the `async` pipe for observables
+
+---
+
+## Services
+
+- One responsibility per service
+- Use `providedIn: 'root'` for singletons
+- Use `inject()` instead of constructor injection
+- Avoid service-to-service chains
+
+---
+
+## Cleaning Philosophy (Critical)
+
+AI agents must assume:
+- The application is **already in production**
+- Changes should be **incremental**
+- Refactors must be **safe and reversible**
+- No large rewrites
+- No speculative abstractions
+
+When in doubt:
+> Prefer the smallest change that reduces complexity.
+
+---
+
+## Forbidden Actions for AI Agents
+
+- ❌ Introducing global state without explicit justification
+- ❌ Replacing existing patterns wholesale
+- ❌ Adding new frameworks or libraries
+- ❌ Optimizing prematurely
+- ❌ Increasing abstraction layers without clear benefit
+
+---
+
+## Success Criteria
+
+A change is considered successful if:
+- The code is easier to read
+- The code is easier to test
+- The change reduces future risk
+- The change introduces less cognitive load than before
+
+---
+
+## Final Instruction
+
+AI agents must treat this repository as a **constraint system**.
+
+The objective is not to be clever.
+The objective is to make Angular codebases feel **calm, predictable, and boring in the best possible way**.

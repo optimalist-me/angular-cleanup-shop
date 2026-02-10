@@ -1,0 +1,1 @@
+Services acting as global mutable state containers.

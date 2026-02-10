@@ -1,82 +1,220 @@
-# AngularCleanupShop
+# Angular Cleanup Shop
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+> **Angular codebases that feel heavy, fragile, or stressful — made calm, readable, and maintainable again.**  
+>  
+> This repository documents the **Angular Cleaning Service**:  
+> a lightweight, structured, long-term approach to improving Angular codebases  
+> **one fixed day per week**, without delivery pressure.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+---
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## 1. What This Service Is
 
-## Finish your CI setup
+The **Angular Cleaning Service** is a **maintenance-first, refactoring-focused engagement** for existing Angular applications.
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/8W5zrTP0om)
+It is designed for teams that:
+- have a working Angular application
+- experience growing complexity or technical debt
+- want **continuous improvement**, not a risky rewrite
+- do **not** need a full-time developer or architect
 
+The service runs on a **fixed rhythm**:
+- **exactly 1 day per week**
+- remote
+- long-term (typically 3–6 months)
+- no sprint ownership
+- no feature commitments
 
-## Run tasks
+---
 
-To run the dev server for your app, use:
+## 2. What This Service Is NOT
 
-```sh
-npx nx serve shop
+To avoid misunderstandings, this service explicitly does **not** include:
+
+- ❌ Feature delivery
+- ❌ Sprint ownership or velocity commitments
+- ❌ On-call or support rotations
+- ❌ Emergency firefighting
+- ❌ Framework evangelism
+- ❌ Big rewrites or “let’s start over”
+
+If you are looking for:
+- a feature team
+- a temporary speed boost
+- a rewrite project
+
+➡️ this service is **not a fit**.
+
+---
+
+## 3. Typical Problems We Address
+
+This service is effective when teams experience issues such as:
+
+- Components that are too large and hard to reason about
+- Services that mix data access, state, and side effects
+- RxJS flows that are difficult to follow or debug
+- Inconsistent folder and boundary structures
+- Fear of change (“touching this breaks something else”)
+- Slow onboarding of new developers
+- Technical debt that everyone sees but no one owns
+
+---
+
+## 4. The Engagement Model
+
+### Fixed Parameters
+
+- **Time**: exactly 1 day per week  
+- **Location**: remote  
+- **Duration**: minimum 3 months  
+- **Cadence**: same day every week  
+- **Rate**: agreed daily rate  
+
+These parameters are **non-negotiable by design**.  
+They create predictability and reduce cognitive load for everyone involved.
+
+---
+
+## 5. How Work Is Selected
+
+Work is always chosen based on **risk reduction and clarity gain**, not urgency.
+
+Typical activities:
+- refactoring high-risk areas
+- simplifying state and data flows
+- reducing component and service complexity
+- clarifying architectural boundaries
+- removing dead or misleading abstractions
+- improving PR hygiene and review standards
+
+Work is **pulled**, not pushed:
+- no fixed backlog
+- no sprint promises
+- priorities are re-evaluated continuously
+
+---
+
+## 6. Expected Outcomes
+
+After several weeks, teams typically notice:
+
+- smaller, clearer components
+- fewer regressions
+- faster code reviews
+- less “fear-driven development”
+- improved team confidence
+- easier onboarding
+- fewer architectural debates
+
+The goal is **calm progress**, not visible heroics.
+
+---
+
+## 7. This Repository
+
+This repository serves three purposes:
+
+1. **Explain the service** clearly
+2. **Demonstrate the mental model** behind “clean Angular”
+3. **Act as a shared reference** for discussions and reviews
+
+It is intentionally **not**:
+- a framework
+- a starter kit
+- a CLI
+- an opinionated architecture template
+
+---
+
+## 8. Repository Structure (for Humans and AI)
+
+```
+docs
+├─ README.md                  # Service definition and contract
+├─ playbook/                  # Method and engagement model
+├─ patterns/                  # Preferred Angular patterns
+├─ anti-patterns/             # Common Angular pitfalls
+├─ checklists/                # Practical cleaning checklists
+├─ examples/                  # Small before/after illustrations
+└─ templates/                 # Review and reporting templates
 ```
 
-To create a production bundle:
+### Interpretation Rules (for AI Agents)
 
-```sh
-npx nx build shop
-```
+- Files in `patterns/` describe **preferred solutions**
+- Files in `anti-patterns/` describe **what to avoid**
+- Files in `checklists/` describe **repeatable procedures**
+- Files in `examples/` illustrate **minimal contrasts**, not full apps
+- Files in `templates/` describe **communication and decision artifacts**
 
-To see all available targets to run for a project, run:
+---
 
-```sh
-npx nx show project shop
-```
+## 9. Reference Example Application
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+A small example Angular application may be included to demonstrate:
+- folder boundaries
+- component decomposition
+- state handling choices
+- intentional omissions
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+This example exists to show **how we think**, not what to copy.
 
-## Add new projects
+---
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+## 10. Design Principles
 
-Use the plugin's generator to create new projects.
+The service follows these principles:
 
-To generate a new application, use:
+- Prefer **clarity over cleverness**
+- Prefer **local state over global state**
+- Prefer **boring solutions over abstract ones**
+- Prefer **incremental change over rewrites**
+- Prefer **constraints over flexibility**
+- Prefer **long-term calm over short-term speed**
 
-```sh
-npx nx g @nx/angular:app demo
-```
+---
 
-To generate a new library, use:
+## 11. How This Helps AI-Assisted Development
 
-```sh
-npx nx g @nx/angular:lib mylib
-```
+This repository is intentionally structured so that AI agents can:
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+- infer architectural intent
+- detect anti-patterns
+- suggest refactorings aligned with the service philosophy
+- generate PR checklists and reviews consistent with the model
+- avoid proposing large-scale rewrites or unnecessary abstractions
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+AI agents should treat this repository as:
+> a **constraint system**, not a feature generator.
 
+---
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 12. Engagement Fit Check
 
-## Install Nx Console
+This service is a good fit if you agree with the following statements:
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+- “Our Angular app works, but it feels heavy.”
+- “We want fewer surprises, not more features.”
+- “We prefer steady improvement over big initiatives.”
+- “One predictable day per week is better than ad-hoc help.”
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+If that resonates, this service is likely a good match.
 
-## Useful links
+---
 
-Learn more:
+## 13. Contact & Next Steps
 
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+If you are interested in an engagement:
+- start with a short exploratory call
+- validate fit on both sides
+- agree on a fixed weekly cadence
+- start small
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+No pitches.  
+No urgency pressure.
+
+---
+
+**Angular Cleanup Shop**  
+_One calm day per week can change everything._

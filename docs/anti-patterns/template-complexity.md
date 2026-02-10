@@ -1,0 +1,1 @@
+Business logic embedded in templates.

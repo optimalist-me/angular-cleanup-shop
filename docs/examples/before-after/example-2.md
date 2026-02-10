@@ -1,0 +1,1 @@
+Example: breaking a god component.
