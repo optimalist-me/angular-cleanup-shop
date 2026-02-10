@@ -25,6 +25,8 @@ The service runs on a **fixed rhythm**:
 - no sprint ownership
 - no feature commitments
 
+Because work happens one day per week, early onboarding and cleanup guidance is organized by **sessions**, not calendar weeks.
+
 ---
 
 ## 2. What This Service Is NOT
@@ -97,7 +99,7 @@ Work is **pulled**, not pushed:
 
 ## 6. Expected Outcomes
 
-After several weeks, teams typically notice:
+After several sessions, teams typically notice:
 
 - smaller, clearer components
 - fewer regressions
@@ -208,7 +210,7 @@ If that resonates, this service is likely a good match.
 If you are interested in an engagement:
 - start with a short exploratory call
 - validate fit on both sides
-- agree on a fixed weekly cadence
+- agree on a fixed cadence
 - start small
 
 No pitches.  
