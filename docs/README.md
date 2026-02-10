@@ -20,3 +20,11 @@ These improvements are usually applicable to:
 - sometimes even earlier versions (with adaptations)
 
 Framework upgrades are **optional**, explicitly scoped, and never a prerequisite.
+
+### Index
+- [Playbook](playbook/README.md)
+- [Patterns](patterns/README.md)
+- [Anti-patterns](anti-patterns/README.md)
+- [Checklists](checklists/README.md)
+- [Examples](examples/README.md)
+- [Templates](templates/README.md)

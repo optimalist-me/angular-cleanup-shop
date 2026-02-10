@@ -150,6 +150,15 @@ docs
 - Files in `examples/` illustrate **minimal contrasts**, not full apps
 - Files in `templates/` describe **communication and decision artifacts**
 
+### Documentation Index
+- [Docs overview](docs/README.md)
+- [Playbook](docs/playbook/README.md)
+- [Patterns](docs/patterns/README.md)
+- [Anti-patterns](docs/anti-patterns/README.md)
+- [Checklists](docs/checklists/README.md)
+- [Examples](docs/examples/README.md)
+- [Templates](docs/templates/README.md)
+
 ---
 
 ## 9. Reference Example Application
