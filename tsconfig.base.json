@@ -14,7 +14,28 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@cleanup/feature-marketing-home": [
+        "libs/marketing/feature-marketing-home/src/index.ts"
+      ],
+      "@cleanup/ui-marketing-hero": [
+        "libs/marketing/ui-marketing-hero/src/index.ts"
+      ],
+      "@cleanup/ui-marketing-section": [
+        "libs/marketing/ui-marketing-section/src/index.ts"
+      ],
+      "@cleanup/feature-marketing-playbook": [
+        "libs/marketing/feature-marketing-playbook/src/index.ts"
+      ],
+      "@cleanup/feature-marketing-architecture": [
+        "libs/marketing/feature-marketing-architecture/src/index.ts"
+      ],
+      "@cleanup/shared-ui-header": ["libs/shared/ui-header/src/index.ts"],
+      "@cleanup/shared-ui-footer": ["libs/shared/ui-footer/src/index.ts"],
+      "@cleanup/feature-marketing-faq": [
+        "libs/marketing/feature-marketing-faq/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

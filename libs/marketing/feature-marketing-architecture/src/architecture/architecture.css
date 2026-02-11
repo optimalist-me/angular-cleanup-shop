@@ -1,0 +1,149 @@
+:host {
+  display: block;
+}
+
+.architecture {
+  display: grid;
+  gap: 0;
+}
+
+.architecture__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.architecture__split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.architecture__card {
+  border: 1px solid #d6dde3;
+  border-radius: 16px;
+  padding: 18px;
+  background: #ffffff;
+  color: #1f2933;
+  display: grid;
+  gap: 8px;
+}
+
+.architecture__card h3 {
+  margin: 0;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.architecture__card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #5b6770;
+}
+
+.architecture__list {
+  margin: 0;
+  padding-left: 20px;
+  color: #5b6770;
+  display: grid;
+  gap: 8px;
+  line-height: 1.6;
+}
+
+.architecture__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.architecture__actions--center {
+  justify-content: center;
+}
+
+.architecture__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(26, 127, 104, 0.2);
+  text-decoration: none;
+  color: #1a7f68;
+  font-size: 14px;
+  font-weight: 600;
+  background: #e6f2ef;
+}
+
+.architecture__link--primary {
+  background: #1a7f68;
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.architecture__pill {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #d6dde3;
+  font-size: 12px;
+  color: #1a7f68;
+  background: #f4f7f6;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.architecture__code {
+  border-radius: 16px;
+  border: 1px solid #d6dde3;
+  background: #f7f8f9;
+  padding: 16px;
+  font-family: 'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', sans-serif;
+}
+
+.architecture__code pre {
+  margin: 0;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', 'SFMono-Regular', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.architecture__code-title {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5b6770;
+}
+
+@media (max-width: 1000px) {
+  .architecture__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .architecture__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture__split {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .architecture__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .architecture__link {
+    width: 100%;
+  }
+}

@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import { RouterOutlet } from '@angular/router';
+import { SharedFooter } from '@cleanup/shared-ui-footer';
+import { SharedHeader } from '@cleanup/shared-ui-header';
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  imports: [RouterOutlet, SharedHeader, SharedFooter],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
-  protected title = 'shop';
+  protected title = 'Angular Cleanup Shop';
 }

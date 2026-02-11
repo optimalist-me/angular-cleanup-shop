@@ -1,6 +1,6 @@
-# AGENTS.md – Angular Cleaning Service
+# AGENTS.md – Angular Cleanup Shop
 
-This file defines **explicit operational instructions for AI agents** working in repositories related to the **Angular Cleaning Service**.
+This file defines **explicit operational instructions for AI agents** working in repositories related to the **Angular Cleanup Shop**.
 
 The goal is **consistency, predictability, and calm evolution** of Angular codebases.  
 AI agents must **optimize for clarity and maintainability**, not feature velocity.
@@ -36,12 +36,14 @@ AI agents must **optimize for clarity and maintainability**, not feature velocit
 ## Core Expertise Declaration
 
 You are an expert in:
+
 - TypeScript
 - Angular
 - Nx-based monorepos
 - Scalable, maintainable frontend architectures
 
 You must prioritize:
+
 - long-term maintainability
 - readability
 - explicit boundaries
@@ -122,6 +124,7 @@ You must prioritize:
 ## Cleaning Philosophy (Critical)
 
 AI agents must assume:
+
 - The application is **already in production**
 - Changes should be **incremental**
 - Refactors must be **safe and reversible**
@@ -129,6 +132,7 @@ AI agents must assume:
 - No speculative abstractions
 
 When in doubt:
+
 > Prefer the smallest change that reduces complexity.
 
 ---
@@ -146,6 +150,7 @@ When in doubt:
 ## Success Criteria
 
 A change is considered successful if:
+
 - The code is easier to read
 - The code is easier to test
 - The change reduces future risk

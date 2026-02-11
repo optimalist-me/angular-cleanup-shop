@@ -1,8 +1,8 @@
 # Angular Cleanup Shop
 
-> **Angular codebases that feel heavy, fragile, or stressful — made calm, readable, and maintainable again.**  
->  
-> This repository documents the **Angular Cleaning Service**:  
+> **Angular codebases that feel heavy, fragile, or stressful — made calm, readable, and maintainable again.**
+>
+> This repository documents the **Angular Cleanup Shop**:  
 > a lightweight, structured, long-term approach to improving Angular codebases  
 > **one fixed day per week**, without delivery pressure.
 
@@ -10,15 +10,17 @@
 
 ## 1. What This Service Is
 
-The **Angular Cleaning Service** is a **maintenance-first, refactoring-focused engagement** for existing Angular applications.
+The **Angular Cleanup Shop** is a **maintenance-first, refactoring-focused engagement** for existing Angular applications.
 
 It is designed for teams that:
+
 - have a working Angular application
 - experience growing complexity or technical debt
 - want **continuous improvement**, not a risky rewrite
 - do **not** need a full-time developer or architect
 
 The service runs on a **fixed rhythm**:
+
 - **exactly 1 day per week**
 - remote
 - long-term (typically 3–6 months)
@@ -41,6 +43,7 @@ To avoid misunderstandings, this service explicitly does **not** include:
 - ❌ Big rewrites or “let’s start over”
 
 If you are looking for:
+
 - a feature team
 - a temporary speed boost
 - a rewrite project
@@ -67,11 +70,11 @@ This service is effective when teams experience issues such as:
 
 ### Fixed Parameters
 
-- **Time**: exactly 1 day per week  
-- **Location**: remote  
-- **Duration**: minimum 3 months  
-- **Cadence**: same day every week  
-- **Rate**: agreed daily rate  
+- **Time**: exactly 1 day per week
+- **Location**: remote
+- **Duration**: minimum 3 months
+- **Cadence**: same day every week
+- **Rate**: agreed daily rate
 
 These parameters are **non-negotiable by design**.  
 They create predictability and reduce cognitive load for everyone involved.
@@ -83,6 +86,7 @@ They create predictability and reduce cognitive load for everyone involved.
 Work is always chosen based on **risk reduction and clarity gain**, not urgency.
 
 Typical activities:
+
 - refactoring high-risk areas
 - simplifying state and data flows
 - reducing component and service complexity
@@ -91,6 +95,7 @@ Typical activities:
 - improving PR hygiene and review standards
 
 Work is **pulled**, not pushed:
+
 - no fixed backlog
 - no sprint promises
 - priorities are re-evaluated continuously
@@ -122,6 +127,7 @@ This repository serves three purposes:
 3. **Act as a shared reference** for discussions and reviews
 
 It is intentionally **not**:
+
 - a framework
 - a starter kit
 - a CLI
@@ -151,6 +157,7 @@ docs
 - Files in `templates/` describe **communication and decision artifacts**
 
 ### Documentation Index
+
 - [Docs overview](docs/README.md)
 - [Playbook](docs/playbook/README.md)
 - [Patterns](docs/patterns/README.md)
@@ -164,6 +171,7 @@ docs
 ## 9. Reference Example Application
 
 A small example Angular application may be included to demonstrate:
+
 - folder boundaries
 - component decomposition
 - state handling choices
@@ -197,6 +205,7 @@ This repository is intentionally structured so that AI agents can:
 - avoid proposing large-scale rewrites or unnecessary abstractions
 
 AI agents should treat this repository as:
+
 > a **constraint system**, not a feature generator.
 
 ---
@@ -217,6 +226,7 @@ If that resonates, this service is likely a good match.
 ## 13. Contact & Next Steps
 
 If you are interested in an engagement:
+
 - start with a short exploratory call
 - validate fit on both sides
 - agree on a fixed cadence

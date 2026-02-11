@@ -1,0 +1,105 @@
+import { Component } from '@angular/core';
+import { NavigationEnd, provideRouter, Router } from '@angular/router';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Subject } from 'rxjs';
+import { SharedHeader } from './header';
+
+@Component({
+  selector: 'shared-header-dummy',
+  template: '',
+})
+class DummyRouteComponent {}
+
+describe('SharedHeader', () => {
+  let component: SharedHeader;
+  let fixture: ComponentFixture<SharedHeader>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SharedHeader],
+      providers: [
+        provideRouter([
+          { path: 'products', component: DummyRouteComponent },
+          { path: 'playbook', component: DummyRouteComponent },
+          { path: 'architecture', component: DummyRouteComponent },
+          { path: 'faq', component: DummyRouteComponent },
+          { path: 'book/confirmed', component: DummyRouteComponent },
+        ]),
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(SharedHeader);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should toggle the mobile menu', () => {
+    expect(component).toBeTruthy();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const header = compiled.querySelector('header');
+    const toggle = compiled.querySelector(
+      '.header__toggle',
+    ) as HTMLButtonElement;
+
+    expect(header?.classList.contains('header--open')).toBe(false);
+    toggle.click();
+    fixture.detectChanges();
+    expect(header?.classList.contains('header--open')).toBe(true);
+  });
+
+  it('should close the menu when overlay is clicked', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const header = compiled.querySelector('header');
+    const toggle = compiled.querySelector(
+      '.header__toggle',
+    ) as HTMLButtonElement;
+    const overlay = compiled.querySelector(
+      '.header__overlay',
+    ) as HTMLDivElement;
+
+    toggle.click();
+    fixture.detectChanges();
+    expect(header?.classList.contains('header--open')).toBe(true);
+
+    overlay.click();
+    fixture.detectChanges();
+    expect(header?.classList.contains('header--open')).toBe(false);
+  });
+
+  it('should render navigation links', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('Playbook');
+    expect(compiled.textContent).toContain('Architecture');
+  });
+
+  it('should close the menu when a link is clicked', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const header = compiled.querySelector('header');
+    const toggle = compiled.querySelector(
+      '.header__toggle',
+    ) as HTMLButtonElement;
+    const playbookLink = compiled.querySelector(
+      'a[routerLink="/playbook"]',
+    ) as HTMLAnchorElement;
+
+    toggle.click();
+    fixture.detectChanges();
+    expect(header?.classList.contains('header--open')).toBe(true);
+
+    playbookLink.click();
+    fixture.detectChanges();
+    expect(header?.classList.contains('header--open')).toBe(false);
+  });
+
+  it('should close the menu on navigation end', () => {
+    const events$ = new Subject<NavigationEnd>();
+    const routerMock = { events: events$ } as unknown as Router;
+    const header = new SharedHeader(routerMock);
+
+    header.toggleMenu();
+    expect(header.menuOpen()).toBe(true);
+
+    events$.next(new NavigationEnd(1, '/', '/'));
+    expect(header.menuOpen()).toBe(false);
+  });
+});
