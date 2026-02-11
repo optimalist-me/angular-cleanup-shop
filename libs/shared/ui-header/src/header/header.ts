@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs';
 
@@ -11,12 +11,10 @@ import { filter } from 'rxjs';
 })
 export class SharedHeader {
   readonly menuOpen = signal(false);
-
-  constructor(private readonly router: Router) {
-    this.router.events
-      .pipe(filter((event) => event.constructor.name === 'NavigationEnd'))
-      .subscribe(() => this.closeMenu());
-  }
+  private readonly router = inject(Router);
+  private readonly closeOnNavigation = this.router.events
+    .pipe(filter((event) => event.constructor.name === 'NavigationEnd'))
+    .subscribe(() => this.closeMenu());
 
   toggleMenu(): void {
     this.menuOpen.update((open) => !open);

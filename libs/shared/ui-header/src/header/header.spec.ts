@@ -55,7 +55,7 @@ describe('SharedHeader', () => {
     ) as HTMLButtonElement;
     const overlay = compiled.querySelector(
       '.header__overlay',
-    ) as HTMLDivElement;
+    ) as HTMLButtonElement;
 
     toggle.click();
     fixture.detectChanges();
