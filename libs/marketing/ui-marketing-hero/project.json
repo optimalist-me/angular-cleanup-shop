@@ -1,0 +1,32 @@
+{
+  "name": "ui-marketing-hero",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/marketing/ui-marketing-hero/src",
+  "prefix": "marketing",
+  "projectType": "library",
+  "tags": ["domain:marketing", "type:ui", "scope:lib"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/marketing/ui-marketing-hero/ng-package.json",
+        "tsConfig": "libs/marketing/ui-marketing-hero/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/marketing/ui-marketing-hero/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/angular:unit-test",
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

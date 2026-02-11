@@ -1,0 +1,153 @@
+<div class="architecture">
+  <marketing-section
+    eyebrow="Architecture"
+    title="Clear boundaries. Predictable dependencies. Calm Angular systems."
+    subtitle="This page explains how we structure domains, enforce dependencies, and keep UI code stable even as the backend evolves."
+  >
+    <ul class="architecture__list">
+      <li>Structure is a tool for lowering cognitive load.</li>
+      <li>Boundaries are explicit, enforceable, and boring.</li>
+      <li>Local state over global stores, by default.</li>
+    </ul>
+    <div class="architecture__actions">
+      <a
+        class="architecture__link architecture__link--primary"
+        routerLink="/playbook"
+      >
+        Read the playbook
+      </a>
+      <a class="architecture__link" routerLink="/products">Browse products</a>
+    </div>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="Domain map"
+    title="Feature, data-access, ui, util. One-way by design."
+    subtitle="Dependency direction is predictable: feature orchestrates, data-access talks to APIs, ui stays presentational, util stays pure."
+    tone="muted"
+  >
+    <div class="architecture__grid">
+      <div class="architecture__card">
+        <h3>feature</h3>
+        <p>Screens, routes, and orchestration. Owns state composition.</p>
+        <span class="architecture__pill">feature -> data-access -> util</span>
+      </div>
+      <div class="architecture__card">
+        <h3>data-access</h3>
+        <p>API clients, DTO mapping, query and caching.</p>
+        <span class="architecture__pill">no ui imports</span>
+      </div>
+      <div class="architecture__card">
+        <h3>ui</h3>
+        <p>Presentational components with inputs/outputs only.</p>
+        <span class="architecture__pill">ui -> util</span>
+      </div>
+      <div class="architecture__card">
+        <h3>util</h3>
+        <p>Pure helpers and formatting logic. No Angular runtime.</p>
+        <span class="architecture__pill">pure functions</span>
+      </div>
+    </div>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="API layering"
+    title="UI talks to one stable contract."
+    subtitle="Frontend code depends on data-access APIs only, keeping backend changes from leaking into UI and feature logic."
+  >
+    <div class="architecture__split">
+      <div class="architecture__card">
+        <h3>Frontend rule</h3>
+        <ul class="architecture__list">
+          <li>UI uses data-access APIs only.</li>
+          <li>No server entities or internal microservice types.</li>
+          <li>DTOs define the boundary.</li>
+        </ul>
+      </div>
+      <div class="architecture__card">
+        <h3>Why it helps</h3>
+        <ul class="architecture__list">
+          <li>Backend can evolve without UI rewrites.</li>
+          <li>Testing stays fast and focused.</li>
+          <li>Contracts remain stable over time.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="architecture__code">
+      <p class="architecture__code-title">Example flow</p>
+      <pre><code>UI -> data-access API -> backend contract</code></pre>
+    </div>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="Folder structure"
+    title="Domain-based libraries keep ownership obvious."
+    subtitle="A consistent layout prevents shared soup and makes module boundaries enforceable."
+    tone="muted"
+  >
+    <div class="architecture__code">
+      <pre><code>libs/
+  &lt;domain&gt;/
+    feature-*/
+    data-access-*/
+    ui-*/
+    util-*/</code></pre>
+    </div>
+    <div class="architecture__split">
+      <div class="architecture__card">
+        <h3>What it prevents</h3>
+        <ul class="architecture__list">
+          <li>Implicit shared state.</li>
+          <li>Cross-domain coupling.</li>
+          <li>Hidden dependency chains.</li>
+        </ul>
+      </div>
+      <div class="architecture__card">
+        <h3>What it enables</h3>
+        <ul class="architecture__list">
+          <li>Faster onboarding and safer refactors.</li>
+          <li>Clear public APIs per domain.</li>
+          <li>Predictable scaling as teams grow.</li>
+        </ul>
+      </div>
+    </div>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="Why it works"
+    title="Every boundary reduces risk and lowers the cost of change."
+    subtitle="Clean architecture is an efficiency multiplier, not a theoretical exercise."
+  >
+    <div class="architecture__grid">
+      <div class="architecture__card">
+        <h3>Lower regression risk</h3>
+        <p>Smaller surfaces mean fewer accidental side effects.</p>
+      </div>
+      <div class="architecture__card">
+        <h3>Clear ownership</h3>
+        <p>Teams can change code without hidden dependencies.</p>
+      </div>
+      <div class="architecture__card">
+        <h3>Faster delivery</h3>
+        <p>Predictable structure shortens review and build time.</p>
+      </div>
+    </div>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="Next step"
+    title="See if this model fits your team."
+    subtitle="Book a 20-min fit check. Calm, focused, and no sales pressure."
+    align="center"
+    size="compact"
+  >
+    <div class="architecture__actions architecture__actions--center">
+      <a
+        class="architecture__link architecture__link--primary"
+        routerLink="/book/confirmed"
+      >
+        Book a 20-min fit check
+      </a>
+    </div>
+  </marketing-section>
+</div>

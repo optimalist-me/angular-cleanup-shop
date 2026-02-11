@@ -1,0 +1,113 @@
+.hero {
+  --hero-bg: #f6f7f8;
+  --hero-ink: #1f2933;
+  --hero-muted: #5b6770;
+  --hero-accent: #1a7f68;
+  --hero-accent-weak: #e6f2ef;
+  --hero-border: #d6dde3;
+
+  background:
+    radial-gradient(80% 80% at 10% 10%, #ffffff 0%, transparent 55%),
+    radial-gradient(60% 60% at 90% 20%, #eef2f4 0%, transparent 55%),
+    var(--hero-bg);
+  color: var(--hero-ink);
+  padding: 88px 20px 96px;
+}
+
+.hero__content {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: left;
+  font-family: 'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  display: grid;
+  gap: 20px;
+}
+
+.hero__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 12px;
+  color: var(--hero-muted);
+  margin: 0;
+}
+
+.hero__title {
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.hero__subtitle {
+  font-size: clamp(16px, 2vw, 20px);
+  line-height: 1.6;
+  color: var(--hero-muted);
+  margin: 0;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+}
+
+.hero__cta--primary {
+  background: var(--hero-accent);
+  color: #ffffff;
+  box-shadow: 0 8px 22px rgba(26, 127, 104, 0.2);
+}
+
+.hero__cta--secondary {
+  background: var(--hero-accent-weak);
+  color: var(--hero-accent);
+  border-color: rgba(26, 127, 104, 0.2);
+}
+
+.hero__cta:focus-visible,
+.hero__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(26, 127, 104, 0.18);
+}
+
+.hero__note {
+  font-size: 14px;
+  color: var(--hero-muted);
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    padding: 72px 16px 80px;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero__cta {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__cta {
+    transition: none;
+  }
+}

@@ -27,12 +27,49 @@
     },
     "@angular/build:unit-test": {
       "cache": true,
-      "inputs": ["default", "^production"]
+      "inputs": ["default", "^production"],
+      "options": {
+        "watch": false,
+        "coverage": true,
+        "coverageReporters": ["text", "text-summary", "html"],
+        "coverageThresholds": {
+          "lines": 90,
+          "statements": 90
+        }
+      }
+    },
+    "@nx/angular:ng-packagr-lite": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "@nx/angular:unit-test": {
+      "cache": true,
+      "inputs": ["default", "^production"],
+      "options": {
+        "watch": false,
+        "coverage": true,
+        "coverageReporters": ["text", "text-summary", "html"],
+        "coverageThresholds": {
+          "lines": 90,
+          "statements": 90
+        }
+      }
     }
   },
   "plugins": [
-    { "plugin": "@nx/playwright/plugin", "options": { "targetName": "e2e" } },
-    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } }
+    {
+      "plugin": "@nx/playwright/plugin",
+      "options": {
+        "targetName": "e2e"
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
   ],
   "generators": {
     "@nx/angular:application": {
@@ -40,6 +77,24 @@
       "linter": "eslint",
       "style": "css",
       "unitTestRunner": "vitest-angular"
+    },
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "vitest-angular",
+      "directory": "libs/<domain>/<type>-<name>",
+      "buildable": true,
+      "importPath": "@cleanup/<domain>-<type>-<name>",
+      "prefix": "<domain>",
+      "skipModule": true,
+      "standalone": false,
+      "tags": ["domain:<domain>", "type:<type>", "scope:<scope>"]
+    },
+    "@nx/angular:component": {
+      "style": "css",
+      "changeDetection": "OnPush",
+      "displayBlock": true,
+      "name": "<Domain><Name>",
+      "selector": "<domain>-<name>"
     }
   }
 }

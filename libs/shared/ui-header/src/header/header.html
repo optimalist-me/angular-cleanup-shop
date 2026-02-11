@@ -1,0 +1,67 @@
+<header class="header" [class.header--open]="menuOpen()">
+  <button
+    class="header__overlay"
+    type="button"
+    aria-label="Close navigation"
+    (click)="closeMenu()"
+  ></button>
+  <div class="header__inner">
+    <a class="header__brand" routerLink="/">
+      <span class="header__brand-title">Angular Cleanup Shop</span>
+      <span class="header__brand-subtitle"
+        >Less friction. More efficient development.</span
+      >
+    </a>
+    <button
+      class="header__toggle"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="header-nav"
+    >
+      Menu
+    </button>
+    <nav class="header__nav" id="header-nav">
+      <a
+        class="header__link"
+        routerLink="/products"
+        routerLinkActive="header__link--active"
+        (click)="closeMenu()"
+      >
+        Products
+      </a>
+      <a
+        class="header__link"
+        routerLink="/playbook"
+        routerLinkActive="header__link--active"
+        (click)="closeMenu()"
+      >
+        Playbook
+      </a>
+      <a
+        class="header__link"
+        routerLink="/architecture"
+        routerLinkActive="header__link--active"
+        (click)="closeMenu()"
+      >
+        Architecture
+      </a>
+      <a
+        class="header__link"
+        routerLink="/faq"
+        routerLinkActive="header__link--active"
+        (click)="closeMenu()"
+      >
+        FAQ
+      </a>
+    </nav>
+    <a
+      class="header__cta"
+      routerLink="/book/confirmed"
+      routerLinkActive="header__link--active"
+      (click)="closeMenu()"
+    >
+      Book a 20-min fit check
+    </a>
+  </div>
+</header>

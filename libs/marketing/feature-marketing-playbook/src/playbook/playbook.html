@@ -1,0 +1,181 @@
+<div class="playbook">
+  <marketing-section
+    eyebrow="Playbook"
+    title="A calm, maintenance-first approach to Angular cleanup."
+    subtitle="This playbook explains how we reduce structural friction, keep risk low, and make future features cheaper."
+  >
+    <ul class="playbook__list">
+      <li>We optimize for long-term efficiency, not short-term speed.</li>
+      <li>Every change is incremental, reversible, and production-safe.</li>
+      <li>Boundaries, ownership, and clarity come before tooling upgrades.</li>
+    </ul>
+    <div class="playbook__actions">
+      <a
+        class="playbook__link playbook__link--primary"
+        routerLink="/book/confirmed"
+      >
+        Book a 20-min fit check
+      </a>
+      <a class="playbook__link" routerLink="/architecture"
+        >See the architecture</a
+      >
+    </div>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="Overview"
+    title="Modern Angular practices, applied incrementally."
+    subtitle="We focus on how Angular is used: smaller components, clear state ownership, and explicit side effects."
+    tone="muted"
+  >
+    <div class="playbook__grid">
+      <div class="playbook__card">
+        <h3>Core principles</h3>
+        <ul class="playbook__list">
+          <li>Standalone components and clear composition.</li>
+          <li>Signals-first state with computed derivations.</li>
+          <li>Strict dependency boundaries across domains.</li>
+        </ul>
+      </div>
+      <div class="playbook__card">
+        <h3>Modern Angular means</h3>
+        <ul class="playbook__list">
+          <li>Typed reactive forms and explicit side effects.</li>
+          <li>RxJS hygiene without nested operator chains.</li>
+          <li>Pragmatic testing and predictable change detection.</li>
+        </ul>
+      </div>
+      <div class="playbook__card">
+        <h3>Upgrade stance</h3>
+        <p>
+          Upgrades are never assumed. Cleanup works within your current version
+          and reduces future upgrade risk.
+        </p>
+      </div>
+    </div>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="First-day triage"
+    title="Understand risk, stop decay, and set the baseline."
+    subtitle="Day one focuses on the highest-risk areas and the constraints of your current Angular version."
+  >
+    <div class="playbook__split">
+      <div class="playbook__card">
+        <h3>Version assessment</h3>
+        <ul class="playbook__list">
+          <li>Current Angular version and supported practices.</li>
+          <li>Upgrade feasibility and risk, without assuming upgrades.</li>
+          <li>Constraints that impact cleanup sequencing.</li>
+        </ul>
+      </div>
+      <div class="playbook__card">
+        <h3>Stabilize first</h3>
+        <ul class="playbook__list">
+          <li>Identify entropy hotspots and regression risk.</li>
+          <li>Agree on boundaries and ownership early.</li>
+          <li>Define safe, incremental cleanup steps.</li>
+        </ul>
+      </div>
+    </div>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="Cleaning checklists"
+    title="Repeatable workflows for predictable cleanup."
+    subtitle="We rely on checklists to keep refactors boring, safe, and easy to review."
+    tone="muted"
+  >
+    <div class="playbook__grid">
+      <div class="playbook__card">
+        <h3>Component scope</h3>
+        <ul class="playbook__list">
+          <li>Single responsibility and clear inputs/outputs.</li>
+          <li>Template complexity kept low.</li>
+        </ul>
+      </div>
+      <div class="playbook__card">
+        <h3>State ownership</h3>
+        <ul class="playbook__list">
+          <li>Local signals by default.</li>
+          <li>Computed state for derived values.</li>
+        </ul>
+      </div>
+      <div class="playbook__card">
+        <h3>RxJS hygiene</h3>
+        <ul class="playbook__list">
+          <li>Flattened operator chains.</li>
+          <li>Explicit side effects and cleanup.</li>
+        </ul>
+      </div>
+    </div>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="Metrics and guardrails"
+    title="Measure what matters, enforce the boundaries."
+    subtitle="Lightweight metrics and guardrails keep improvements consistent across the codebase."
+  >
+    <div class="playbook__split">
+      <div class="playbook__card">
+        <h3>Recommended metrics</h3>
+        <ul class="playbook__list">
+          <li>Component LOC under 300, service LOC under 200.</li>
+          <li>No circular dependencies between domains.</li>
+          <li>Lazy-loaded feature routes where applicable.</li>
+        </ul>
+      </div>
+      <div class="playbook__card">
+        <h3>Guardrails</h3>
+        <ul class="playbook__list">
+          <li>Nx module boundaries and lint rules.</li>
+          <li>PR checklists that favor clarity over churn.</li>
+          <li>Small, reviewable refactor increments.</li>
+        </ul>
+      </div>
+    </div>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="Engagement model"
+    title="Delivered in sessions, not sprints."
+    subtitle="A consistent cadence that fits around production work and avoids big-bang rewrites."
+    tone="muted"
+  >
+    <div class="playbook__grid">
+      <div class="playbook__card">
+        <h3>Cleanup audit</h3>
+        <p>One-day assessment with findings and a focused action plan.</p>
+      </div>
+      <div class="playbook__card">
+        <h3>Cleanup sprint</h3>
+        <p>2–4 sessions spread over time to reduce risk and cognitive load.</p>
+      </div>
+      <div class="playbook__card">
+        <h3>Continuous hygiene</h3>
+        <p>One day per week to keep the repository calm and predictable.</p>
+      </div>
+    </div>
+    <div class="playbook__note">
+      <span>Angular upgrades are scoped separately.</span>
+      Cleanup focuses on structure first so upgrades are safer later.
+    </div>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="Next step"
+    title="See if this model fits your team."
+    subtitle="Book a 20-min fit check. Calm, focused, and no sales pressure."
+    align="center"
+    size="compact"
+  >
+    <div class="playbook__actions playbook__actions--center">
+      <a
+        class="playbook__link playbook__link--primary"
+        routerLink="/book/confirmed"
+      >
+        Book a 20-min fit check
+      </a>
+    </div>
+  </marketing-section>
+</div>
