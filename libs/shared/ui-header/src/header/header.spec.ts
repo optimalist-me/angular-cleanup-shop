@@ -93,13 +93,20 @@ describe('SharedHeader', () => {
 
   it('should close the menu on navigation end', () => {
     const events$ = new Subject<NavigationEnd>();
-    const routerMock = { events: events$ } as unknown as Router;
-    const header = new SharedHeader(routerMock);
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Router, useValue: { events: events$ } },
+      ],
+    });
 
-    header.toggleMenu();
-    expect(header.menuOpen()).toBe(true);
+    const navigationHeader = TestBed.runInInjectionContext(
+      () => new SharedHeader(),
+    );
+    navigationHeader.toggleMenu();
+    expect(navigationHeader.menuOpen()).toBe(true);
 
     events$.next(new NavigationEnd(1, '/', '/'));
-    expect(header.menuOpen()).toBe(false);
+    expect(navigationHeader.menuOpen()).toBe(false);
   });
 });
