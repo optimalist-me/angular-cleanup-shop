@@ -29,4 +29,18 @@ export const appRoutes: Route[] = [
         (m) => m.marketingFaqRoutes,
       ),
   },
+  {
+    path: 'products',
+    loadChildren: () =>
+      import('@cleanup/feature-products-list').then(
+        (m) => m.productsListRoutes,
+      ),
+  },
+  {
+    path: 'products/:slug',
+    loadChildren: () =>
+      import('@cleanup/feature-product-detail').then(
+        (m) => m.productDetailRoutes,
+      ),
+  },
 ];

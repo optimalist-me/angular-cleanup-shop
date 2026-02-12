@@ -1,0 +1,57 @@
+<section class="detail">
+  <div class="detail__inner">
+    <a class="detail__back" routerLink="/products">Back to products</a>
+
+    @if (isLoading()) {
+    <p class="detail__state">Loading product...</p>
+    } @else if (product(); as item) {
+    <div class="detail__content">
+      <div class="detail__media">
+        <img
+          class="detail__image"
+          [ngSrc]="item.imageSrc"
+          [alt]="item.imageAlt"
+          width="1200"
+          height="900"
+          sizes="(max-width: 900px) 100vw, 60vw"
+        />
+      </div>
+      <header class="detail__header">
+        @if (tagLabel(); as label) {
+        <products-tag class="detail__tag" [label]="label" tone="accent" />
+        }
+        <h1 class="detail__title">{{ item.name }}</h1>
+        <p class="detail__summary">{{ item.shortDescription }}</p>
+        <p class="detail__description">{{ item.description }}</p>
+        <div class="detail__meta">
+          <div class="detail__meta-item">
+            <span>Timeline</span>
+            <strong>{{ item.timeline }}</strong>
+          </div>
+        </div>
+      </header>
+
+      <div class="detail__grid">
+        <article class="detail__panel">
+          <h2>Outcome</h2>
+          <p>{{ item.outcome }}</p>
+        </article>
+        <article class="detail__panel detail__panel--muted">
+          <h2>Pattern</h2>
+          <p>{{ item.pattern }}</p>
+        </article>
+        <article class="detail__panel detail__panel--wide">
+          <h2>Best for</h2>
+          <ul>
+            @for (entry of item.bestFor; track entry) {
+            <li>{{ entry }}</li>
+            }
+          </ul>
+        </article>
+      </div>
+    </div>
+    } @else if (notFound()) {
+    <p class="detail__state">Product not found.</p>
+    }
+  </div>
+</section>

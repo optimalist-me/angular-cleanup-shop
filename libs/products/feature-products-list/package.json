@@ -1,0 +1,10 @@
+{
+  "name": "@cleanup/feature-products-list",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/core": "^21.1.0",
+    "@cleanup/data-access-products": "0.0.1",
+    "@cleanup/ui-product-card": "0.0.1"
+  },
+  "sideEffects": false
+}
