@@ -13,4 +13,5 @@ import { SharedHeader } from '@cleanup/shared-ui-header';
 export class App {
   private readonly cartRepository = inject(CartRepository);
   readonly cartCount = this.cartRepository.itemCount;
+  readonly title = 'Angular Cleanup Shop';
 }

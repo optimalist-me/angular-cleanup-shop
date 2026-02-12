@@ -32,6 +32,19 @@
         "watch": false,
         "coverage": true,
         "coverageReporters": ["text", "text-summary", "html"],
+        "coverageInclude": ["{projectRoot}/src/**"],
+        "coverageExclude": [
+          "{projectRoot}/**/*.spec.ts",
+          "{projectRoot}/src/index.ts",
+          "{projectRoot}/src/lib.routes.ts",
+          "{projectRoot}/src/models/**/*.ts",
+          "{projectRoot}/src/main.ts",
+          "{projectRoot}/src/styles.css",
+          "{projectRoot}/src/app/app.config.ts",
+          "{projectRoot}/src/app/app.routes.ts",
+          "{projectRoot}/src/app/app.css",
+          "{projectRoot}/src/index.html"
+        ],
         "coverageThresholds": {
           "lines": 90,
           "statements": 90
