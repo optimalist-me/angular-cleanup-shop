@@ -1,0 +1,9 @@
+<span
+  class="tag"
+  [class.tag--accent]="tone() === 'accent'"
+  [class.tag--muted]="tone() === 'muted'"
+  [class.tag--md]="size() === 'md'"
+  [attr.aria-label]="ariaValue()"
+>
+  {{ label() }}
+</span>

@@ -1,0 +1,42 @@
+<article class="card" [class.card--linked]="ctaHref()">
+  <div class="card__media">
+    <img
+      class="card__image"
+      [ngSrc]="imageSrc()"
+      [alt]="imageAlt()"
+      width="1200"
+      height="900"
+      sizes="(max-width: 900px) 100vw, 33vw"
+    />
+  </div>
+  <header class="card__header">
+    @if (tag(); as label) {
+    <products-tag
+      class="card__tag"
+      [label]="label"
+      tone="accent"
+    ></products-tag>
+    }
+    <h3 class="card__title">{{ name() }}</h3>
+  </header>
+
+  @if (shortDescription()) {
+  <p class="card__summary">{{ shortDescription() }}</p>
+  } @if (hasDetails()) {
+  <dl class="card__details">
+    @if (outcome()) {
+    <div class="card__detail">
+      <dt>Outcome</dt>
+      <dd>{{ outcome() }}</dd>
+    </div>
+    } @if (pattern()) {
+    <div class="card__detail">
+      <dt>Pattern</dt>
+      <dd>{{ pattern() }}</dd>
+    </div>
+    }
+  </dl>
+  } @if (ctaHref(); as href) {
+  <a class="card__cta" [href]="href">{{ ctaLabel() }}</a>
+  }
+</article>

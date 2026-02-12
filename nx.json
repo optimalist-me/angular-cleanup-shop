@@ -50,6 +50,12 @@
         "watch": false,
         "coverage": true,
         "coverageReporters": ["text", "text-summary", "html"],
+        "coverageInclude": ["{projectRoot}/src/**"],
+        "coverageExclude": [
+          "{projectRoot}/**/*.spec.ts",
+          "{projectRoot}/src/index.ts",
+          "{projectRoot}/src/lib.routes.ts"
+        ],
         "coverageThresholds": {
           "lines": 90,
           "statements": 90

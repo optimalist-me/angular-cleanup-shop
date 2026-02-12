@@ -34,6 +34,19 @@
       "@cleanup/shared-ui-footer": ["libs/shared/ui-footer/src/index.ts"],
       "@cleanup/feature-marketing-faq": [
         "libs/marketing/feature-marketing-faq/src/index.ts"
+      ],
+      "@cleanup/data-access-products": [
+        "libs/products/data-access-products/src/index.ts"
+      ],
+      "@cleanup/ui-product-card": [
+        "libs/products/ui-product-card/src/index.ts"
+      ],
+      "@cleanup/ui-product-tag": ["libs/products/ui-product-tag/src/index.ts"],
+      "@cleanup/feature-products-list": [
+        "libs/products/feature-products-list/src/index.ts"
+      ],
+      "@cleanup/feature-product-detail": [
+        "libs/products/feature-product-detail/src/index.ts"
       ]
     }
   },

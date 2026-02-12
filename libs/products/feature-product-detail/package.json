@@ -1,0 +1,13 @@
+{
+  "name": "@cleanup/feature-product-detail",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@angular/router": "~21.1.0",
+    "rxjs": "~7.8.0",
+    "@cleanup/data-access-products": "0.0.1",
+    "@cleanup/ui-product-tag": "0.0.1"
+  },
+  "sideEffects": false
+}

@@ -1,0 +1,55 @@
+<section class="products">
+  <div class="products__inner">
+    <header class="products__intro">
+      <p class="products__eyebrow">Products</p>
+      <h1 class="products__title">
+        Pick the outcome your codebase needs most.
+      </h1>
+      <p class="products__subtitle">
+        Each product maps to a concrete cleanup outcome and a proven structural
+        pattern.
+      </p>
+    </header>
+
+    <div class="products__filters">
+      <button
+        type="button"
+        class="products__filter"
+        [class.products__filter--active]="!selectedTag()"
+        (click)="selectTag(null)"
+      >
+        All
+      </button>
+      @for (tag of availableTags(); track tag) {
+      <button
+        type="button"
+        class="products__filter"
+        [class.products__filter--active]="selectedTag() === tag"
+        (click)="selectTag(tag)"
+      >
+        {{ tag }}
+      </button>
+      }
+    </div>
+
+    @if (hasProducts()) {
+    <div class="products__grid">
+      @for (product of productCards(); track product.slug) {
+      <products-card
+        [name]="product.name"
+        [imageSrc]="product.imageSrc"
+        [imageAlt]="product.imageAlt"
+        [shortDescription]="product.shortDescription"
+        [outcome]="product.outcome"
+        [pattern]="product.pattern"
+        [tag]="product.tagLabel"
+        [ctaHref]="product.href"
+        ctaLabel="View details"
+      />
+      }
+    </div>
+    } @else {
+    <p class="products__empty">Loading products...</p>
+    }
+  </div>
+</section>
