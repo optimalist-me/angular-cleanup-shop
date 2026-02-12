@@ -54,7 +54,8 @@
         "coverageExclude": [
           "{projectRoot}/**/*.spec.ts",
           "{projectRoot}/src/index.ts",
-          "{projectRoot}/src/lib.routes.ts"
+          "{projectRoot}/src/lib.routes.ts",
+          "{projectRoot}/src/models/**/*.ts"
         ],
         "coverageThresholds": {
           "lines": 90,

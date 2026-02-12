@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CartRepository } from '@cleanup/data-access-cart';
 import { SharedFooter } from '@cleanup/shared-ui-footer';
 import { SharedHeader } from '@cleanup/shared-ui-header';
 
@@ -10,5 +11,6 @@ import { SharedHeader } from '@cleanup/shared-ui-header';
   styleUrl: './app.css',
 })
 export class App {
-  protected title = 'Angular Cleanup Shop';
+  private readonly cartRepository = inject(CartRepository);
+  readonly cartCount = this.cartRepository.itemCount;
 }

@@ -13,6 +13,7 @@
       "Growing monorepos"
     ],
     "timeline": "2-3 sessions",
+    "price": 2400,
     "imageSrc": "/images/products/boundary-polish.png",
     "imageAlt": "Illustration of the Boundary Polish cleaning product."
   },
@@ -30,6 +31,7 @@
       "Hard-to-test views"
     ],
     "timeline": "2 sessions",
+    "price": 1800,
     "imageSrc": "/images/products/state-simplifier.png",
     "imageAlt": "Illustration of the State Simplifier cleaning product."
   },
@@ -47,6 +49,7 @@
       "Frequent regressions"
     ],
     "timeline": "1-2 sessions",
+    "price": 2000,
     "imageSrc": "/images/products/template-detangler.png",
     "imageAlt": "Illustration of the Template Detangler cleaning product."
   },
@@ -64,6 +67,7 @@
       "Inconsistent error handling"
     ],
     "timeline": "2 sessions",
+    "price": 2200,
     "imageSrc": "/images/products/rxjs-untangler.png",
     "imageAlt": "Illustration of the RxJS Untangler cleaning product."
   },
@@ -81,6 +85,7 @@
       "Large component trees"
     ],
     "timeline": "1-2 sessions",
+    "price": 2100,
     "imageSrc": "/images/products/onpush-primer.png",
     "imageAlt": "Illustration of the OnPush Primer cleaning product."
   },
@@ -94,6 +99,7 @@
     "description": "Make tests deterministic by stabilizing setup, trimming flaky or redundant suites, and aligning coverage with real product risk.",
     "bestFor": ["Flaky CI", "Slow test runs", "Unclear test ownership"],
     "timeline": "2-3 sessions",
+    "price": 2300,
     "imageSrc": "/images/products/test-stabilizer.png",
     "imageAlt": "Illustration of the Test Stabilizer cleaning product."
   },
@@ -107,6 +113,7 @@
     "description": "Prepare the codebase for safe Angular upgrades with staged cleanup, clear sequencing, and fewer upgrade-day surprises.",
     "bestFor": ["Upcoming major upgrade", "Deprecated APIs", "Tooling drift"],
     "timeline": "2-4 sessions",
+    "price": 2500,
     "imageSrc": "/images/products/upgrade-lubricant.png",
     "imageAlt": "Illustration of the Upgrade Lubricant cleaning product."
   },
@@ -120,6 +127,7 @@
     "description": "Split oversized components into focused, reusable parts with clearer responsibilities and a calmer surface for future change.",
     "bestFor": ["God components", "Mixed responsibilities", "Slow reviews"],
     "timeline": "2 sessions",
+    "price": 2000,
     "imageSrc": "/images/products/component-degreaser.png",
     "imageAlt": "Illustration of the Component Degreaser cleaning product."
   },
@@ -137,6 +145,7 @@
       "Inconsistent imports"
     ],
     "timeline": "2-3 sessions",
+    "price": 2400,
     "imageSrc": "/images/products/ownership-clarifier.png",
     "imageAlt": "Illustration of the Ownership Clarifier cleaning product."
   },
@@ -154,6 +163,7 @@
       "Legacy state patterns"
     ],
     "timeline": "1-2 sessions",
+    "price": 1700,
     "imageSrc": "/images/products/signal-starter.png",
     "imageAlt": "Illustration of the Signal Starter cleaning product."
   },
@@ -171,6 +181,7 @@
       "Unclear data ownership"
     ],
     "timeline": "2-3 sessions",
+    "price": 2600,
     "imageSrc": "/images/products/data-contract-sealer.png",
     "imageAlt": "Illustration of the Data Contract Sealer cleaning product."
   },
@@ -184,6 +195,7 @@
     "description": "Increase review throughput by shaping smaller, safer change sets and clarifying ownership so reviewers spend less time untangling intent.",
     "bestFor": ["Long review cycles", "High regression risk", "Large PRs"],
     "timeline": "1-2 sessions",
+    "price": 1900,
     "imageSrc": "/images/products/review-speed-boost.png",
     "imageAlt": "Illustration of the Review Speed Boost cleaning product."
   }

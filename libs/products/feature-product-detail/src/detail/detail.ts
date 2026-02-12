@@ -6,20 +6,22 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NgOptimizedImage } from '@angular/common';
+import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { map } from 'rxjs';
+import { CartRepository } from '@cleanup/data-access-cart';
 import { ProductsRepository } from '@cleanup/data-access-products';
 import { ProductTag } from '@cleanup/ui-product-tag';
 
 @Component({
   selector: 'products-detail',
-  imports: [NgOptimizedImage, ProductTag, RouterLink],
+  imports: [CurrencyPipe, NgOptimizedImage, ProductTag, RouterLink],
   templateUrl: './detail.html',
   styleUrl: './detail.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductDetail {
   private readonly route = inject(ActivatedRoute);
+  private readonly cartRepository = inject(CartRepository);
   private readonly repository = inject(ProductsRepository);
 
   readonly products = this.repository.all;
@@ -49,6 +51,23 @@ export class ProductDetail {
   readonly notFound = computed(
     () => this.slug() !== null && !this.isLoading() && !this.product(),
   );
+
+  addToCart(): void {
+    const product = this.product();
+    if (!product) {
+      return;
+    }
+
+    this.cartRepository.addItem({
+      id: product.slug,
+      slug: product.slug,
+      name: product.name,
+      price: product.price,
+      imageSrc: product.imageSrc,
+      imageAlt: product.imageAlt,
+      quantity: 1,
+    });
+  }
 }
 
 const tagLabels = {

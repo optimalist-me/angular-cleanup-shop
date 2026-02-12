@@ -47,7 +47,13 @@
       ],
       "@cleanup/feature-product-detail": [
         "libs/products/feature-product-detail/src/index.ts"
-      ]
+      ],
+      "@cleanup/data-access-cart": ["libs/cart/data-access-cart/src/index.ts"],
+      "@cleanup/ui-cart-line-item": [
+        "libs/cart/ui-cart-line-item/src/index.ts"
+      ],
+      "@cleanup/ui-cart-summary": ["libs/cart/ui-cart-summary/src/index.ts"],
+      "@cleanup/feature-cart": ["libs/cart/feature-cart/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

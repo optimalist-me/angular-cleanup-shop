@@ -25,9 +25,21 @@
         <p class="detail__description">{{ item.description }}</p>
         <div class="detail__meta">
           <div class="detail__meta-item">
+            <span>Price</span>
+            <strong>{{ item.price | currency: 'EUR':'symbol':'1.0-0' }}</strong>
+          </div>
+          <div class="detail__meta-item">
             <span>Timeline</span>
             <strong>{{ item.timeline }}</strong>
           </div>
+        </div>
+        <div class="detail__actions">
+          <button type="button" class="detail__cta" (click)="addToCart()">
+            Add to cart
+          </button>
+          <a class="detail__cta detail__cta--ghost" routerLink="/cart">
+            View cart
+          </a>
         </div>
       </header>
 
