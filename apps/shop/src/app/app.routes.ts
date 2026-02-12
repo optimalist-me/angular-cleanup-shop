@@ -43,4 +43,9 @@ export const appRoutes: Route[] = [
         (m) => m.productDetailRoutes,
       ),
   },
+  {
+    path: 'cart',
+    loadChildren: () =>
+      import('@cleanup/feature-cart').then((m) => m.cartRoutes),
+  },
 ];

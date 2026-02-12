@@ -1,15 +1,27 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroShoppingCart } from '@ng-icons/heroicons/outline';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'shared-header',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [NgIconComponent, RouterLink, RouterLinkActive],
   templateUrl: './header.html',
   styleUrl: './header.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [provideIcons({ heroShoppingCart })],
 })
 export class SharedHeader {
+  readonly cartCount = input(0);
+  readonly hasCartItems = computed(() => this.cartCount() > 0);
   readonly menuOpen = signal(false);
   private readonly router = inject(Router);
   private readonly closeOnNavigation = this.router.events

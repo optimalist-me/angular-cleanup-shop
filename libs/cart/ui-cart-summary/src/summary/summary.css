@@ -1,0 +1,53 @@
+:host {
+  display: block;
+}
+
+.summary {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 18px;
+  border: 1px solid #e1e7eb;
+  background: #ffffff;
+  color: #1f2933;
+  font-family: 'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', sans-serif;
+}
+
+.summary__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.summary__title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.summary__count {
+  font-size: 13px;
+  color: #5b6770;
+}
+
+.summary__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+}
+
+.summary__cta {
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: none;
+  background: #1a7f68;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.summary__cta:hover,
+.summary__cta:focus-visible {
+  background: #146554;
+}

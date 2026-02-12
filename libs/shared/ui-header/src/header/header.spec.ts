@@ -72,6 +72,16 @@ describe('SharedHeader', () => {
     expect(compiled.textContent).toContain('Architecture');
   });
 
+  it('should show cart count badge when items exist', () => {
+    fixture.componentRef.setInput('cartCount', 2);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('.header__cart-count')?.textContent).toContain(
+      '2',
+    );
+  });
+
   it('should close the menu when a link is clicked', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const header = compiled.querySelector('header');

@@ -1,0 +1,41 @@
+<article class="line-item">
+  <div class="line-item__media">
+    <img
+      class="line-item__image"
+      [ngSrc]="imageSrc()"
+      [alt]="imageAlt()"
+      width="360"
+      height="240"
+      sizes="(max-width: 700px) 25vw, 12vw"
+    />
+  </div>
+
+  <div class="line-item__body">
+    <header class="line-item__header">
+      <h3 class="line-item__title">{{ name() }}</h3>
+      <span class="line-item__price">
+        {{ price() | currency: 'EUR':'symbol':'1.0-0' }}
+      </span>
+    </header>
+
+    <div class="line-item__controls">
+      <div class="line-item__stepper" role="group" aria-label="Quantity">
+        <button type="button" class="line-item__step" (click)="decrease()">
+          -
+        </button>
+        <span class="line-item__qty">{{ quantity() }}</span>
+        <button type="button" class="line-item__step" (click)="increase()">
+          +
+        </button>
+      </div>
+
+      <button type="button" class="line-item__remove" (click)="removeItem()">
+        Remove
+      </button>
+    </div>
+  </div>
+
+  <div class="line-item__total" aria-label="Line total">
+    {{ price() * quantity() | currency: 'EUR':'symbol':'1.0-0' }}
+  </div>
+</article>

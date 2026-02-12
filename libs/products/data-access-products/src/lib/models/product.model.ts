@@ -17,6 +17,7 @@ export type Product = {
   description: string;
   bestFor: string[];
   timeline: string;
+  price: number;
   imageSrc: string;
   imageAlt: string;
 };

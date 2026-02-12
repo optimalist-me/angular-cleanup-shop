@@ -1,0 +1,32 @@
+{
+  "name": "ui-cart-summary",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/cart/ui-cart-summary/src",
+  "prefix": "cart",
+  "projectType": "library",
+  "tags": ["domain:cart", "type:ui", "scope:lib"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/cart/ui-cart-summary/ng-package.json",
+        "tsConfig": "libs/cart/ui-cart-summary/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/cart/ui-cart-summary/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/angular:unit-test",
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

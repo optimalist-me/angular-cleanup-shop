@@ -193,6 +193,8 @@ __metadata:
     "@angular/platform-browser": "npm:~21.1.0"
     "@angular/router": "npm:~21.1.0"
     "@eslint/js": "npm:^9.8.0"
+    "@ng-icons/core": "npm:^33.1.0"
+    "@ng-icons/heroicons": "npm:^33.1.0"
     "@nx/angular": "npm:22.5.0"
     "@nx/devkit": "npm:22.5.0"
     "@nx/eslint": "npm:22.5.0"
@@ -3909,6 +3911,30 @@ __metadata:
     "@emnapi/runtime": "npm:^1.7.1"
     "@tybys/wasm-util": "npm:^0.10.1"
   checksum: 10c0/04d57b67e80736e41fe44674a011878db0a8ad893f4d44abb9d3608debb7c174224cba2796ed5b0c1d367368159f3ca6be45f1c59222f70e32ddc880f803d447
+  languageName: node
+  linkType: hard
+
+"@ng-icons/core@npm:^33.1.0":
+  version: 33.1.0
+  resolution: "@ng-icons/core@npm:33.1.0"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  peerDependencies:
+    "@angular-devkit/schematics": ">=21.0.0"
+    "@angular/common": ">=21.0.0"
+    "@angular/core": ">=21.0.0"
+    "@schematics/angular": ">=21.0.0"
+    rxjs: ^6.5.3 || ^7.4.0
+  checksum: 10c0/0a03e1d264a621c612d0c4158684b4b7c3d8cedf1d8d6123c6795cc9d73f113565d8f775f9c4807e5a18b722915fcc319d05e366a9739e25a897f543c96430c6
+  languageName: node
+  linkType: hard
+
+"@ng-icons/heroicons@npm:^33.1.0":
+  version: 33.1.0
+  resolution: "@ng-icons/heroicons@npm:33.1.0"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  checksum: 10c0/008220ec5587d86eaa639d7bdcec46fd1c23881c843f8b34810d8030f33d47ac88babe521ba31274d4fc8507079c7ae48098141c2616211a7de7a23df2c88363
   languageName: node
   linkType: hard
 
