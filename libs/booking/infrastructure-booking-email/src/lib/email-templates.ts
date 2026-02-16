@@ -137,7 +137,7 @@ export function generateBookingConfirmationHtml(
               <td class="details-label">Team Size:</td>
               <td class="details-value">${data.teamSize} team members</td>
             </tr>
-            ${data.preferredDates && data.preferredDates.length > 0 ? `<tr><td class="details-label">Preferred Dates:</td><td class="details-value">${data.preferredDates.map(date => escapeHtml(date)).join(', ')}</td></tr>` : ''}
+            ${data.preferredDates && data.preferredDates.length > 0 ? `<tr><td class="details-label">Preferred Dates:</td><td class="details-value">${data.preferredDates.map((date) => escapeHtml(date)).join(', ')}</td></tr>` : ''}
             ${data.notes ? `<tr><td class="details-label">Notes:</td><td class="details-value">${escapeHtml(data.notes)}</td></tr>` : ''}
           </table>
         </div>

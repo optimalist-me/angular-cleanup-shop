@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, computed } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  computed,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -24,7 +29,9 @@ export class BookingBooking {
   readonly canSubmit$ = this.repository.canSubmit;
 
   // Preferred dates signal (local, synced with draft)
-  readonly preferredDates$ = computed(() => this.draft$().preferredDates ?? ['']);
+  readonly preferredDates$ = computed(
+    () => this.draft$().preferredDates ?? [''],
+  );
 
   onName(value: string): void {
     this.repository.updateDraft({ name: value });
@@ -74,10 +81,11 @@ export class BookingBooking {
   }
 
   // For template compatibility
-  canSubmitSchedule$ = computed(() =>
-    this.preferredDates$().length > 0 &&
-    !!this.preferredDates$()[0] &&
-    this.preferredDates$().every(date => !!date)
+  canSubmitSchedule$ = computed(
+    () =>
+      this.preferredDates$().length > 0 &&
+      !!this.preferredDates$()[0] &&
+      this.preferredDates$().every((date) => !!date),
   );
 
   next(): void {

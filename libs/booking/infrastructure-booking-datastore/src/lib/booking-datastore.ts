@@ -30,7 +30,10 @@ type BookingRow = {
 };
 
 type DatabaseLike = {
-  run: (sql: string, ...params: Array<string | number | null>) => Promise<unknown>;
+  run: (
+    sql: string,
+    ...params: Array<string | number | null>
+  ) => Promise<unknown>;
   get: <Row = unknown>(
     sql: string,
     ...params: Array<string | number | null>
