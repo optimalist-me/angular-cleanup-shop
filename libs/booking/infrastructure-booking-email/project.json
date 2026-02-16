@@ -1,0 +1,20 @@
+{
+  "name": "infrastructure-booking-email",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/booking/infrastructure-booking-email/src",
+  "projectType": "library",
+  "tags": ["type:infrastructure", "scope:booking"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/booking/infrastructure-booking-email",
+        "tsConfig": "libs/booking/infrastructure-booking-email/tsconfig.lib.json",
+        "packageJson": "libs/booking/infrastructure-booking-email/package.json",
+        "main": "libs/booking/infrastructure-booking-email/src/index.ts",
+        "assets": ["libs/booking/infrastructure-booking-email/*.md"]
+      }
+    }
+  }
+}

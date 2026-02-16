@@ -1,0 +1,20 @@
+{
+  "name": "presentation-booking-rest",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/booking/presentation-booking-rest/src",
+  "projectType": "library",
+  "tags": ["type:presentation", "scope:booking"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/booking/presentation-booking-rest",
+        "tsConfig": "libs/booking/presentation-booking-rest/tsconfig.lib.json",
+        "packageJson": "libs/booking/presentation-booking-rest/package.json",
+        "main": "libs/booking/presentation-booking-rest/src/index.ts",
+        "assets": ["libs/booking/presentation-booking-rest/*.md"]
+      }
+    }
+  }
+}

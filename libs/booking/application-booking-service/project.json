@@ -1,0 +1,20 @@
+{
+  "name": "application-booking-service",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/booking/application-booking-service/src",
+  "projectType": "library",
+  "tags": ["type:application", "scope:booking"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/booking/application-booking-service",
+        "tsConfig": "libs/booking/application-booking-service/tsconfig.lib.json",
+        "packageJson": "libs/booking/application-booking-service/package.json",
+        "main": "libs/booking/application-booking-service/src/index.ts",
+        "assets": ["libs/booking/application-booking-service/*.md"]
+      }
+    }
+  }
+}

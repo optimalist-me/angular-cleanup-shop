@@ -31,15 +31,20 @@
   color: #1f2933;
   display: grid;
   gap: 4px;
+  background: url('/images/cleanup-logo.png') no-repeat left center;
+  background-size: 250px auto;
+  min-height: 100px;
+  padding-left: 180px;
 }
 
 .header__brand-title {
-  font-size: 16px;
+  color: #146554;
+  font-size: 1.75rem;
   font-weight: 600;
 }
 
 .header__brand-subtitle {
-  font-size: 12px;
+  font-size: 0.875rem;
   color: #5b6770;
 }
 
@@ -58,7 +63,7 @@
 .header__link {
   text-decoration: none;
   color: #1f2933;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
 }
 
@@ -101,7 +106,7 @@
   background: #1a7f68;
   color: #ffffff;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
 }
 
@@ -117,7 +122,7 @@
   border: 1px solid #d6dde3;
   background: #ffffff;
   color: #1f2933;
-  font-size: 13px;
+  font-size: 0.875rem;
   font-weight: 600;
 }
 

@@ -1,0 +1,10 @@
+{
+  "name": "@cleanup/ui-booking-stepper",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@cleanup/models-booking": "0.0.1"
+  },
+  "sideEffects": false
+}

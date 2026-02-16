@@ -185,7 +185,7 @@ Subheadline:
 
 CTA:
 
-> Book a 20-min fit check
+> Request a 20-min fit check
 
 ---
 

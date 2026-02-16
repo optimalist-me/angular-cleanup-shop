@@ -53,7 +53,27 @@
         "libs/cart/ui-cart-line-item/src/index.ts"
       ],
       "@cleanup/ui-cart-summary": ["libs/cart/ui-cart-summary/src/index.ts"],
-      "@cleanup/feature-cart": ["libs/cart/feature-cart/src/index.ts"]
+      "@cleanup/feature-cart": ["libs/cart/feature-cart/src/index.ts"],
+      "@cleanup/data-access-booking": [
+        "libs/booking/data-access-booking/src/index.ts"
+      ],
+      "@cleanup/models-booking": ["libs/booking/models-booking/src/index.ts"],
+      "@cleanup/ui-booking-stepper": [
+        "libs/booking/ui-booking-stepper/src/index.ts"
+      ],
+      "@cleanup/feature-booking": ["libs/booking/feature-booking/src/index.ts"],
+      "@angular-cleanup-shop/infrastructure-booking-datastore": [
+        "libs/booking/infrastructure-booking-datastore/src/index.ts"
+      ],
+      "@angular-cleanup-shop/application-booking-service": [
+        "libs/booking/application-booking-service/src/index.ts"
+      ],
+      "@angular-cleanup-shop/presentation-booking-rest": [
+        "libs/booking/presentation-booking-rest/src/index.ts"
+      ],
+      "@angular-cleanup-shop/infrastructure-booking-email": [
+        "libs/booking/infrastructure-booking-email/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

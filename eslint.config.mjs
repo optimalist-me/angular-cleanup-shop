@@ -23,6 +23,18 @@ export default [
                 'type:data-access',
                 'type:ui',
                 'type:util',
+                'type:models',
+                'domain:shared',
+              ],
+            },
+            {
+              sourceTag: 'scope:backend',
+              onlyDependOnLibsWithTags: [
+                'type:presentation',
+                'type:application',
+                'type:infrastructure',
+                'type:util',
+                'type:models',
                 'domain:shared',
               ],
             },
@@ -32,19 +44,79 @@ export default [
             },
             {
               sourceTag: 'type:feature',
-              onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'domain:shared'],
+              onlyDependOnLibsWithTags: [
+                'type:data-access',
+                'type:ui',
+                'type:util',
+                'type:models',
+                'domain:shared',
+              ],
             },
             {
               sourceTag: 'type:data-access',
-              onlyDependOnLibsWithTags: ['type:util', 'domain:shared'],
+              onlyDependOnLibsWithTags: [
+                'type:util',
+                'type:models',
+                'domain:shared',
+              ],
             },
             {
               sourceTag: 'type:ui',
-              onlyDependOnLibsWithTags: ['type:ui', 'type:util', 'domain:shared'],
+              onlyDependOnLibsWithTags: [
+                'type:ui',
+                'type:util',
+                'type:models',
+                'domain:shared',
+              ],
             },
             {
               sourceTag: 'type:util',
-              onlyDependOnLibsWithTags: ['type:util', 'domain:shared'],
+              onlyDependOnLibsWithTags: [
+                'type:util',
+                'type:models',
+                'domain:shared',
+              ],
+            },
+            {
+              sourceTag: 'type:models',
+              onlyDependOnLibsWithTags: ['type:models', 'domain:shared'],
+            },
+            {
+              sourceTag: 'type:api',
+              onlyDependOnLibsWithTags: [
+                'type:presentation',
+                'type:application',
+                'type:infrastructure',
+                'type:util',
+                'type:models',
+                'domain:shared',
+              ],
+            },
+            {
+              sourceTag: 'type:presentation',
+              onlyDependOnLibsWithTags: [
+                'type:application',
+                'type:util',
+                'type:models',
+                'domain:shared',
+              ],
+            },
+            {
+              sourceTag: 'type:application',
+              onlyDependOnLibsWithTags: [
+                'type:infrastructure',
+                'type:util',
+                'type:models',
+                'domain:shared',
+              ],
+            },
+            {
+              sourceTag: 'type:infrastructure',
+              onlyDependOnLibsWithTags: [
+                'type:util',
+                'type:models',
+                'domain:shared',
+              ],
             },
             {
               sourceTag: 'domain:marketing',

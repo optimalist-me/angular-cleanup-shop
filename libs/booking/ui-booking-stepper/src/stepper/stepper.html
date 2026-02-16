@@ -1,0 +1,20 @@
+<nav class="stepper">
+  <ol class="stepper__list">
+    @for (s of steps; track s.id) {
+    <li class="stepper__item">
+      <div
+        class="stepper__step"
+        [class.stepper__step--active]="isActive(s.id)"
+        [class.stepper__step--completed]="isCompleted(s.id)"
+      >
+        @if (isCompleted(s.id)) {
+        <span class="stepper__check">✓</span>
+        } @else {
+        <span class="stepper__number">{{ s.number }}</span>
+        }
+      </div>
+      <span class="stepper__label">{{ s.label }}</span>
+    </li>
+    }
+  </ol>
+</nav>

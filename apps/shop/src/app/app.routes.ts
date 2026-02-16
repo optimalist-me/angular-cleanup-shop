@@ -48,4 +48,9 @@ export const appRoutes: Route[] = [
     loadChildren: () =>
       import('@cleanup/feature-cart').then((m) => m.cartRoutes),
   },
+  {
+    path: 'book',
+    loadChildren: () =>
+      import('@cleanup/feature-booking').then((m) => m.bookingRoutes),
+  },
 ];

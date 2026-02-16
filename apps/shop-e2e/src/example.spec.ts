@@ -1,8 +1,44 @@
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
+test('header CTA navigates to booking', async ({ page }) => {
   await page.goto('/');
 
-  // Expect h1 to contain a substring.
-  expect(await page.locator('h1').innerText()).toContain('Less Friction');
+  await page.getByRole('link', { name: 'Request a 20-min fit check' }).click();
+
+  await expect(page).toHaveURL(/\/book$/u);
+  await expect(
+    page.getByRole('heading', { name: 'Schedule your 20-min fit check' }),
+  ).toBeVisible();
+});
+
+test('booking flow submits and confirms', async ({ page }) => {
+  await page.route('**/api/bookings', async (route) => {
+    const responseBody = {
+      id: 'booking-123',
+      createdAt: new Date().toISOString(),
+    };
+
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(responseBody),
+    });
+  });
+
+  await page.goto('/book');
+
+  await page.fill('#name', 'Jane Doe');
+  await page.fill('#email', 'jane@example.com');
+  await page.fill('#company', 'Cleanup Shop');
+  await page.selectOption('#teamSize', '6');
+  await page.fill('#notes', 'Interested in a fast audit.');
+
+  await page.getByRole('button', { name: 'Next step' }).click();
+  await page.getByRole('button', { name: 'Next step' }).click();
+  await page.getByRole('button', { name: 'Confirm booking' }).click();
+
+  await expect(
+    page.getByRole('heading', { name: 'Booking confirmed!' }),
+  ).toBeVisible();
+  await expect(page.locator('.booking__success')).toContainText('booking-123');
 });
