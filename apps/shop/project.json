@@ -56,7 +56,11 @@
           "buildTarget": "shop:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "dependsOn": ["api:serve", "api:mailpit"],
+      "options": {
+        "proxyConfig": "apps/shop/proxy.conf.json"
+      }
     },
     "lint": {
       "executor": "@nx/eslint:lint"

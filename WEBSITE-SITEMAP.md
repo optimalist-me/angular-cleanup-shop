@@ -103,7 +103,7 @@ Primary CTA:
 
 Secondary CTA:
 
-> Book a 20‑min fit check
+> Request a 20‑min fit check
 
 ---
 
@@ -144,7 +144,7 @@ Cards that link into `/products/:slug`.
 
 #### Final CTA
 
-> Book a 20‑min fit check
+> Request a 20‑min fit check
 
 ---
 
@@ -318,7 +318,7 @@ Content:
 
 CTA:
 
-> Book a 20‑min fit check
+> Request a 20‑min fit check
 
 ---
 
@@ -400,7 +400,7 @@ It is built for qualified leads.
 
 CTAs are calm:
 
-- “Book a 20‑min fit check”
+- “Request a 20‑min fit check”
 - “See if this model fits your team”
 
 No urgency tactics.

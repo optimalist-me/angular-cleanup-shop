@@ -4,7 +4,7 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartRepository } from '@cleanup/data-access-cart';
 import { CartLineItem } from '@cleanup/ui-cart-line-item';
 import { CartSummary } from '@cleanup/ui-cart-summary';
@@ -18,6 +18,7 @@ import { CartSummary } from '@cleanup/ui-cart-summary';
 })
 export class CartCart {
   private readonly repository = inject(CartRepository);
+  private readonly router = inject(Router);
 
   readonly items = this.repository.items;
   readonly itemCount = this.repository.itemCount;
@@ -33,6 +34,6 @@ export class CartCart {
   }
 
   checkout(): void {
-    // Placeholder for checkout flow.
+    this.router.navigate(['/book']);
   }
 }

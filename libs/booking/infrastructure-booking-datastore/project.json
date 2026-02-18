@@ -1,0 +1,20 @@
+{
+  "name": "infrastructure-booking-datastore",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/booking/infrastructure-booking-datastore/src",
+  "projectType": "library",
+  "tags": ["type:infrastructure", "scope:booking"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/booking/infrastructure-booking-datastore",
+        "tsConfig": "libs/booking/infrastructure-booking-datastore/tsconfig.lib.json",
+        "packageJson": "libs/booking/infrastructure-booking-datastore/package.json",
+        "main": "libs/booking/infrastructure-booking-datastore/src/index.ts",
+        "assets": ["libs/booking/infrastructure-booking-datastore/*.md"]
+      }
+    }
+  }
+}

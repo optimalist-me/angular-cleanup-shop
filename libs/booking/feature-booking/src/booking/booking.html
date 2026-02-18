@@ -1,0 +1,262 @@
+<section class="booking">
+  <div class="booking__inner">
+    <button type="button" class="booking__back" (click)="back()">
+      ← Back to cart
+    </button>
+
+    <header class="booking__intro">
+      <h1 class="booking__title">Schedule your 20-min fit check</h1>
+      <p class="booking__subtitle">
+        Tell us about your organization so we can prepare the best solution.
+      </p>
+    </header>
+
+    <booking-stepper [step]="step$()" />
+
+    @if (step$() === 'info') {
+    <form class="booking__form">
+      <fieldset class="booking__fieldset">
+        <legend class="booking__legend">About your organization</legend>
+
+        <div class="booking__field">
+          <label class="booking__label" for="name">Your name</label>
+          <input
+            id="name"
+            type="text"
+            class="booking__input"
+            placeholder="Jane Doe"
+            [value]="draft$().name || ''"
+            (input)="onName($event.target.value)"
+            required
+          />
+        </div>
+
+        <div class="booking__field">
+          <label class="booking__label" for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            class="booking__input"
+            placeholder="jane@company.com"
+            [value]="draft$().email || ''"
+            (input)="onEmail($event.target.value)"
+            required
+          />
+        </div>
+
+        <div class="booking__field">
+          <label class="booking__label" for="company">Company</label>
+          <input
+            id="company"
+            type="text"
+            class="booking__input"
+            placeholder="Your Company"
+            [value]="draft$().company || ''"
+            (input)="onCompany($event.target.value)"
+            required
+          />
+        </div>
+
+        <div class="booking__field">
+          <label class="booking__label" for="teamSize">Team size</label>
+          <select
+            id="teamSize"
+            class="booking__input"
+            [value]="draft$().teamSize || ''"
+            (change)="onTeamSize($event)"
+            required
+          >
+            <option value="">Select team size</option>
+            <option value="1">1 person</option>
+            <option value="2">2-5 people</option>
+            <option value="6">6-10 people</option>
+            <option value="11">11-20 people</option>
+            <option value="21">20+ people</option>
+          </select>
+        </div>
+
+        <div class="booking__field">
+          <label class="booking__label" for="notes">Notes (optional)</label>
+          <textarea
+            id="notes"
+            class="booking__textarea"
+            placeholder="Tell us about your fit-check priorities..."
+            [value]="draft$().notes || ''"
+            (input)="onNotes($event)"
+          ></textarea>
+        </div>
+      </fieldset>
+
+      @if (error$()) {
+      <div class="booking__error">
+        <p>{{ error$() }}</p>
+      </div>
+      }
+
+      <div class="booking__actions">
+        <button
+          type="button"
+          class="booking__button booking__button--primary"
+          (click)="next()"
+          [disabled]="!canSubmit$() || status$() === 'submitting'"
+        >
+          @if (status$() === 'submitting') { Scheduling... } @else { Next step }
+        </button>
+      </div>
+    </form>
+    } @else if (step$() === 'schedule') {
+    <form class="booking__form">
+      <fieldset class="booking__fieldset">
+        <legend class="booking__legend">Schedule your fit check</legend>
+
+        <p class="booking__hint">
+          Please provide at least one, and up to three, preferred dates. We'll
+          confirm a time by email.
+        </p>
+
+        @for (date of preferredDates$(); track date; let i = $index) {
+        <div class="booking__field booking__field--date">
+          <label class="booking__label" [for]="'preferredDate' + i">
+            Preferred date {{ i + 1 }} @if (i === 0) {
+            <span class="booking__required">*</span> }
+          </label>
+          <input
+            [id]="'preferredDate' + i"
+            type="date"
+            class="booking__input"
+            [value]="date || ''"
+            (input)="onPreferredDate(i, $event.target.value)"
+            [required]="i === 0 ? true : null"
+          />
+          @if (preferredDates$().length > 1) {
+          <button
+            type="button"
+            class="booking__button booking__button--icon"
+            aria-label="Remove date"
+            (click)="removePreferredDate(i)"
+          >
+            ×
+          </button>
+          }
+        </div>
+        } @if (preferredDates$().length < 3) {
+        <div class="booking__actions booking__actions--add-date">
+          <button
+            type="button"
+            class="booking__button booking__button--secondary"
+            (click)="addPreferredDate()"
+          >
+            + Add another date
+          </button>
+        </div>
+        }
+      </fieldset>
+
+      @if (error$()) {
+      <div class="booking__error">
+        <p>{{ error$() }}</p>
+      </div>
+      }
+
+      <div class="booking__actions">
+        <button
+          type="button"
+          class="booking__button booking__button--ghost"
+          (click)="previous()"
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          class="booking__button booking__button--primary"
+          (click)="next()"
+          [disabled]="!canSubmitSchedule$() || status$() === 'submitting'"
+        >
+          @if (status$() === 'submitting') { Scheduling... } @else { Next step }
+        </button>
+      </div>
+    </form>
+    } @else if (step$() === 'confirm') {
+    <div class="booking__confirmation">
+      @if (status$() === 'success' && confirmation$(); as confirm) {
+      <div class="booking__success">
+        <div class="booking__success-icon">✓</div>
+        <h2>Booking confirmed!</h2>
+        <p>Confirmation ID: <strong>{{ confirm.id }}</strong></p>
+        <p class="booking__success-message">
+          We'll be in touch at <strong>{{ draft$().email }}</strong> to schedule
+          your fit check.
+        </p>
+
+        <div class="booking__actions">
+          <a
+            class="booking__button booking__button--primary"
+            routerLink="/products"
+          >
+            Continue shopping
+          </a>
+          <a class="booking__button booking__button--ghost" routerLink="/cart">
+            Back to cart
+          </a>
+        </div>
+      </div>
+      } @else {
+      <fieldset class="booking__fieldset">
+        <legend class="booking__legend">Confirm your booking</legend>
+
+        <div class="booking__summary">
+          <div class="booking__summary-item">
+            <span>Name</span>
+            <strong>{{ draft$().name }}</strong>
+          </div>
+          <div class="booking__summary-item">
+            <span>Email</span>
+            <strong>{{ draft$().email }}</strong>
+          </div>
+          <div class="booking__summary-item">
+            <span>Company</span>
+            <strong>{{ draft$().company }}</strong>
+          </div>
+          <div class="booking__summary-item">
+            <span>Team size</span>
+            <strong>{{ draft$().teamSize }} people</strong>
+          </div>
+          @if (draft$().notes) {
+          <div class="booking__summary-item">
+            <span>Notes</span>
+            <strong>{{ draft$().notes }}</strong>
+          </div>
+          }
+        </div>
+      </fieldset>
+
+      @if (error$()) {
+      <div class="booking__error">
+        <p>{{ error$() }}</p>
+      </div>
+      }
+
+      <div class="booking__actions">
+        <button
+          type="button"
+          class="booking__button booking__button--ghost"
+          (click)="previous()"
+          [disabled]="status$() === 'submitting'"
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          class="booking__button booking__button--primary"
+          (click)="submit()"
+          [disabled]="status$() === 'submitting'"
+        >
+          @if (status$() === 'submitting') { Confirming... } @else { Confirm
+          booking }
+        </button>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,16 @@
+{
+  "name": "@cleanup/feature-booking",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@angular/forms": "^21.1.0",
+    "@angular/router": "^21.1.0",
+    "@cleanup/ui-booking-stepper": "0.0.1",
+    "@cleanup/data-access-booking": "0.0.1"
+  },
+  "devDependencies": {
+    "vitest": "*"
+  },
+  "sideEffects": false
+}
