@@ -13,13 +13,9 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+
 app.use(express.static(path.join(__dirname, 'assets')));
 app.use(express.static(path.join(__dirname, '../shop/browser')));
-
-// For Angular client-side routing: serve index.html for all unmatched routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../shop/browser/index.html'));
-});
 
 // Health check
 app.get('/api', (req, res) => {
@@ -28,6 +24,11 @@ app.get('/api', (req, res) => {
 
 // Booking routes
 app.use('/api/bookings', createBookingRouter());
+
+// For Angular client-side routing: serve index.html for all unmatched routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../shop/browser/index.html'));
+});
 
 const port = process.env.PORT || 3333;
 
