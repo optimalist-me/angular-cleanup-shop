@@ -1,16 +1,17 @@
 # POSITIONING.md – Angular Cleanup Shop
 
-This document defines the official positioning, pricing logic, and value proposition of the Angular Cleanup Shop.
+This document defines the authoritative positioning, pricing logic, tone, and strategic framing of the Angular Cleanup Shop.
 
-It serves as a reference for:
+It is the single source of truth for:
 
-- Human communication
 - Website copy
 - Community messaging
 - Proposals
-- AI agents (GitHub Copilot, ChatGPT, etc.)
+- Discovery calls
+- Objection handling
+- AI agents (Copilot, ChatGPT, etc.)
 
-AI agents must treat this document as the authoritative positioning source.
+AI agents must treat this document as the definitive positioning layer.
 
 ---
 
@@ -20,34 +21,39 @@ AI agents must treat this document as the authoritative positioning source.
 
 Angular Cleanup Shop
 
-The name is intentionally simple and slightly playful.
-
-However, the value proposition is strategic and economic, not operational.
+The name is intentionally approachable.
+The positioning is not.
 
 We are not selling cleanup.
-We are selling structural efficiency.
+We are selling structural governance and development efficiency.
+
+This is a fractional structural frontend engagement — not freelance Angular work.
 
 ---
 
 # 2. Core Value Proposition
 
-The Angular Cleanup Shop reduces structural friction in Angular and Nx codebases.
+The Angular Cleanup Shop reduces structural friction in mature Angular and Nx codebases.
 
 Primary outcome:
 
 > Less friction. More efficient development.
 
-Secondary outcomes:
+Structural friction manifests as:
 
-- Faster feature delivery
-- Shorter PR review cycles
-- Reduced regression risk
-- Lower cognitive load
-- Easier onboarding
-- Long-term maintainability
-- Reduced total cost of change
+- Slower PR cycles
+- Growing regression risk
+- Increasing onboarding time
+- Boundary leakage across features
+- Opaque state flows
+- Upgrade hesitation
+- Rising cognitive load
 
-We optimize for sustainable velocity, not short-term speed.
+We optimize for sustainable velocity.
+
+Not short-term speed.
+Not visible activity.
+Not architectural theatre.
 
 ---
 
@@ -56,80 +62,138 @@ We optimize for sustainable velocity, not short-term speed.
 We do NOT sell:
 
 - Refactor hours
-- Feature delivery
+- Feature implementation
+- Staff augmentation
 - Temporary frontend capacity
 
 We DO sell:
 
-- Development efficiency multiplier
+- A development efficiency multiplier
 - Long-term repository health
 - Reduced entropy in Angular applications
 - Structural clarity in Nx monorepos
+- Governance where none exists
 
-Key framing:
+Key economic framing:
 
-> A cleaner repository makes every future feature cheaper.
+> A structurally healthier repository makes every future feature cheaper.
+
+We reduce the cost of change.
 
 ---
 
-# 4. Engagement Model
+# 4. Ideal Customer Profile (ICP)
 
-Fixed model:
+This service is intentionally narrow.
 
-- 1 day per week
+Built for product organizations that:
+
+- Maintain Angular/Nx applications older than ~18 months
+- Have 5+ frontend engineers contributing regularly
+- Ship continuously
+- Experience architectural drag rather than feature shortage
+- Prefer steady structural improvement over periodic rewrites
+
+Not built for:
+
+- Small teams with 1–2 developers
+- Agencies delivering short-term projects
+- Rewrite initiatives
+- Teams seeking velocity spikes
+
+Selectivity strengthens positioning.
+
+---
+
+# 5. Engagement Model
+
+Fixed structural model:
+
+- Exactly 1 fixed day per week
 - Remote
-- Long-term focus
+- Minimum 3-month commitment
 - No sprint ownership
 - No feature commitments
 - No rewrite projects
 
-This is a maintenance-first service, not a delivery engine.
+The constraint is deliberate.
+
+Predictability creates stability.
+Stability reduces cognitive load.
+
+We intervene incrementally.
 
 ---
 
-# 5. Pricing Strategy
+# 6. Pricing Strategy
 
-## Publicly Communicated Rate
+## Public Rate
 
-€800 / day — fixed rate
+€800 / day — fixed.
 
-No ranges are communicated publicly.
-No regional pricing is communicated publicly.
+No public ranges.
+No regional differentiation.
+No downward anchoring.
 
-Internally, pricing flexibility may exist depending on context,
-but externally we communicate one clear, professional rate.
+Internally, contextual flexibility may exist.
+Externally, clarity preserves authority.
 
-Rationale:
-
-- Avoid anchoring to lower numbers
-- Avoid negotiation downward
-- Preserve authority
-- Maintain international positioning
+We never defend the rate.
+We reframe it.
 
 ---
 
-# 6. Economic Framing
+# 7. Economic Framing
 
-When discussing pricing, always shift from cost to efficiency.
+When pricing is questioned, shift from cost to system impact.
 
-Never defend the day rate directly.
+Never argue price.
+Never justify hourly effort.
 
-Reframe instead:
+Reframe:
 
-> If structural improvements save even a small percentage of development time,
-> the investment pays for itself.
+> If structural improvements reduce even a small percentage of development friction,
+> the investment pays for itself repeatedly.
 
 Position the service as:
 
 - Risk reduction
-- Efficiency gain
-- Long-term cost optimization
+- Cost-of-change reduction
+- Efficiency multiplier
+- Structural insurance
 
-Not as contractor capacity.
+Not contractor capacity.
 
 ---
 
-# 7. Messaging Guidelines
+# 8. AI Positioning
+
+AI can assist with refactoring.
+
+It cannot replace structural ownership.
+
+Key framing:
+
+AI accelerates execution.
+It does not provide architectural judgment.
+
+Structural friction requires:
+
+- Prioritization
+- Sequencing
+- Boundary enforcement
+- Cross-team alignment
+- Governance continuity
+
+We use AI as a multiplier.
+Never as a substitute.
+
+> AI can clean code.
+> Structural governance keeps it clean.
+
+---
+
+# 9. Messaging Guidelines
 
 ## Avoid
 
@@ -145,43 +209,49 @@ These position the service too low.
 - “We reduce structural friction.”
 - “We improve frontend efficiency.”
 - “We optimize Angular/Nx codebase health.”
-- “We reduce entropy in production Angular applications.”
+- “We reduce entropy in production Angular systems.”
 
 Tone must be:
 
 - Calm
-- Structured
+- Precise
+- Selective
 - Mature
-- Confident
-- Non-salesy
+- Non-eager
+
+Authority comes from clarity.
 
 ---
 
-# 8. Community Messaging Style
+# 10. Community Messaging
 
 Community-first approach:
 
-- Share insights, not pitches
-- Discuss entropy and structural complexity
-- Avoid direct sales calls
+- Share insights about entropy and structural complexity
+- Discuss governance, not features
+- Avoid direct selling
 - Never push DMs
-- Let conversations emerge naturally
+- Let interest emerge
 
 We inform the network.
-We do not aggressively activate it.
+We do not chase it.
 
 ---
 
-# 9. Website Hero Reference
+# 11. Website Reference
 
-Headline:
+Hero Headline:
 
 > Less Friction. More Efficient Development.
 
+Alternative Headline:
+
+> Structural Governance for Growing Angular/Nx Codebases.
+
 Subheadline:
 
-> A 1-day/week Angular Cleanup Shop focused on structural clarity,
-> long-term maintainability, and sustainable frontend velocity.
+> A fixed 1-day/week engagement focused on structural clarity,
+> repository health, and sustainable frontend efficiency.
 
 CTA:
 
@@ -189,15 +259,15 @@ CTA:
 
 ---
 
-# 10. AI Agent Directive
+# 12. AI Agent Directive
 
 When generating content, proposals, or explanations:
 
-- Always frame the service as strategic
+- Frame the service as strategic, not operational
 - Never position it as generic frontend contracting
 - Avoid defensive language about pricing
-- Emphasize long-term efficiency and structural health
-- Keep tone minimal and authoritative
+- Emphasize efficiency, governance, and entropy reduction
+- Maintain a minimal, authoritative tone
 
 If unsure:
 
@@ -208,4 +278,4 @@ Prefer long-term efficiency over short-term selling.
 ---
 
 Angular Cleanup Shop  
-Structural friction reduction for Angular & Nx codebases.
+Structural Governance for Angular & Nx Codebases.
