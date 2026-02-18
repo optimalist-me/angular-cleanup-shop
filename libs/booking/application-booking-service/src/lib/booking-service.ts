@@ -29,11 +29,7 @@ export async function processBooking(
 ): Promise<ProcessBookingResult> {
   try {
     // Validate required fields
-    if (
-      !bookingRequest.email ||
-      !bookingRequest.name ||
-      !bookingRequest.teamSize
-    ) {
+    if (!bookingRequest.email || !bookingRequest.name || bookingRequest.teamSize === undefined || bookingRequest.teamSize === null) {
       return {
         success: false,
         message: 'Missing required fields',
@@ -52,7 +48,7 @@ export async function processBooking(
     }
 
     // Validate team size
-    if (bookingRequest.teamSize < 1 || bookingRequest.teamSize > 100) {
+    if (typeof bookingRequest.teamSize !== 'number' || bookingRequest.teamSize < 1 || bookingRequest.teamSize > 100) {
       return {
         success: false,
         message: 'Invalid team size',

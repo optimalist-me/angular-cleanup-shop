@@ -101,8 +101,49 @@ describe('BookingBooking', () => {
       value: { value: '2026-02-20' },
       enumerable: true,
     });
-    component.onPreferredDate(event);
-    expect(component.draft$().scheduledDate).toBe('2026-02-20');
+    component.onPreferredDate(0, '2026-02-20');
+    expect(component.draft$().preferredDates?.[0]).toBe('2026-02-20');
+  });
+
+  it('should not add more than 3 preferred dates', () => {
+    // Fill up to 3 dates
+    component.onPreferredDate(0, '2026-02-20');
+    component.addPreferredDate();
+    component.onPreferredDate(1, '2026-02-21');
+    component.addPreferredDate();
+    component.onPreferredDate(2, '2026-02-22');
+    // Try to add a 4th
+    component.addPreferredDate();
+    expect(component.draft$().preferredDates?.length).toBe(3);
+  });
+
+  it('should not remove the last preferred date', () => {
+    // Only one date present
+    const initialLength = component.draft$()?.preferredDates?.length ?? 0;
+    component.removePreferredDate(0);
+    const length = component.draft$()?.preferredDates?.length ?? 0;
+    expect(length).toBeGreaterThanOrEqual(1);
+    if (initialLength > 1) {
+      expect(length).toBe(initialLength - 1);
+    } else {
+      expect(length).toBe(1);
+    }
+  });
+
+  it('canSubmitSchedule$ should be false if preferredDates is empty', () => {
+    // Clear all dates
+    component.repository.updateDraft({ preferredDates: [] });
+    expect(component.canSubmitSchedule$()).toBe(false);
+  });
+
+  it('canSubmitSchedule$ should be false if any preferredDate is empty', () => {
+    component.repository.updateDraft({ preferredDates: ['2026-02-20', ''] });
+    expect(component.canSubmitSchedule$()).toBe(false);
+  });
+
+  it('canSubmitSchedule$ should be true if all preferredDates are filled', () => {
+    component.repository.updateDraft({ preferredDates: ['2026-02-20', '2026-02-21'] });
+    expect(component.canSubmitSchedule$()).toBe(true);
   });
 
   it('should call next on repository when next is clicked', () => {

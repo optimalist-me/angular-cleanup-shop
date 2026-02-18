@@ -77,6 +77,9 @@ export class BookingBooking {
     if (current.length > 1) {
       current.splice(index, 1);
       this.repository.updateDraft({ preferredDates: current });
+    } else {
+      // Always keep at least one empty string
+      this.repository.updateDraft({ preferredDates: [''] });
     }
   }
 

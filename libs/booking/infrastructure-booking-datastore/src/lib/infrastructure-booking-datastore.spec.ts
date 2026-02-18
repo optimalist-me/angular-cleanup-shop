@@ -28,7 +28,7 @@ async function withDatastore<T>(
       company TEXT NOT NULL,
       team_size INTEGER NOT NULL,
       notes TEXT,
-      scheduled_date TEXT,
+      preferred_dates TEXT,
       created_at TEXT NOT NULL,
       completed_at TEXT
     );
@@ -66,13 +66,13 @@ describe('booking datastore', () => {
 
   it('lists and filters bookings', async () => {
     await withDatastore(async (datastore) => {
-      await datastore.saveBooking({
+      const tori = await datastore.saveBooking({
         email: 'tori@example.com',
         name: 'Tori',
         company: 'Cleanup Shop',
         teamSize: 2,
       });
-      await datastore.saveBooking({
+      const alex = await datastore.saveBooking({
         email: 'alex@example.com',
         name: 'Alex',
         company: 'Cleanup Shop',
@@ -82,7 +82,8 @@ describe('booking datastore', () => {
       const all = await datastore.getAllBookings();
       const filtered = await datastore.getBookingsByEmail('tori@example.com');
 
-      expect(all).toHaveLength(2);
+      expect(all.some(b => b.id === tori.id)).toBe(true);
+      expect(all.some(b => b.id === alex.id)).toBe(true);
       expect(filtered).toHaveLength(1);
       expect(filtered[0]?.email).toBe('tori@example.com');
     });

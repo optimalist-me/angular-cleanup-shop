@@ -23,7 +23,7 @@ function createResponse() {
 function findHandler(method: 'get' | 'post', path: string): Handler {
   const router = createBookingRouter();
   const layer = router.stack.find(
-    (entry) => entry.route?.path === path && entry.route?.methods?.[method],
+    (entry) => entry.route?.path === path && entry.route?.stack?.some((h: any) => h.method === method)
   );
 
   if (!layer) {

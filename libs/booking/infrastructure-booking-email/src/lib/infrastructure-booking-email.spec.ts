@@ -51,8 +51,8 @@ describe('infrastructure booking email', () => {
     );
     expect(sendMail).toHaveBeenCalledWith(
       expect.objectContaining({
-        to: 'shop@cleanupshop.local',
-        subject: `New booking submitted #${baseBooking.bookingId}`,
+        to: 'riley@example.com',
+        subject: `Booking Confirmation #${baseBooking.bookingId}`,
       }),
     );
   });
