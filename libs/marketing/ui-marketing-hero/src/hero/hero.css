@@ -44,6 +44,18 @@
   margin: 0;
 }
 
+.hero__demo-note {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--hero-muted);
+  margin: 4px 0 0;
+  max-width: 640px;
+}
+
+.hero__demo-note strong {
+  color: var(--hero-ink);
+}
+
 .hero__actions {
   display: flex;
   flex-wrap: wrap;

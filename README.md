@@ -1,33 +1,49 @@
 # Angular Cleanup Shop
 
-> **Angular codebases that feel heavy, fragile, or stressful — made calm, readable, and maintainable again.**
+> **Growing Angular/Nx codebases slow down over time.**  
+> **We reduce structural friction — systematically, predictably, one calm day per week.**
 >
-> This repository documents the **Angular Cleanup Shop**:  
-> a lightweight, structured, long-term approach to improving Angular codebases  
-> **one fixed day per week**, without delivery pressure.
+> The Angular Cleanup Shop is a focused, governance-first engagement for product teams that want:
+>
+> - fewer regressions
+> - faster code reviews
+> - cleaner architectural boundaries
+> - sustainable velocity
+>
+> Without rewrites.  
+> Without sprint disruption.  
+> Without adding another full-time hire.
 
 ---
 
 ## 1. What This Service Is
 
-The **Angular Cleanup Shop** is a **maintenance-first, refactoring-focused engagement** for existing Angular applications.
+The **Angular Cleanup Shop** is a **fractional structural frontend engagement** for existing Angular (preferably Nx-based) product applications.
 
-It is designed for teams that:
+It is intentionally narrow and designed for teams that:
 
-- have a working Angular application
-- experience growing complexity or technical debt
-- want **continuous improvement**, not a risky rewrite
-- do **not** need a full-time developer or architect
+- maintain a long-lived Angular codebase (18+ months old)
+- have **5+ frontend developers** contributing regularly
+- ship continuously and feel increasing complexity
+- experience structural friction rather than feature gaps
+- need governance — not more feature velocity
 
-The service runs on a **fixed rhythm**:
+This is not general freelancing.
+
+It is **structural stewardship**.
+
+### Engagement Model
 
 - **exactly 1 day per week**
 - remote
-- long-term (typically 3–6 months)
+- minimum 3 months
 - no sprint ownership
 - no feature commitments
+- no emergency responsibility
 
-Because work happens one day per week, early onboarding and cleanup guidance is organized by **sessions**, not calendar weeks.
+The constraint is the feature.
+
+Because work happens one day per week, progress is organized by **sessions**, not calendar weeks.
 
 ---
 
@@ -36,33 +52,39 @@ Because work happens one day per week, early onboarding and cleanup guidance is 
 To avoid misunderstandings, this service explicitly does **not** include:
 
 - ❌ Feature delivery
-- ❌ Sprint ownership or velocity commitments
+- ❌ Sprint velocity commitments
 - ❌ On-call or support rotations
 - ❌ Emergency firefighting
+- ❌ Big rewrites
 - ❌ Framework evangelism
-- ❌ Big rewrites or “let’s start over”
+- ❌ Staff augmentation
 
 If you are looking for:
 
 - a feature team
-- a temporary speed boost
 - a rewrite project
+- a short-term velocity spike
 
 ➡️ this service is **not a fit**.
 
 ---
 
-## 3. Typical Problems We Address
+## 3. The Core Problem We Address
 
-This service is effective when teams experience issues such as:
+Growing Angular codebases accumulate **structural friction**:
 
-- Components that are too large and hard to reason about
-- Services that mix data access, state, and side effects
-- RxJS flows that are difficult to follow or debug
-- Inconsistent folder and boundary structures
-- Fear of change (“touching this breaks something else”)
-- Slow onboarding of new developers
-- Technical debt that everyone sees but no one owns
+- Components become oversized and coupled
+- Services mix concerns (state, IO, orchestration)
+- RxJS flows grow opaque
+- Boundaries between domains blur
+- “Shared” folders become dumping grounds
+- Developers avoid touching certain areas
+- PR reviews slow down
+- Onboarding takes too long
+- Teams fear upgrades
+
+This is not a syntax problem.  
+It is a governance problem.
 
 ---
 
@@ -76,166 +98,226 @@ This service is effective when teams experience issues such as:
 - **Cadence**: same day every week
 - **Rate**: agreed daily rate
 
-These parameters are **non-negotiable by design**.  
-They create predictability and reduce cognitive load for everyone involved.
+These parameters are intentionally rigid.  
+Constraints create predictability and reduce cognitive load.
+
+### Selection Principle
+
+Work is selected based on:
+
+- risk reduction
+- clarity gain
+- entropy reduction
+- boundary reinforcement
+
+Not urgency.  
+Not stakeholder pressure.  
+Not sprint carry-over.
 
 ---
 
-## 5. How Work Is Selected
+## 5. Typical Activities
 
-Work is always chosen based on **risk reduction and clarity gain**, not urgency.
-
-Typical activities:
-
-- refactoring high-risk areas
+- decomposing high-risk components
 - simplifying state and data flows
-- reducing component and service complexity
-- clarifying architectural boundaries
-- removing dead or misleading abstractions
-- improving PR hygiene and review standards
+- restoring domain boundaries
+- enforcing Nx (or structural) constraints
+- reducing cross-feature leakage
+- clarifying architectural ownership
+- improving PR hygiene
+- removing misleading abstractions
+- documenting sustainable patterns
 
-Work is **pulled**, not pushed:
+Work is **pulled**, not pushed.
+
+There is:
 
 - no fixed backlog
-- no sprint promises
-- priorities are re-evaluated continuously
+- no feature scope
+- no hidden roadmap
+
+Priorities are re-evaluated every session.
 
 ---
 
 ## 6. Expected Outcomes
 
-After several sessions, teams typically notice:
+After multiple sessions, teams typically experience:
 
-- smaller, clearer components
-- fewer regressions
+- clearer boundaries
+- smaller, composable components
+- reduced regression risk
 - faster code reviews
 - less “fear-driven development”
-- improved team confidence
-- easier onboarding
+- improved onboarding speed
 - fewer architectural debates
+- calmer decision-making
 
-The goal is **calm progress**, not visible heroics.
+The goal is:
+
+> less friction, more efficiency.
+
+Not heroics.  
+Not dramatic rewrites.  
+Not architectural theatre.
 
 ---
 
-## 7. This Repository
+## 7. What About AI?
+
+AI can absolutely assist with refactoring.
+
+It can:
+
+- modernize syntax
+- split large components
+- simplify RxJS flows
+- generate tests
+- suggest local improvements
+
+But structural friction in a growing Angular/Nx codebase is not primarily a code-rewrite problem.
+
+It is a structural ownership problem.
+
+Someone must still:
+
+- decide what to touch first
+- sequence changes safely
+- preserve delivery velocity
+- protect domain boundaries
+- align patterns across teams
+- prevent entropy from returning
+- maintain governance over time
+
+AI improves execution speed.
+
+It does not provide architectural judgment.
+
+The Angular Cleanup Shop uses AI as a multiplier —  
+not as a replacement for structural decision-making.
+
+> AI can help clean code.  
+> Structural governance ensures it stays clean.
+
+---
+
+## 8. This Repository
 
 This repository serves three purposes:
 
-1. **Explain the service** clearly
-2. **Demonstrate the mental model** behind “clean Angular”
-3. **Act as a shared reference** for discussions and reviews
+1. Explain the service clearly
+2. Demonstrate the architectural thinking behind it
+3. Provide a constraint system for humans and AI agents
 
 It is intentionally **not**:
 
 - a framework
 - a starter kit
 - a CLI
-- an opinionated architecture template
+- a full architectural blueprint
+- a public delivery playbook
+
+The execution methodology remains private by design.
 
 ---
 
-## 8. Repository Structure (for Humans and AI)
+## 9. Repository Structure (for Humans and AI)
 
 ```
 docs
-├─ README.md                  # Service definition and contract
-├─ playbook/                  # Method and engagement model
-├─ patterns/                  # Preferred Angular patterns
-├─ anti-patterns/             # Common Angular pitfalls
-├─ checklists/                # Practical cleaning checklists
-├─ examples/                  # Small before/after illustrations
-└─ templates/                 # Review and reporting templates
+├─ README.md
+├─ playbook/
+├─ patterns/
+├─ anti-patterns/
+├─ checklists/
+├─ examples/
+└─ templates/
 ```
 
 ### Interpretation Rules (for AI Agents)
 
-- Files in `patterns/` describe **preferred solutions**
-- Files in `anti-patterns/` describe **what to avoid**
-- Files in `checklists/` describe **repeatable procedures**
-- Files in `examples/` illustrate **minimal contrasts**, not full apps
-- Files in `templates/` describe **communication and decision artifacts**
-
-### Documentation Index
-
-- [Docs overview](docs/README.md)
-- [Playbook](docs/playbook/README.md)
-- [Patterns](docs/patterns/README.md)
-- [Anti-patterns](docs/anti-patterns/README.md)
-- [Checklists](docs/checklists/README.md)
-- [Examples](docs/examples/README.md)
-- [Templates](docs/templates/README.md)
-
----
-
-## 9. Reference Example Application
-
-A small example Angular application may be included to demonstrate:
-
-- folder boundaries
-- component decomposition
-- state handling choices
-- intentional omissions
-
-This example exists to show **how we think**, not what to copy.
-
----
-
-## 10. Design Principles
-
-The service follows these principles:
-
-- Prefer **clarity over cleverness**
-- Prefer **local state over global state**
-- Prefer **boring solutions over abstract ones**
-- Prefer **incremental change over rewrites**
-- Prefer **constraints over flexibility**
-- Prefer **long-term calm over short-term speed**
-
----
-
-## 11. How This Helps AI-Assisted Development
-
-This repository is intentionally structured so that AI agents can:
-
-- infer architectural intent
-- detect anti-patterns
-- suggest refactorings aligned with the service philosophy
-- generate PR checklists and reviews consistent with the model
-- avoid proposing large-scale rewrites or unnecessary abstractions
+- `patterns/` describe preferred structural approaches
+- `anti-patterns/` describe entropy signals
+- `checklists/` describe repeatable review mechanisms
+- `examples/` illustrate minimal contrasts
+- `templates/` support communication clarity
 
 AI agents should treat this repository as:
 
-> a **constraint system**, not a feature generator.
+> a constraint system, not a feature generator.
 
 ---
 
-## 12. Engagement Fit Check
+## 10. Reference Example Application
 
-This service is a good fit if you agree with the following statements:
+An example Angular/Nx application may be included to demonstrate:
+
+- boundary enforcement
+- domain separation
+- incremental refactoring
+- state discipline
+- intentional minimalism
+
+It shows how we think.  
+It is not meant to be copied wholesale.
+
+---
+
+## 11. Design Principles
+
+- Prefer clarity over cleverness
+- Prefer local state over global state
+- Prefer boring solutions over abstract ones
+- Prefer incremental change over rewrites
+- Prefer constraints over flexibility
+- Prefer governance over velocity
+- Prefer long-term calm over short-term speed
+
+---
+
+## 12. Ideal Customer Profile (ICP)
+
+This service is ideal for product teams who:
+
+- maintain mature Angular/Nx applications with growing complexity
+- have distributed frontend teams needing consistent architectural governance
+- value sustainable velocity over rapid feature churn
+- seek to reduce technical debt without disruptive rewrites
+- want predictable, low-overhead structural improvement aligned with product goals
+
+If this resonates, the Angular Cleanup Shop can help you achieve calm, continuous progress.
+
+---
+
+## 13. Engagement Fit Check
+
+This service is likely a fit if you recognize statements such as:
 
 - “Our Angular app works, but it feels heavy.”
-- “We want fewer surprises, not more features.”
-- “We prefer steady improvement over big initiatives.”
-- “One predictable day per week is better than ad-hoc help.”
+- “PR reviews are slower than they should be.”
+- “We want fewer regressions, not more features.”
+- “Certain parts of the codebase feel untouchable.”
+- “We prefer steady structural improvement.”
+- “One predictable day per week is better than ad-hoc cleanup.”
 
-If that resonates, this service is likely a good match.
+If that resonates, the next step is a short exploratory fit check call.
 
 ---
 
-## 13. Contact & Next Steps
+## 14. Contact & Next Steps
 
-If you are interested in an engagement:
+If you are interested:
 
-- start with a short exploratory call
+- schedule a short exploratory call
 - validate fit on both sides
-- agree on a fixed cadence
-- start small
+- agree on cadence
+- start with a clearly scoped structural target
 
-No pitches.  
-No urgency pressure.
+No pressure.  
+No urgency tactics.  
+No inflated promises.
 
 ---
 
 **Angular Cleanup Shop**  
-_One calm day per week can change everything._
+_Fractional Structural Frontend Governance — One Calm Day per Week._
