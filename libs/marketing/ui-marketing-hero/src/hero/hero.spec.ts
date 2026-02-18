@@ -21,7 +21,7 @@ describe('MarketingHero', () => {
     expect(component).toBeTruthy();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Less Friction. More Efficient Development.',
+      'Reduce Structural Friction. Protect Long-Term Velocity.',
     );
   });
 });
