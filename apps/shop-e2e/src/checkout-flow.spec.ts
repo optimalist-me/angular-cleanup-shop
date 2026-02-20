@@ -58,7 +58,7 @@ test('checkout flow submits and confirms', async ({ page }) => {
   await page.fill('#name', 'Jane Doe');
   await page.fill('#email', 'jane@example.com');
   await page.fill('#company', 'Cleanup Shop');
-  await page.selectOption('#teamSize', '10');
+  await page.getByLabel('Team size').selectOption({ label: '6-20' });
   await page.fill('#angularVersion', '21');
   await page.selectOption('#usesNx', 'yes');
   await page.fill('#notes', 'Interested in a fast audit.');
