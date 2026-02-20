@@ -1,0 +1,290 @@
+<section class="checkout">
+  <div class="checkout__inner">
+    <a class="checkout__back" routerLink="/cart">Back to cart</a>
+
+    <header class="checkout__intro">
+      <h1 class="checkout__title">Checkout and Request Appointment</h1>
+      <p class="checkout__subtitle">
+        Confirm your selected cleanup packages and request a 20-minute fit
+        check.
+      </p>
+    </header>
+
+    <ol class="checkout__steps">
+      <li
+        class="checkout__step"
+        [class.checkout__step--active]="step() === 'review'"
+      >
+        1. Review
+      </li>
+      <li
+        class="checkout__step"
+        [class.checkout__step--active]="step() === 'details'"
+      >
+        2. Details
+      </li>
+      <li
+        class="checkout__step"
+        [class.checkout__step--active]="step() === 'schedule'"
+      >
+        3. Schedule & confirm
+      </li>
+    </ol>
+
+    @if (step() === 'review') {
+    <div class="checkout__layout">
+      <div class="checkout__items">
+        @if (hasItems()) { @for (item of items(); track item.id) {
+        <cart-line-item
+          [id]="item.id"
+          [name]="item.name"
+          [imageSrc]="item.imageSrc"
+          [imageAlt]="item.imageAlt"
+          [price]="item.price"
+          [quantity]="item.quantity"
+          (quantityChange)="updateQuantity(item.id, $event)"
+          (remove)="removeItem(item.id)"
+        />
+        } } @else {
+        <div class="checkout__empty">
+          <p>
+            No demo packages selected. You can still request a fit-check call.
+          </p>
+          <a class="checkout__empty-link" routerLink="/products">
+            Browse products
+          </a>
+        </div>
+        }
+      </div>
+
+      <aside class="checkout__summary">
+        <checkout-summary [itemCount]="itemCount()" [subtotal]="subtotal()" />
+        <button
+          type="button"
+          class="checkout__button checkout__button--primary"
+          (click)="toDetailsStep()"
+        >
+          Continue to details
+        </button>
+      </aside>
+    </div>
+    } @else if (step() === 'details') {
+    <form class="checkout__form" [formGroup]="detailsForm">
+      <fieldset class="checkout__fieldset">
+        <legend class="checkout__legend">
+          Contact and qualification details
+        </legend>
+
+        <div class="checkout__field">
+          <label class="checkout__label" for="name">Your name</label>
+          <input
+            id="name"
+            class="checkout__input"
+            type="text"
+            formControlName="name"
+          />
+          @if (hasDetailsControlError('name', 'required')) {
+          <p class="checkout__error-text">Name is required.</p>
+          }
+        </div>
+
+        <div class="checkout__field">
+          <label class="checkout__label" for="email">Work email</label>
+          <input
+            id="email"
+            class="checkout__input"
+            type="email"
+            formControlName="email"
+          />
+          @if (hasDetailsControlError('email', 'required')) {
+          <p class="checkout__error-text">Email is required.</p>
+          } @else if (hasDetailsControlError('email', 'email')) {
+          <p class="checkout__error-text">Enter a valid email address.</p>
+          }
+        </div>
+
+        <div class="checkout__field">
+          <label class="checkout__label" for="company">Company</label>
+          <input
+            id="company"
+            class="checkout__input"
+            type="text"
+            formControlName="company"
+          />
+          @if (hasDetailsControlError('company', 'required')) {
+          <p class="checkout__error-text">Company is required.</p>
+          }
+        </div>
+
+        <div class="checkout__field">
+          <label class="checkout__label" for="teamSize">Team size</label>
+          <select
+            id="teamSize"
+            class="checkout__input"
+            formControlName="teamSize"
+          >
+            <option [ngValue]="null">Select team size</option>
+            <option [ngValue]="1">1-5</option>
+            <option [ngValue]="10">6-20</option>
+            <option [ngValue]="30">21-50</option>
+            <option [ngValue]="60">50+</option>
+          </select>
+          @if (hasDetailsControlError('teamSize', 'required')) {
+          <p class="checkout__error-text">Team size is required.</p>
+          }
+        </div>
+
+        <div class="checkout__field">
+          <label class="checkout__label" for="angularVersion"
+            >Angular version (approx.)</label
+          >
+          <input
+            id="angularVersion"
+            class="checkout__input"
+            type="text"
+            placeholder="Example: 20 or 21"
+            formControlName="angularVersion"
+          />
+          @if (hasDetailsControlError('angularVersion', 'required')) {
+          <p class="checkout__error-text">Angular version is required.</p>
+          }
+        </div>
+
+        <div class="checkout__field">
+          <label class="checkout__label" for="usesNx">Using Nx?</label>
+          <select id="usesNx" class="checkout__input" formControlName="usesNx">
+            <option value="">Select one</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+          @if (hasDetailsControlError('usesNx', 'required')) {
+          <p class="checkout__error-text">Please select yes or no.</p>
+          }
+        </div>
+
+        <div class="checkout__field">
+          <label class="checkout__label" for="notes">Optional note</label>
+          <textarea
+            id="notes"
+            class="checkout__textarea"
+            formControlName="notes"
+          ></textarea>
+        </div>
+      </fieldset>
+
+      <div class="checkout__actions">
+        <button
+          type="button"
+          class="checkout__button checkout__button--ghost"
+          (click)="backToReview()"
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          class="checkout__button checkout__button--primary"
+          [disabled]="!canContinueFromDetails()"
+          (click)="toScheduleStep()"
+        >
+          Continue to scheduling
+        </button>
+      </div>
+    </form>
+    } @else {
+    <form class="checkout__form" [formGroup]="scheduleForm">
+      <fieldset class="checkout__fieldset">
+        <legend class="checkout__legend">Scheduling preferences</legend>
+        <p class="checkout__hint">
+          Share 1 to 3 preferred dates. We will confirm the exact appointment
+          time by email.
+        </p>
+
+        <div formArrayName="preferredDates" class="checkout__date-list">
+          @for (control of preferredDateControls; track $index; let i = $index)
+          {
+          <div class="checkout__date-item">
+            <label class="checkout__label" [for]="'preferred-date-' + i"
+              >Preferred date {{ i + 1 }}</label
+            >
+            <input
+              class="checkout__input"
+              [id]="'preferred-date-' + i"
+              type="date"
+              [formControlName]="i"
+            />
+            @if (hasPreferredDateError(i)) {
+            <p class="checkout__error-text">Date is required.</p>
+            } @if (preferredDateControls.length > 1) {
+            <button
+              type="button"
+              class="checkout__button checkout__button--ghost checkout__button--small"
+              (click)="removePreferredDate(i)"
+            >
+              Remove
+            </button>
+            }
+          </div>
+          }
+        </div>
+
+        @if (preferredDateControls.length < 3) {
+        <button
+          type="button"
+          class="checkout__button checkout__button--ghost checkout__button--small"
+          (click)="addPreferredDate()"
+        >
+          Add another date
+        </button>
+        }
+      </fieldset>
+
+      <section class="checkout__review">
+        <h2 class="checkout__review-title">Final review</h2>
+        <p class="checkout__review-row">
+          <span>Contact</span>
+          <strong>{{ detailsForm.controls.name.value }}</strong>
+        </p>
+        <p class="checkout__review-row">
+          <span>Email</span>
+          <strong>{{ detailsForm.controls.email.value }}</strong>
+        </p>
+        <p class="checkout__review-row">
+          <span>Company</span>
+          <strong>{{ detailsForm.controls.company.value }}</strong>
+        </p>
+        <p class="checkout__review-row">
+          <span>Selected packages</span>
+          <strong>{{ itemCount() }}</strong>
+        </p>
+        <p class="checkout__review-row">
+          <span>Subtotal</span>
+          <strong>€{{ subtotal() }}</strong>
+        </p>
+      </section>
+
+      @if (submissionError()) {
+      <p class="checkout__error-banner">{{ submissionError() }}</p>
+      }
+
+      <div class="checkout__actions">
+        <button
+          type="button"
+          class="checkout__button checkout__button--ghost"
+          (click)="backToDetails()"
+          [disabled]="submitting()"
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          class="checkout__button checkout__button--primary"
+          (click)="submit()"
+          [disabled]="!canSubmit()"
+        >
+          @if (submitting()) { Submitting... } @else { Complete checkout }
+        </button>
+      </div>
+    </form>
+    }
+  </div>
+</section>

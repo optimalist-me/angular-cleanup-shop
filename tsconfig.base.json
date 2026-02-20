@@ -54,6 +54,10 @@
       ],
       "@cleanup/ui-cart-summary": ["libs/cart/ui-cart-summary/src/index.ts"],
       "@cleanup/feature-cart": ["libs/cart/feature-cart/src/index.ts"],
+      "@cleanup/ui-checkout": ["libs/checkout/ui-checkout/src/index.ts"],
+      "@cleanup/feature-checkout": [
+        "libs/checkout/feature-checkout/src/index.ts"
+      ],
       "@cleanup/data-access-booking": [
         "libs/booking/data-access-booking/src/index.ts"
       ],

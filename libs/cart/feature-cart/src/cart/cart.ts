@@ -34,6 +34,6 @@ export class CartCart {
   }
 
   checkout(): void {
-    this.router.navigate(['/book']);
+    this.router.navigate(['/checkout']);
   }
 }

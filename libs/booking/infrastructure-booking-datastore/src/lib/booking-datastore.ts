@@ -1,9 +1,11 @@
 /**
- * Infrastructure layer for booking data persistence
+ * Infrastructure layer for booking data persistence.
  *
  * The SQLite connection is managed by the API app. Call `setDatabase`
  * before using any datastore functions.
  */
+
+import { type BookingPainArea } from '@cleanup/models-booking';
 
 export interface StoredBooking {
   id: string;
@@ -11,6 +13,9 @@ export interface StoredBooking {
   name: string;
   company: string;
   teamSize: number;
+  angularVersion: string;
+  usesNx: boolean;
+  painArea: BookingPainArea;
   notes?: string;
   preferredDates?: string[];
   createdAt: string;
@@ -23,8 +28,14 @@ type BookingRow = {
   name: string;
   company: string;
   team_size: number;
+  angular_version: string;
+  uses_nx: number;
+  pain_area: string;
   notes: string | null;
-  preferred_dates: string[] | null;
+  preferred_dates: string | null;
+  cart_items: string;
+  cart_subtotal: number;
+  cart_item_count: number;
   created_at: string;
   completed_at: string | null;
 };
@@ -61,6 +72,7 @@ function getDatabase(): DatabaseLike {
       'Booking datastore has no database connection. Call setDatabase() first.',
     );
   }
+
   return database;
 }
 
@@ -71,18 +83,21 @@ function mapRow(row: BookingRow): StoredBooking {
     name: row.name,
     company: row.company,
     teamSize: row.team_size,
+    angularVersion: row.angular_version,
+    usesNx: row.uses_nx === 1,
+    painArea: normalizePainArea(row.pain_area),
     notes: row.notes ?? undefined,
-    preferredDates: row.preferred_dates ?? undefined,
+    preferredDates: parsePreferredDates(row.preferred_dates),
     createdAt: row.created_at,
     completedAt: row.completed_at ?? undefined,
   };
 }
 
 /**
- * Saves a booking to the data store
+ * Saves a booking to the data store.
  */
 export async function saveBooking(
-  booking: Omit<StoredBooking, 'id' | 'createdAt'>,
+  booking: Omit<StoredBooking, 'id' | 'createdAt' | 'completedAt'>,
 ): Promise<StoredBooking> {
   const db = getDatabase();
   const id = `booking-${Date.now()}`;
@@ -96,18 +111,30 @@ export async function saveBooking(
       name,
       company,
       team_size,
+      angular_version,
+      uses_nx,
+      pain_area,
       notes,
       preferred_dates,
+      cart_items,
+      cart_subtotal,
+      cart_item_count,
       created_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `,
     id,
     booking.email,
     booking.name,
     booking.company,
     booking.teamSize,
+    booking.angularVersion,
+    booking.usesNx ? 1 : 0,
+    booking.painArea,
     booking.notes ?? null,
     booking.preferredDates ? JSON.stringify(booking.preferredDates) : null,
+    '[]',
+    0,
+    0,
     createdAt,
   );
 
@@ -119,7 +146,7 @@ export async function saveBooking(
 }
 
 /**
- * Retrieves a booking by ID
+ * Retrieves a booking by ID.
  */
 export async function getBooking(id: string): Promise<StoredBooking | null> {
   const db = getDatabase();
@@ -131,7 +158,7 @@ export async function getBooking(id: string): Promise<StoredBooking | null> {
 }
 
 /**
- * Retrieves all bookings (for admin purposes)
+ * Retrieves all bookings (for admin purposes).
  */
 export async function getAllBookings(): Promise<StoredBooking[]> {
   const db = getDatabase();
@@ -142,7 +169,7 @@ export async function getAllBookings(): Promise<StoredBooking[]> {
 }
 
 /**
- * Gets bookings by email
+ * Gets bookings by email.
  */
 export async function getBookingsByEmail(
   email: string,
@@ -156,7 +183,7 @@ export async function getBookingsByEmail(
 }
 
 /**
- * Marks a booking as completed (sent confirmation email)
+ * Marks a booking as completed (confirmation email sent).
  */
 export async function markBookingCompleted(
   id: string,
@@ -169,5 +196,40 @@ export async function markBookingCompleted(
     completedAt,
     id,
   );
+
   return getBooking(id);
+}
+
+function parsePreferredDates(raw: string | null): string[] | undefined {
+  if (!raw) {
+    return undefined;
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) {
+      return undefined;
+    }
+
+    const dates = parsed.filter(
+      (value): value is string => typeof value === 'string',
+    );
+    return dates.length > 0 ? dates : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function normalizePainArea(value: string): BookingPainArea {
+  const allowed: BookingPainArea[] = [
+    'boundaries',
+    'state',
+    'templates',
+    'testing',
+    'upgrades',
+    'performance',
+  ];
+  return allowed.includes(value as BookingPainArea)
+    ? (value as BookingPainArea)
+    : 'boundaries';
 }

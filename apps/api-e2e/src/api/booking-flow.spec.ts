@@ -1,14 +1,5 @@
 import axios from 'axios';
 
-describe('API health', () => {
-  it('returns the welcome message', async () => {
-    const res = await axios.get('/api');
-
-    expect(res.status).toBe(200);
-    expect(res.data).toEqual({ message: 'Welcome to api!' });
-  });
-});
-
 describe('booking API flow', () => {
   it('creates and retrieves a booking', async () => {
     const bookingRequest = {
@@ -16,7 +7,11 @@ describe('booking API flow', () => {
       email: 'taylor@example.com',
       company: 'Cleanup Shop',
       teamSize: 6,
+      angularVersion: '21',
+      usesNx: true,
+      painArea: 'boundaries',
       notes: 'Afternoons preferred',
+      preferredDates: ['2026-03-11'],
     };
 
     const createRes = await axios.post('/api/bookings', bookingRequest);

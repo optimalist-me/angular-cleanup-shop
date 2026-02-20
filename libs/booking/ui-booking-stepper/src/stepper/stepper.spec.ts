@@ -19,25 +19,25 @@ describe('BookingStepper', () => {
   });
 
   it('should mark step as active when it matches input', () => {
-    fixture.componentRef.setInput('step', 'info');
+    fixture.componentRef.setInput('step', 'review');
     fixture.detectChanges();
 
-    expect(component.isActive('info')).toBe(true);
+    expect(component.isActive('review')).toBe(true);
+    expect(component.isActive('details')).toBe(false);
     expect(component.isActive('schedule')).toBe(false);
-    expect(component.isActive('confirm')).toBe(false);
   });
 
   it('should mark previous steps as completed', () => {
-    fixture.componentRef.setInput('step', 'confirm');
+    fixture.componentRef.setInput('step', 'schedule');
     fixture.detectChanges();
 
-    expect(component.isCompleted('info')).toBe(true);
-    expect(component.isCompleted('schedule')).toBe(true);
-    expect(component.isCompleted('confirm')).toBe(false);
+    expect(component.isCompleted('review')).toBe(true);
+    expect(component.isCompleted('details')).toBe(true);
+    expect(component.isCompleted('schedule')).toBe(false);
   });
 
   it('should render all three steps in template', () => {
-    fixture.componentRef.setInput('step', 'info');
+    fixture.componentRef.setInput('step', 'review');
     fixture.detectChanges();
 
     const items = fixture.nativeElement.querySelectorAll('.stepper__item');

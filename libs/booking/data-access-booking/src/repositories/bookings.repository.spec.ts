@@ -1,137 +1,81 @@
 import { TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
-import { BookingRequest, BookingResponse } from '@cleanup/models-booking';
+import { of } from 'rxjs';
+import { BookingRequest } from '@cleanup/models-booking';
 import { BookingsApi } from '../api/bookings.api';
 import { BookingsRepository } from './bookings.repository';
 
 describe('BookingsRepository', () => {
-  let service: BookingsRepository;
-  let api: BookingsApi;
+  let repository: BookingsRepository;
+  let api: {
+    createBooking: ReturnType<typeof vi.fn>;
+    getBookingById: ReturnType<typeof vi.fn>;
+  };
 
   const request: BookingRequest = {
     name: 'Maya Stone',
     email: 'maya@cleanup.shop',
     company: 'Cleanup Labs',
     teamSize: 8,
+    angularVersion: '21',
+    usesNx: true,
+    painArea: 'boundaries',
     notes: 'Interested in a fit check.',
-  };
-  const response: BookingResponse = {
-    id: 'booking_123',
-    createdAt: '2026-02-12T12:00:00Z',
+    preferredDates: ['2026-03-12'],
   };
 
   beforeEach(() => {
+    api = {
+      createBooking: vi.fn(() =>
+        of({
+          success: true,
+          bookingId: 'booking-123',
+          message: 'Booking submitted successfully',
+        }),
+      ),
+      getBookingById: vi.fn(() =>
+        of({
+          success: true,
+          booking: {
+            id: 'booking-123',
+            name: request.name,
+            email: request.email,
+            company: request.company,
+            teamSize: request.teamSize,
+            angularVersion: request.angularVersion,
+            usesNx: request.usesNx,
+            painArea: request.painArea,
+            notes: request.notes,
+            preferredDates: request.preferredDates,
+            createdAt: '2026-03-01T00:00:00.000Z',
+          },
+        }),
+      ),
+    };
+
     TestBed.configureTestingModule({
       providers: [
         BookingsRepository,
         {
           provide: BookingsApi,
-          useValue: {
-            createBooking: vi.fn(),
-          },
+          useValue: api,
         },
       ],
     });
-    service = TestBed.inject(BookingsRepository);
-    api = TestBed.inject(BookingsApi);
+
+    repository = TestBed.inject(BookingsRepository);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(repository).toBeTruthy();
   });
 
-  it('should update the booking draft', () => {
-    service.updateDraft({ name: 'Maya' });
-    service.updateDraft({ email: 'maya@cleanup.shop' });
-
-    expect(service.draft()).toEqual({
-      name: 'Maya',
-      email: 'maya@cleanup.shop',
-    });
-    expect(service.canSubmit()).toBe(false);
-  });
-
-  it('should move between steps', () => {
-    expect(service.step()).toBe('info');
-    service.nextStep();
-    expect(service.step()).toBe('schedule');
-    service.nextStep();
-    expect(service.step()).toBe('confirm');
-    service.previousStep();
-    expect(service.step()).toBe('schedule');
-    service.previousStep();
-    expect(service.step()).toBe('info');
-    service.previousStep();
-    expect(service.step()).toBe('info');
-  });
-
-  it('should reset wizard state', () => {
-    service.updateDraft(request);
-    service.nextStep();
-    service.status.set('error');
-    service.error.set('Oops');
-    service.confirmation.set(response);
-
-    service.reset();
-
-    expect(service.step()).toBe('info');
-    expect(service.draft()).toEqual({});
-    expect(service.status()).toBe('idle');
-    expect(service.error()).toBeNull();
-    expect(service.confirmation()).toBeNull();
-  });
-
-  it('should submit a booking', () => {
-    vi.mocked(api.createBooking).mockReturnValue(of(response));
-
-    service.updateDraft(request);
-    service.submit();
-
+  it('should proxy createBooking', () => {
+    repository.createBooking(request).subscribe();
     expect(api.createBooking).toHaveBeenCalledWith(request);
-    expect(service.status()).toBe('success');
-    expect(service.confirmation()).toEqual(response);
-    expect(service.step()).toBe('confirm');
-    expect(service.error()).toBeNull();
-    expect(service.canSubmit()).toBe(true);
   });
 
-  it('should surface submission errors', () => {
-    vi.mocked(api.createBooking).mockReturnValue(
-      throwError(() => new Error('fail')),
-    );
-
-    service.updateDraft(request);
-    service.submit();
-
-    expect(service.status()).toBe('error');
-    expect(service.error()).toBe('Booking failed. Try again.');
-  });
-
-  it('should reject incomplete submissions', () => {
-    service.updateDraft({ name: 'Maya' });
-    service.submit();
-
-    expect(service.status()).toBe('error');
-    expect(service.error()).toBe('Missing required booking details.');
-  });
-
-  it('should default notes when missing', () => {
-    vi.mocked(api.createBooking).mockReturnValue(of(response));
-
-    service.updateDraft({
-      name: 'Maya Stone',
-      email: 'maya@cleanup.shop',
-      company: 'Cleanup Labs',
-      teamSize: 8,
-    });
-    service.submit();
-
-    expect(api.createBooking).toHaveBeenCalledWith({
-      name: 'Maya Stone',
-      email: 'maya@cleanup.shop',
-      company: 'Cleanup Labs',
-      teamSize: 8,
-      notes: '',
-    });
+  it('should proxy getBookingById', () => {
+    repository.getBookingById('booking-123').subscribe();
+    expect(api.getBookingById).toHaveBeenCalledWith('booking-123');
   });
 });

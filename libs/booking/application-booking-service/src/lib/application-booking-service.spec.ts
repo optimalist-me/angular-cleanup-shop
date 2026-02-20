@@ -23,7 +23,11 @@ const baseRequest: BookingRequest = {
   email: 'avery@example.com',
   company: 'Cleanup Shop',
   teamSize: 5,
+  angularVersion: '21',
+  usesNx: true,
+  painArea: 'boundaries',
   notes: 'Please send details',
+  preferredDates: ['2026-03-11'],
 };
 
 describe('booking service', () => {

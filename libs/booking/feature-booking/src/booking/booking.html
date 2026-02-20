@@ -1,60 +1,76 @@
 <section class="booking">
   <div class="booking__inner">
-    <button type="button" class="booking__back" (click)="back()">
-      ← Back to cart
-    </button>
-
+    @if (!isConfirmation()) {
+    <a class="booking__back" routerLink="/">Back to home</a>
     <header class="booking__intro">
-      <h1 class="booking__title">Schedule your 20-min fit check</h1>
+      <h1 class="booking__title">Request a 20-min fit check</h1>
       <p class="booking__subtitle">
-        Tell us about your organization so we can prepare the best solution.
+        Share your context and preferred dates. We will confirm the final
+        appointment slot by email.
       </p>
     </header>
 
-    <booking-stepper [step]="step$()" />
+    <ol class="booking__steps">
+      <li
+        class="booking__step"
+        [class.booking__step--active]="step() === 'details'"
+      >
+        1. Details
+      </li>
+      <li
+        class="booking__step"
+        [class.booking__step--active]="step() === 'schedule'"
+      >
+        2. Schedule & confirm
+      </li>
+    </ol>
 
-    @if (step$() === 'info') {
-    <form class="booking__form">
+    @if (step() === 'details') {
+    <form class="booking__form" [formGroup]="detailsForm">
       <fieldset class="booking__fieldset">
-        <legend class="booking__legend">About your organization</legend>
+        <legend class="booking__legend">
+          Contact and qualification details
+        </legend>
 
         <div class="booking__field">
           <label class="booking__label" for="name">Your name</label>
           <input
             id="name"
-            type="text"
             class="booking__input"
-            placeholder="Jane Doe"
-            [value]="draft$().name || ''"
-            (input)="onName($event.target.value)"
-            required
+            type="text"
+            formControlName="name"
           />
+          @if (hasDetailsControlError('name', 'required')) {
+          <p class="booking__error-text">Name is required.</p>
+          }
         </div>
 
         <div class="booking__field">
-          <label class="booking__label" for="email">Email</label>
+          <label class="booking__label" for="email">Work email</label>
           <input
             id="email"
-            type="email"
             class="booking__input"
-            placeholder="jane@company.com"
-            [value]="draft$().email || ''"
-            (input)="onEmail($event.target.value)"
-            required
+            type="email"
+            formControlName="email"
           />
+          @if (hasDetailsControlError('email', 'required')) {
+          <p class="booking__error-text">Email is required.</p>
+          } @else if (hasDetailsControlError('email', 'email')) {
+          <p class="booking__error-text">Enter a valid email address.</p>
+          }
         </div>
 
         <div class="booking__field">
           <label class="booking__label" for="company">Company</label>
           <input
             id="company"
-            type="text"
             class="booking__input"
-            placeholder="Your Company"
-            [value]="draft$().company || ''"
-            (input)="onCompany($event.target.value)"
-            required
+            type="text"
+            formControlName="company"
           />
+          @if (hasDetailsControlError('company', 'required')) {
+          <p class="booking__error-text">Company is required.</p>
+          }
         </div>
 
         <div class="booking__field">
@@ -62,200 +78,249 @@
           <select
             id="teamSize"
             class="booking__input"
-            [value]="draft$().teamSize || ''"
-            (change)="onTeamSize($event)"
-            required
+            formControlName="teamSize"
           >
-            <option value="">Select team size</option>
-            <option value="1">1 person</option>
-            <option value="2">2-5 people</option>
-            <option value="6">6-10 people</option>
-            <option value="11">11-20 people</option>
-            <option value="21">20+ people</option>
+            <option [ngValue]="null">Select team size</option>
+            <option [ngValue]="1">1-5</option>
+            <option [ngValue]="10">6-20</option>
+            <option [ngValue]="30">21-50</option>
+            <option [ngValue]="60">50+</option>
           </select>
+          @if (hasDetailsControlError('teamSize', 'required')) {
+          <p class="booking__error-text">Team size is required.</p>
+          }
         </div>
 
         <div class="booking__field">
-          <label class="booking__label" for="notes">Notes (optional)</label>
+          <label class="booking__label" for="angularVersion"
+            >Angular version (approx.)</label
+          >
+          <input
+            id="angularVersion"
+            class="booking__input"
+            type="text"
+            placeholder="Example: 20 or 21"
+            formControlName="angularVersion"
+          />
+          @if (hasDetailsControlError('angularVersion', 'required')) {
+          <p class="booking__error-text">Angular version is required.</p>
+          }
+        </div>
+
+        <div class="booking__field">
+          <label class="booking__label" for="usesNx">Using Nx?</label>
+          <select id="usesNx" class="booking__input" formControlName="usesNx">
+            <option value="">Select one</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+          @if (hasDetailsControlError('usesNx', 'required')) {
+          <p class="booking__error-text">Please select yes or no.</p>
+          }
+        </div>
+
+        <div class="booking__field">
+          <label class="booking__label" for="notes">Optional note</label>
           <textarea
             id="notes"
             class="booking__textarea"
-            placeholder="Tell us about your fit-check priorities..."
-            [value]="draft$().notes || ''"
-            (input)="onNotes($event)"
+            formControlName="notes"
           ></textarea>
         </div>
       </fieldset>
 
-      @if (error$()) {
-      <div class="booking__error">
-        <p>{{ error$() }}</p>
-      </div>
-      }
-
       <div class="booking__actions">
         <button
           type="button"
           class="booking__button booking__button--primary"
-          (click)="next()"
-          [disabled]="!canSubmit$() || status$() === 'submitting'"
+          [disabled]="!canContinueFromDetails()"
+          (click)="toScheduleStep()"
         >
-          @if (status$() === 'submitting') { Scheduling... } @else { Next step }
+          Continue to scheduling
         </button>
       </div>
     </form>
-    } @else if (step$() === 'schedule') {
-    <form class="booking__form">
+    } @else {
+    <form class="booking__form" [formGroup]="scheduleForm">
       <fieldset class="booking__fieldset">
-        <legend class="booking__legend">Schedule your fit check</legend>
-
+        <legend class="booking__legend">Scheduling preferences</legend>
         <p class="booking__hint">
-          Please provide at least one, and up to three, preferred dates. We'll
-          confirm a time by email.
+          Share 1 to 3 preferred dates. No payment is required for this fit
+          check.
         </p>
 
-        @for (date of preferredDates$(); track date; let i = $index) {
-        <div class="booking__field booking__field--date">
-          <label class="booking__label" [for]="'preferredDate' + i">
-            Preferred date {{ i + 1 }} @if (i === 0) {
-            <span class="booking__required">*</span> }
-          </label>
-          <input
-            [id]="'preferredDate' + i"
-            type="date"
-            class="booking__input"
-            [value]="date || ''"
-            (input)="onPreferredDate(i, $event.target.value)"
-            [required]="i === 0 ? true : null"
-          />
-          @if (preferredDates$().length > 1) {
-          <button
-            type="button"
-            class="booking__button booking__button--icon"
-            aria-label="Remove date"
-            (click)="removePreferredDate(i)"
-          >
-            ×
-          </button>
+        <div formArrayName="preferredDates" class="booking__date-list">
+          @for (control of preferredDateControls; track $index; let i = $index)
+          {
+          <div class="booking__date-item">
+            <label class="booking__label" [for]="'preferred-date-' + i"
+              >Preferred date {{ i + 1 }}</label
+            >
+            <input
+              class="booking__input"
+              [id]="'preferred-date-' + i"
+              type="date"
+              [formControlName]="i"
+            />
+            @if (hasPreferredDateError(i)) {
+            <p class="booking__error-text">Date is required.</p>
+            } @if (preferredDateControls.length > 1) {
+            <button
+              type="button"
+              class="booking__button booking__button--ghost booking__button--small"
+              (click)="removePreferredDate(i)"
+            >
+              Remove
+            </button>
+            }
+          </div>
           }
         </div>
-        } @if (preferredDates$().length < 3) {
-        <div class="booking__actions booking__actions--add-date">
-          <button
-            type="button"
-            class="booking__button booking__button--secondary"
-            (click)="addPreferredDate()"
-          >
-            + Add another date
-          </button>
-        </div>
+
+        @if (preferredDateControls.length < 3) {
+        <button
+          type="button"
+          class="booking__button booking__button--ghost booking__button--small"
+          (click)="addPreferredDate()"
+        >
+          Add another date
+        </button>
         }
       </fieldset>
 
-      @if (error$()) {
-      <div class="booking__error">
-        <p>{{ error$() }}</p>
-      </div>
+      <section class="booking__review">
+        <h2 class="booking__review-title">Final review</h2>
+        <p class="booking__review-row">
+          <span>Contact</span>
+          <strong>{{ detailsForm.controls.name.value }}</strong>
+        </p>
+        <p class="booking__review-row">
+          <span>Email</span>
+          <strong>{{ detailsForm.controls.email.value }}</strong>
+        </p>
+        <p class="booking__review-row">
+          <span>Company</span>
+          <strong>{{ detailsForm.controls.company.value }}</strong>
+        </p>
+        <p class="booking__review-row">
+          <span>Team size</span>
+          <strong>{{ detailsForm.controls.teamSize.value }}</strong>
+        </p>
+      </section>
+
+      @if (submissionError()) {
+      <p class="booking__error-banner">{{ submissionError() }}</p>
       }
 
       <div class="booking__actions">
         <button
           type="button"
           class="booking__button booking__button--ghost"
-          (click)="previous()"
+          (click)="backToDetails()"
+          [disabled]="submitting()"
         >
           Back
         </button>
         <button
           type="button"
           class="booking__button booking__button--primary"
-          (click)="next()"
-          [disabled]="!canSubmitSchedule$() || status$() === 'submitting'"
+          (click)="submitBooking()"
+          [disabled]="!canSubmit()"
         >
-          @if (status$() === 'submitting') { Scheduling... } @else { Next step }
+          @if (submitting()) { Submitting... } @else { Submit request }
         </button>
       </div>
     </form>
-    } @else if (step$() === 'confirm') {
-    <div class="booking__confirmation">
-      @if (status$() === 'success' && confirmation$(); as confirm) {
-      <div class="booking__success">
-        <div class="booking__success-icon">✓</div>
-        <h2>Booking confirmed!</h2>
-        <p>Confirmation ID: <strong>{{ confirm.id }}</strong></p>
-        <p class="booking__success-message">
-          We'll be in touch at <strong>{{ draft$().email }}</strong> to schedule
-          your fit check.
+    } } @else if (loading()) {
+    <a class="booking__back" routerLink="/book">Back to booking</a>
+    <div class="confirmation__panel">
+      <h1 class="confirmation__title">Loading booking confirmation...</h1>
+      <p class="confirmation__subtitle">
+        We are retrieving your request details.
+      </p>
+    </div>
+    } @else if (error()) {
+    <a class="booking__back" routerLink="/book">Back to booking</a>
+    <div class="confirmation__panel confirmation__panel--error">
+      <h1 class="confirmation__title">We could not load this confirmation.</h1>
+      <p class="confirmation__subtitle">{{ error() }}</p>
+      <div class="confirmation__actions">
+        <a
+          class="confirmation__button confirmation__button--primary"
+          routerLink="/book"
+        >
+          Return to booking
+        </a>
+      </div>
+    </div>
+    } @else if (booking(); as details) {
+    <a class="booking__back" routerLink="/book">Back to booking</a>
+    <div class="confirmation__panel confirmation__panel--success">
+      <h1 class="confirmation__title">Appointment request received</h1>
+      <p class="confirmation__subtitle">
+        Thanks. We will email <strong>{{ details.email }}</strong> to confirm a
+        slot from your preferred dates.
+      </p>
+
+      <div class="confirmation__summary">
+        <p class="confirmation__row">
+          <span>Confirmation ID</span>
+          <strong>{{ details.id }}</strong>
         </p>
-
-        <div class="booking__actions">
-          <a
-            class="booking__button booking__button--primary"
-            routerLink="/products"
-          >
-            Continue shopping
-          </a>
-          <a class="booking__button booking__button--ghost" routerLink="/cart">
-            Back to cart
-          </a>
-        </div>
+        <p class="confirmation__row">
+          <span>Submitted</span>
+          <strong>{{ details.createdAt | date: 'medium' }}</strong>
+        </p>
+        <p class="confirmation__row">
+          <span>Company</span>
+          <strong>{{ details.company }}</strong>
+        </p>
+        <p class="confirmation__row">
+          <span>Team size</span>
+          <strong>{{ details.teamSize }}</strong>
+        </p>
+        <p class="confirmation__row">
+          <span>Angular version</span>
+          <strong>{{ details.angularVersion }}</strong>
+        </p>
+        <p class="confirmation__row">
+          <span>Using Nx</span>
+          <strong>{{ details.usesNx ? 'Yes' : 'No' }}</strong>
+        </p>
       </div>
-      } @else {
-      <fieldset class="booking__fieldset">
-        <legend class="booking__legend">Confirm your booking</legend>
 
-        <div class="booking__summary">
-          <div class="booking__summary-item">
-            <span>Name</span>
-            <strong>{{ draft$().name }}</strong>
-          </div>
-          <div class="booking__summary-item">
-            <span>Email</span>
-            <strong>{{ draft$().email }}</strong>
-          </div>
-          <div class="booking__summary-item">
-            <span>Company</span>
-            <strong>{{ draft$().company }}</strong>
-          </div>
-          <div class="booking__summary-item">
-            <span>Team size</span>
-            <strong>{{ draft$().teamSize }} people</strong>
-          </div>
-          @if (draft$().notes) {
-          <div class="booking__summary-item">
-            <span>Notes</span>
-            <strong>{{ draft$().notes }}</strong>
-          </div>
+      <section class="confirmation__section">
+        <h2>Preferred dates</h2>
+        <ul class="confirmation__list">
+          @for (date of details.preferredDates ?? []; track date) {
+          <li>{{ date }}</li>
           }
-        </div>
-      </fieldset>
+        </ul>
+      </section>
 
-      @if (error$()) {
-      <div class="booking__error">
-        <p>{{ error$() }}</p>
-      </div>
-      }
+      <section class="confirmation__section">
+        <h2>Next steps</h2>
+        <ul class="confirmation__list">
+          <li>We will confirm your appointment by email.</li>
+          <li>Bring the repository context and current pain points.</li>
+          <li>No payment is required for this fit check.</li>
+        </ul>
+      </section>
 
-      <div class="booking__actions">
-        <button
-          type="button"
-          class="booking__button booking__button--ghost"
-          (click)="previous()"
-          [disabled]="status$() === 'submitting'"
+      <div class="confirmation__actions">
+        <a
+          class="confirmation__button confirmation__button--primary"
+          routerLink="/products"
         >
-          Back
-        </button>
-        <button
-          type="button"
-          class="booking__button booking__button--primary"
-          (click)="submit()"
-          [disabled]="status$() === 'submitting'"
+          Continue browsing
+        </a>
+        <a
+          class="confirmation__button confirmation__button--ghost"
+          routerLink="/book"
         >
-          @if (status$() === 'submitting') { Confirming... } @else { Confirm
-          booking }
-        </button>
+          Start another request
+        </a>
       </div>
-      }
     </div>
     }
   </div>

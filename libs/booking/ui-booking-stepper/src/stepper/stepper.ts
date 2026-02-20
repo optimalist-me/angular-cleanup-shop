@@ -13,16 +13,16 @@ export class BookingStepper {
   readonly step = input.required<BookingStep>();
 
   readonly steps: { id: BookingStep; label: string; number: number }[] = [
-    { id: 'info', label: 'Your Info', number: 1 },
-    { id: 'schedule', label: 'Schedule', number: 2 },
-    { id: 'confirm', label: 'Confirm', number: 3 },
+    { id: 'review', label: 'Review', number: 1 },
+    { id: 'details', label: 'Details', number: 2 },
+    { id: 'schedule', label: 'Schedule', number: 3 },
   ];
 
   isCompleted(stepId: BookingStep): boolean {
     const stepOrder: Record<BookingStep, number> = {
-      info: 0,
-      schedule: 1,
-      confirm: 2,
+      review: 0,
+      details: 1,
+      schedule: 2,
     };
     const currentOrder = stepOrder[this.step()];
     const targetOrder = stepOrder[stepId];

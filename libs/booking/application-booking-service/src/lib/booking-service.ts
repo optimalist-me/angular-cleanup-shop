@@ -1,5 +1,5 @@
 /**
- * Application layer for booking service
+ * Application layer for booking service.
  *
  * This layer implements the business logic for processing bookings.
  * It orchestrates between the presentation layer (controllers) and
@@ -28,50 +28,32 @@ export async function processBooking(
   bookingRequest: BookingRequest,
 ): Promise<ProcessBookingResult> {
   try {
-    // Validate required fields
-    if (!bookingRequest.email || !bookingRequest.name || bookingRequest.teamSize === undefined || bookingRequest.teamSize === null) {
+    const validationError = validateBookingRequest(bookingRequest);
+    if (validationError) {
       return {
         success: false,
-        message: 'Missing required fields',
-        error: 'Email, name, and team size are required',
+        message: validationError.message,
+        error: validationError.error,
       };
     }
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(bookingRequest.email)) {
-      return {
-        success: false,
-        message: 'Invalid email format',
-        error: 'Please provide a valid email address',
-      };
-    }
-
-    // Validate team size
-    if (typeof bookingRequest.teamSize !== 'number' || bookingRequest.teamSize < 1 || bookingRequest.teamSize > 100) {
-      return {
-        success: false,
-        message: 'Invalid team size',
-        error: 'Team size must be between 1 and 100',
-      };
-    }
-
-    // Save the booking
     const savedBooking = await BookingDatastore.saveBooking({
       email: bookingRequest.email,
       name: bookingRequest.name,
-      company: bookingRequest.company || 'Not provided',
+      company: bookingRequest.company,
       teamSize: bookingRequest.teamSize,
+      angularVersion: bookingRequest.angularVersion,
+      usesNx: bookingRequest.usesNx,
+      painArea: bookingRequest.painArea ?? 'boundaries',
       notes: bookingRequest.notes,
       preferredDates: bookingRequest.preferredDates,
     });
 
-    // Send confirmation email
     const emailResult = await sendBookingConfirmationEmail({
       bookingId: savedBooking.id,
       email: bookingRequest.email,
       name: bookingRequest.name,
-      company: bookingRequest.company || 'Not provided',
+      company: bookingRequest.company,
       teamSize: bookingRequest.teamSize,
       notes: bookingRequest.notes,
       preferredDates: bookingRequest.preferredDates,
@@ -83,7 +65,6 @@ export async function processBooking(
         emailResult.error,
       );
     } else {
-      // Mark booking as completed (email sent successfully)
       await BookingDatastore.markBookingCompleted(savedBooking.id);
     }
 
@@ -103,15 +84,82 @@ export async function processBooking(
 }
 
 /**
- * Retrieves booking details
+ * Retrieves booking details.
  */
 export async function getBookingDetails(bookingId: string) {
   return BookingDatastore.getBooking(bookingId);
 }
 
 /**
- * Retrieves user's bookings by email
+ * Retrieves user's bookings by email.
  */
 export async function getUserBookings(email: string) {
   return BookingDatastore.getBookingsByEmail(email);
+}
+
+function validateBookingRequest(bookingRequest: BookingRequest): {
+  message: string;
+  error: string;
+} | null {
+  if (
+    !bookingRequest.email ||
+    !bookingRequest.name ||
+    !bookingRequest.company ||
+    !bookingRequest.angularVersion ||
+    bookingRequest.teamSize === undefined ||
+    bookingRequest.teamSize === null
+  ) {
+    return {
+      message: 'Missing required fields',
+      error: 'Email, name, company, angularVersion, and teamSize are required',
+    };
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(bookingRequest.email)) {
+    return {
+      message: 'Invalid email format',
+      error: 'Please provide a valid email address',
+    };
+  }
+
+  if (
+    typeof bookingRequest.teamSize !== 'number' ||
+    bookingRequest.teamSize < 1 ||
+    bookingRequest.teamSize > 100
+  ) {
+    return {
+      message: 'Invalid team size',
+      error: 'Team size must be between 1 and 100',
+    };
+  }
+
+  if (!Array.isArray(bookingRequest.preferredDates)) {
+    return {
+      message: 'Invalid preferred dates',
+      error: 'Preferred dates must be an array',
+    };
+  }
+
+  if (
+    bookingRequest.preferredDates.length < 1 ||
+    bookingRequest.preferredDates.length > 3
+  ) {
+    return {
+      message: 'Invalid preferred dates',
+      error: 'Provide between 1 and 3 preferred dates',
+    };
+  }
+
+  const hasEmptyDate = bookingRequest.preferredDates.some(
+    (value) => typeof value !== 'string' || value.trim().length === 0,
+  );
+  if (hasEmptyDate) {
+    return {
+      message: 'Invalid preferred dates',
+      error: 'Preferred dates must be non-empty values',
+    };
+  }
+
+  return null;
 }
