@@ -54,6 +54,11 @@
   line-height: var(--ds-line-height-tight);
 }
 
+.ds-text--size-2xl {
+  font-size: var(--ds-font-size-600);
+  line-height: var(--ds-line-height-tight);
+}
+
 .ds-text--weight-regular {
   font-weight: var(--ds-font-weight-regular);
 }
