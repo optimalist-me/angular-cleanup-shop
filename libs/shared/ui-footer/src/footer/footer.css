@@ -3,85 +3,71 @@
 }
 
 .footer {
-  background: #f6f7f8;
-  border-top: 1px solid #e1e7eb;
-  color: #1f2933;
-  font-family: 'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  background: var(--ds-surface-subtle);
+  border-top: var(--ds-border-width-default) solid var(--ds-border-subtle);
+  color: var(--ds-text-primary);
+  font-family: var(--ds-font-family-base);
 }
 
 .footer__inner {
-  max-width: 1120px;
+  max-width: var(--ds-max-content-width);
   margin: 0 auto;
-  padding: 48px 20px 32px;
+  padding: var(--ds-space-8) var(--ds-space-5) var(--ds-space-6);
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr);
-  gap: 32px;
+  gap: var(--ds-space-7);
 }
 
 .footer__brand {
   display: grid;
-  gap: 8px;
+  gap: var(--ds-space-2);
 }
 
 .footer__title {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
 }
 
 .footer__subtitle {
   margin: 0;
-  font-size: 14px;
-  color: #5b6770;
-  line-height: 1.5;
 }
 
 .footer__links {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  gap: var(--ds-space-6);
 }
 
 .footer__column {
   display: grid;
-  gap: 8px;
+  gap: var(--ds-space-2);
 }
 
 .footer__heading {
   margin: 0;
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #5b6770;
 }
 
 .footer__link {
   text-decoration: none;
-  color: #1f2933;
-  font-size: 14px;
+  color: var(--ds-text-primary);
 }
 
 .footer__link:hover,
 .footer__link:focus-visible {
-  color: #1a7f68;
+  color: var(--ds-text-accent);
 }
 
 .footer__text {
   margin: 0;
-  font-size: 14px;
-  color: #5b6770;
 }
 
 .footer__meta {
-  border-top: 1px solid #e1e7eb;
-  padding: 16px 20px 32px;
-  max-width: 1120px;
+  border-top: var(--ds-border-width-default) solid var(--ds-border-subtle);
+  padding: var(--ds-space-4) var(--ds-space-5) var(--ds-space-6);
+  max-width: var(--ds-max-content-width);
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  gap: 16px;
-  font-size: 13px;
-  color: #5b6770;
+  gap: var(--ds-space-4);
 }
 
 .footer__meta p {
