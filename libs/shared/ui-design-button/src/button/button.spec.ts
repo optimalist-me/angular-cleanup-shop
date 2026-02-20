@@ -19,7 +19,9 @@ describe('SharedDesignButton', () => {
     fixture.componentRef.setInput('size', 'lg');
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    const button = fixture.nativeElement.querySelector(
+      'button',
+    ) as HTMLButtonElement;
 
     expect(button.classList.contains('ds-button--tone-secondary')).toBe(true);
     expect(button.classList.contains('ds-button--size-lg')).toBe(true);
@@ -31,10 +33,14 @@ describe('SharedDesignButton', () => {
     fixture.componentRef.setInput('fullWidth', true);
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    const button = fixture.nativeElement.querySelector(
+      'button',
+    ) as HTMLButtonElement;
     expect(button.classList.contains('ds-button--full-width')).toBe(true);
     expect(button.querySelector('.ds-button__spinner')).toBeTruthy();
-    expect(button.querySelector('.ds-button__label')?.textContent).toContain('Save');
+    expect(button.querySelector('.ds-button__label')?.textContent).toContain(
+      'Save',
+    );
   });
 
   it('should emit pressed when clicked', () => {
@@ -44,7 +50,9 @@ describe('SharedDesignButton', () => {
     });
 
     fixture.detectChanges();
-    const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    const button = fixture.nativeElement.querySelector(
+      'button',
+    ) as HTMLButtonElement;
     button.click();
 
     expect(pressedCount).toBe(1);
@@ -58,7 +66,9 @@ describe('SharedDesignButton', () => {
 
     fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();
-    const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    const button = fixture.nativeElement.querySelector(
+      'button',
+    ) as HTMLButtonElement;
     button.click();
 
     expect(pressedCount).toBe(0);

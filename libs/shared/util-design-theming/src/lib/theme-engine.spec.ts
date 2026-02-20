@@ -28,10 +28,12 @@ describe('theme engine', () => {
   it('should apply static core and component tokens as CSS variables', () => {
     applyDesignStaticTokens(rootElement);
 
-    expect(rootElement.style.getPropertyValue('--ds-font-family-base')).toContain(
-      'Space Grotesk',
+    expect(
+      rootElement.style.getPropertyValue('--ds-font-family-base'),
+    ).toContain('Space Grotesk');
+    expect(rootElement.style.getPropertyValue('--ds-button-height-md')).toBe(
+      '2.5rem',
     );
-    expect(rootElement.style.getPropertyValue('--ds-button-height-md')).toBe('2.5rem');
   });
 
   it('should apply semantic theme tokens and color scheme', () => {
@@ -39,7 +41,9 @@ describe('theme engine', () => {
 
     expect(rootElement.dataset['theme']).toBe('dark');
     expect(rootElement.style.getPropertyValue('color-scheme')).toBe('dark');
-    expect(rootElement.style.getPropertyValue('--ds-text-primary')).toBe('#e7f0f6');
+    expect(rootElement.style.getPropertyValue('--ds-text-primary')).toBe(
+      '#e7f0f6',
+    );
   });
 
   it('should validate known theme names', () => {
