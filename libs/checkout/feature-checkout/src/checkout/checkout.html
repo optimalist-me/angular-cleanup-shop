@@ -1,12 +1,22 @@
 <section class="checkout">
   <div class="checkout__inner">
-    <a class="checkout__back" routerLink="/cart">Back to cart</a>
+    <a class="checkout__back" routerLink="/cart">
+      <shared-design-text tone="accent" size="sm" weight="semibold">
+        Back to cart
+      </shared-design-text>
+    </a>
 
     <header class="checkout__intro">
-      <h1 class="checkout__title">Checkout and Request Appointment</h1>
+      <h1 class="checkout__title">
+        <shared-design-text size="xl" weight="semibold">
+          Checkout and Request Appointment
+        </shared-design-text>
+      </h1>
       <p class="checkout__subtitle">
-        Confirm your selected cleanup packages and request a 20-minute fit
-        check.
+        <shared-design-text tone="muted" size="lg">
+          Confirm your selected cleanup packages and request a 20-minute fit
+          check.
+        </shared-design-text>
       </p>
     </header>
 
@@ -46,14 +56,23 @@
           (remove)="removeItem(item.id)"
         />
         } } @else {
-        <div class="checkout__empty">
+        <shared-design-surface
+          class="checkout__empty"
+          tone="default"
+          padding="lg"
+          radius="lg"
+        >
           <p>
-            No demo packages selected. You can still request a fit-check call.
+            <shared-design-text tone="muted" size="md">
+              No demo packages selected. You can still request a fit-check call.
+            </shared-design-text>
           </p>
           <a class="checkout__empty-link" routerLink="/products">
-            Browse products
+            <shared-design-text tone="inverse" size="sm" weight="semibold">
+              Browse products
+            </shared-design-text>
           </a>
-        </div>
+        </shared-design-surface>
         }
       </div>
 
@@ -72,7 +91,9 @@
     <form class="checkout__form" [formGroup]="detailsForm">
       <fieldset class="checkout__fieldset">
         <legend class="checkout__legend">
-          Contact and qualification details
+          <shared-design-text size="xl" weight="semibold">
+            Contact and qualification details
+          </shared-design-text>
         </legend>
 
         <div class="checkout__field">
@@ -193,10 +214,16 @@
     } @else {
     <form class="checkout__form" [formGroup]="scheduleForm">
       <fieldset class="checkout__fieldset">
-        <legend class="checkout__legend">Scheduling preferences</legend>
+        <legend class="checkout__legend">
+          <shared-design-text size="xl" weight="semibold">
+            Scheduling preferences
+          </shared-design-text>
+        </legend>
         <p class="checkout__hint">
-          Share 1 to 3 preferred dates. We will confirm the exact appointment
-          time by email.
+          <shared-design-text tone="muted" size="sm">
+            Share 1 to 3 preferred dates. We will confirm the exact appointment
+            time by email.
+          </shared-design-text>
         </p>
 
         <div formArrayName="preferredDates" class="checkout__date-list">
@@ -238,32 +265,85 @@
         }
       </fieldset>
 
-      <section class="checkout__review">
-        <h2 class="checkout__review-title">Final review</h2>
+      <shared-design-surface
+        class="checkout__review"
+        tone="subtle"
+        padding="md"
+        radius="lg"
+      >
+        <h2 class="checkout__review-title">
+          <shared-design-text size="lg" weight="semibold"
+            >Final review</shared-design-text
+          >
+        </h2>
         <p class="checkout__review-row">
-          <span>Contact</span>
-          <strong>{{ detailsForm.controls.name.value }}</strong>
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Contact</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ detailsForm.controls.name.value }}
+            </shared-design-text>
+          </strong>
         </p>
         <p class="checkout__review-row">
-          <span>Email</span>
-          <strong>{{ detailsForm.controls.email.value }}</strong>
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Email</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ detailsForm.controls.email.value }}
+            </shared-design-text>
+          </strong>
         </p>
         <p class="checkout__review-row">
-          <span>Company</span>
-          <strong>{{ detailsForm.controls.company.value }}</strong>
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Company</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ detailsForm.controls.company.value }}
+            </shared-design-text>
+          </strong>
         </p>
         <p class="checkout__review-row">
-          <span>Selected packages</span>
-          <strong>{{ itemCount() }}</strong>
+          <span>
+            <shared-design-text tone="muted" size="sm"
+              >Selected packages</shared-design-text
+            >
+          </span>
+          <strong>
+            <shared-design-text size="sm" weight="semibold"
+              >{{ itemCount() }}</shared-design-text
+            >
+          </strong>
         </p>
         <p class="checkout__review-row">
-          <span>Subtotal</span>
-          <strong>€{{ subtotal() }}</strong>
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Subtotal</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ subtotal() | currency: 'EUR':'symbol':'1.0-0' }}
+            </shared-design-text>
+          </strong>
         </p>
-      </section>
+      </shared-design-surface>
 
       @if (submissionError()) {
-      <p class="checkout__error-banner">{{ submissionError() }}</p>
+      <p class="checkout__error-banner">
+        <shared-design-text tone="danger" size="sm">
+          {{ submissionError() }}
+        </shared-design-text>
+      </p>
       }
 
       <div class="checkout__actions">
