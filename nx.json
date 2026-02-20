@@ -151,10 +151,5 @@
       "name": "<Domain><Name>",
       "selector": "<domain>-<name>"
     }
-  },
-  "release": {
-    "version": {
-      "preVersionCommand": "yarn dlx nx run-many -t build"
-    }
   }
 }

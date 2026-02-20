@@ -4,13 +4,6 @@
   "sourceRoot": "libs/shared/util-design-tokens/src",
   "prefix": "shared",
   "projectType": "library",
-  "release": {
-    "version": {
-      "manifestRootsToUpdate": ["dist/{projectRoot}"],
-      "currentVersionResolver": "git-tag",
-      "fallbackCurrentVersionResolver": "disk"
-    }
-  },
   "tags": ["domain:shared", "type:util", "scope:lib"],
   "targets": {
     "build": {
@@ -27,11 +20,6 @@
         "development": {}
       },
       "defaultConfiguration": "production"
-    },
-    "nx-release-publish": {
-      "options": {
-        "packageRoot": "dist/{projectRoot}"
-      }
     },
     "test": {
       "executor": "@nx/angular:unit-test",
