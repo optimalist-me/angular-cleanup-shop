@@ -14,9 +14,15 @@
         class="architecture__link architecture__link--primary"
         routerLink="/playbook"
       >
-        Read the playbook
+        <shared-design-text tone="inverse" size="md" weight="semibold">
+          Read the playbook
+        </shared-design-text>
       </a>
-      <a class="architecture__link" routerLink="/products">Browse products</a>
+      <a class="architecture__link" routerLink="/products">
+        <shared-design-text tone="accent" size="md" weight="semibold">
+          Browse products
+        </shared-design-text>
+      </a>
     </div>
   </marketing-section>
 
@@ -27,26 +33,82 @@
     tone="muted"
   >
     <div class="architecture__grid">
-      <div class="architecture__card">
+      <shared-design-surface
+        class="architecture__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
         <h3>feature</h3>
         <p>Screens, routes, and orchestration. Owns state composition.</p>
-        <span class="architecture__pill">feature -> data-access -> util</span>
-      </div>
-      <div class="architecture__card">
+        <span class="architecture__pill">
+          <shared-design-text
+            tone="accent"
+            size="sm"
+            weight="medium"
+            [uppercase]="true"
+          >
+            feature -> data-access -> util
+          </shared-design-text>
+        </span>
+      </shared-design-surface>
+      <shared-design-surface
+        class="architecture__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
         <h3>data-access</h3>
         <p>API clients, DTO mapping, query and caching.</p>
-        <span class="architecture__pill">no ui imports</span>
-      </div>
-      <div class="architecture__card">
+        <span class="architecture__pill">
+          <shared-design-text
+            tone="accent"
+            size="sm"
+            weight="medium"
+            [uppercase]="true"
+          >
+            no ui imports
+          </shared-design-text>
+        </span>
+      </shared-design-surface>
+      <shared-design-surface
+        class="architecture__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
         <h3>ui</h3>
         <p>Presentational components with inputs/outputs only.</p>
-        <span class="architecture__pill">ui -> util</span>
-      </div>
-      <div class="architecture__card">
+        <span class="architecture__pill">
+          <shared-design-text
+            tone="accent"
+            size="sm"
+            weight="medium"
+            [uppercase]="true"
+          >
+            ui -> util
+          </shared-design-text>
+        </span>
+      </shared-design-surface>
+      <shared-design-surface
+        class="architecture__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
         <h3>util</h3>
         <p>Pure helpers and formatting logic. No Angular runtime.</p>
-        <span class="architecture__pill">pure functions</span>
-      </div>
+        <span class="architecture__pill">
+          <shared-design-text
+            tone="accent"
+            size="sm"
+            weight="medium"
+            [uppercase]="true"
+          >
+            pure functions
+          </shared-design-text>
+        </span>
+      </shared-design-surface>
     </div>
   </marketing-section>
 
@@ -56,27 +118,51 @@
     subtitle="Frontend code depends on data-access APIs only, keeping backend changes from leaking into UI and feature logic."
   >
     <div class="architecture__split">
-      <div class="architecture__card">
+      <shared-design-surface
+        class="architecture__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
         <h3>Frontend rule</h3>
         <ul class="architecture__list">
           <li>UI uses data-access APIs only.</li>
           <li>No server entities or internal microservice types.</li>
           <li>DTOs define the boundary.</li>
         </ul>
-      </div>
-      <div class="architecture__card">
+      </shared-design-surface>
+      <shared-design-surface
+        class="architecture__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
         <h3>Why it helps</h3>
         <ul class="architecture__list">
           <li>Backend can evolve without UI rewrites.</li>
           <li>Testing stays fast and focused.</li>
           <li>Contracts remain stable over time.</li>
         </ul>
-      </div>
+      </shared-design-surface>
     </div>
-    <div class="architecture__code">
-      <p class="architecture__code-title">Example flow</p>
+    <shared-design-surface
+      class="architecture__code"
+      tone="subtle"
+      padding="md"
+      radius="lg"
+    >
+      <p class="architecture__code-title">
+        <shared-design-text
+          tone="muted"
+          size="sm"
+          weight="medium"
+          [uppercase]="true"
+        >
+          Example flow
+        </shared-design-text>
+      </p>
       <pre><code>UI -> data-access API -> backend contract</code></pre>
-    </div>
+    </shared-design-surface>
   </marketing-section>
 
   <marketing-section
@@ -85,31 +171,46 @@
     subtitle="A consistent layout prevents shared soup and makes module boundaries enforceable."
     tone="muted"
   >
-    <div class="architecture__code">
+    <shared-design-surface
+      class="architecture__code"
+      tone="subtle"
+      padding="md"
+      radius="lg"
+    >
       <pre><code>libs/
   &lt;domain&gt;/
     feature-*/
     data-access-*/
     ui-*/
     util-*/</code></pre>
-    </div>
+    </shared-design-surface>
     <div class="architecture__split">
-      <div class="architecture__card">
+      <shared-design-surface
+        class="architecture__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
         <h3>What it prevents</h3>
         <ul class="architecture__list">
           <li>Implicit shared state.</li>
           <li>Cross-domain coupling.</li>
           <li>Hidden dependency chains.</li>
         </ul>
-      </div>
-      <div class="architecture__card">
+      </shared-design-surface>
+      <shared-design-surface
+        class="architecture__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
         <h3>What it enables</h3>
         <ul class="architecture__list">
           <li>Faster onboarding and safer refactors.</li>
           <li>Clear public APIs per domain.</li>
           <li>Predictable scaling as teams grow.</li>
         </ul>
-      </div>
+      </shared-design-surface>
     </div>
   </marketing-section>
 
@@ -119,18 +220,33 @@
     subtitle="Clean architecture is an efficiency multiplier, not a theoretical exercise."
   >
     <div class="architecture__grid">
-      <div class="architecture__card">
+      <shared-design-surface
+        class="architecture__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
         <h3>Lower regression risk</h3>
         <p>Smaller surfaces mean fewer accidental side effects.</p>
-      </div>
-      <div class="architecture__card">
+      </shared-design-surface>
+      <shared-design-surface
+        class="architecture__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
         <h3>Clear ownership</h3>
         <p>Teams can change code without hidden dependencies.</p>
-      </div>
-      <div class="architecture__card">
+      </shared-design-surface>
+      <shared-design-surface
+        class="architecture__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
         <h3>Faster delivery</h3>
         <p>Predictable structure shortens review and build time.</p>
-      </div>
+      </shared-design-surface>
     </div>
   </marketing-section>
 
@@ -146,7 +262,9 @@
         class="architecture__link architecture__link--primary"
         routerLink="/book"
       >
-        Request a 20-min fit check
+        <shared-design-text tone="inverse" size="md" weight="semibold">
+          Request a 20-min fit check
+        </shared-design-text>
       </a>
     </div>
   </marketing-section>

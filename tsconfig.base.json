@@ -77,6 +77,24 @@
       ],
       "@angular-cleanup-shop/infrastructure-booking-email": [
         "libs/booking/infrastructure-booking-email/src/index.ts"
+      ],
+      "@cleanup/shared-util-design-tokens": [
+        "libs/shared/util-design-tokens/src/index.ts"
+      ],
+      "@cleanup/shared-util-design-theming": [
+        "libs/shared/util-design-theming/src/index.ts"
+      ],
+      "@cleanup/shared-ui-design-button": [
+        "libs/shared/ui-design-button/src/index.ts"
+      ],
+      "@cleanup/shared-ui-design-input": [
+        "libs/shared/ui-design-input/src/index.ts"
+      ],
+      "@cleanup/shared-ui-design-surface": [
+        "libs/shared/ui-design-surface/src/index.ts"
+      ],
+      "@cleanup/shared-ui-design-text": [
+        "libs/shared/ui-design-text/src/index.ts"
       ]
     }
   },

@@ -3,36 +3,33 @@
 }
 
 .detail {
-  background: #ffffff;
-  color: #1f2933;
-  padding: 72px 20px 96px;
-  font-family: 'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  background: var(--ds-surface-card);
+  color: var(--ds-text-primary);
+  padding: 72px var(--ds-space-5) 96px;
+  font-family: var(--ds-font-family-base);
 }
 
 .detail__inner {
   max-width: 960px;
   margin: 0 auto;
   display: grid;
-  gap: 32px;
+  gap: var(--ds-space-7);
 }
 
 .detail__back {
   width: fit-content;
   text-decoration: none;
-  color: #1a7f68;
-  font-size: 14px;
-  font-weight: 600;
 }
 
 .detail__content {
   display: grid;
-  gap: 32px;
+  gap: var(--ds-space-7);
 }
 
 .detail__media {
-  border-radius: 20px;
+  border-radius: var(--ds-surface-radius);
   overflow: hidden;
-  background: #f1f4f6;
+  background: var(--ds-surface-subtle);
   aspect-ratio: 4 / 3;
 }
 
@@ -45,7 +42,7 @@
 
 .detail__header {
   display: grid;
-  gap: 12px;
+  gap: var(--ds-space-3);
 }
 
 .detail__tag {
@@ -54,123 +51,93 @@
 
 .detail__title {
   margin: 0;
-  font-size: clamp(32px, 4vw, 44px);
-  line-height: 1.1;
+  max-width: 18ch;
 }
 
 .detail__summary {
   margin: 0;
-  color: #5b6770;
-  font-size: 16px;
-  line-height: 1.6;
   max-width: 720px;
 }
 
 .detail__description {
   margin: 0;
-  color: #1f2933;
-  font-size: 15px;
-  line-height: 1.6;
   max-width: 720px;
 }
 
 .detail__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--ds-space-3);
 }
 
 .detail__meta-item {
   display: grid;
-  gap: 4px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: #f1f4f6;
-  color: #1f2933;
-  font-size: 13px;
+  gap: var(--ds-space-1);
 }
 
-.detail__meta-item span {
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 11px;
-  color: #5b6770;
+.detail__meta-label,
+.detail__meta-value {
+  margin: 0;
 }
 
 .detail__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--ds-space-3);
   align-items: center;
 }
 
-.detail__cta {
-  border: none;
-  border-radius: 999px;
-  padding: 12px 18px;
-  background: #1a7f68;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.detail__cta:hover,
-.detail__cta:focus-visible {
-  background: #146554;
-}
-
 .detail__cta--ghost {
-  background: #ffffff;
-  color: #1a7f68;
-  border: 1px solid #cbd5dc;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--ds-button-height-md);
+  padding: 0 var(--ds-button-padding-x-md);
+  border-radius: var(--ds-radius-pill);
+  border: var(--ds-border-width-default) solid var(--ds-action-secondary-border);
+  background: var(--ds-action-secondary-bg);
+  text-decoration: none;
 }
 
 .detail__cta--ghost:hover,
 .detail__cta--ghost:focus-visible {
-  background: #f6f7f8;
+  background: var(--ds-action-secondary-hover);
+  border-color: var(--ds-field-border-focus);
 }
 
 .detail__grid {
   display: grid;
-  gap: 16px;
+  gap: var(--ds-space-4);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .detail__panel {
-  border: 1px solid #d6dde3;
-  border-radius: 18px;
-  padding: 20px;
-  background: #ffffff;
   display: grid;
-  gap: 8px;
-}
-
-.detail__panel--muted {
-  background: #f6f7f8;
+  gap: var(--ds-space-2);
 }
 
 .detail__panel h2 {
   margin: 0;
-  font-size: 16px;
+  color: var(--ds-text-primary);
+  font-size: var(--ds-font-size-300);
+  line-height: var(--ds-line-height-tight);
 }
 
 .detail__panel p {
   margin: 0;
-  color: #5b6770;
-  font-size: 15px;
-  line-height: 1.6;
+  color: var(--ds-text-muted);
+  line-height: var(--ds-line-height-base);
 }
 
 .detail__panel ul {
   margin: 0;
-  padding-left: 18px;
+  padding-left: var(--ds-space-5);
   display: grid;
-  gap: 6px;
-  color: #5b6770;
-  font-size: 15px;
-  line-height: 1.6;
+  gap: var(--ds-space-2);
+}
+
+.detail__panel li {
+  line-height: var(--ds-line-height-base);
 }
 
 .detail__panel--wide {
@@ -179,13 +146,11 @@
 
 .detail__state {
   margin: 0;
-  color: #5b6770;
-  font-size: 15px;
 }
 
 @media (max-width: 720px) {
   .detail {
-    padding: 64px 16px 80px;
+    padding: 64px var(--ds-space-4) 80px;
   }
 
   .detail__grid {

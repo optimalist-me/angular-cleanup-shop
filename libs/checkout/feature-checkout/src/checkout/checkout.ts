@@ -20,6 +20,8 @@ import { catchError, of, startWith, take } from 'rxjs';
 import { BookingsRepository } from '@cleanup/data-access-booking';
 import { CartRepository } from '@cleanup/data-access-cart';
 import { type BookingRequest } from '@cleanup/models-booking';
+import { SharedDesignSurface } from '@cleanup/shared-ui-design-surface';
+import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 import { CartLineItem } from '@cleanup/ui-cart-line-item';
 import { CheckoutSummary } from '@cleanup/ui-checkout';
 
@@ -33,6 +35,8 @@ type CheckoutStep = 'review' | 'details' | 'schedule';
     RouterLink,
     CartLineItem,
     CheckoutSummary,
+    SharedDesignSurface,
+    SharedDesignText,
   ],
   templateUrl: './checkout.html',
   styleUrl: './checkout.css',

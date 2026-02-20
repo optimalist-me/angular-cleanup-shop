@@ -5,11 +5,12 @@ import {
   input,
 } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
+import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 import { ProductTag } from '@cleanup/ui-product-tag';
 
 @Component({
   selector: 'products-card',
-  imports: [NgOptimizedImage, ProductTag],
+  imports: [NgOptimizedImage, ProductTag, SharedDesignText],
   templateUrl: './card.html',
   styleUrl: './card.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

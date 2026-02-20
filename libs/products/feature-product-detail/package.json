@@ -8,7 +8,10 @@
     "rxjs": "~7.8.0",
     "@cleanup/data-access-products": "0.0.1",
     "@cleanup/ui-product-tag": "0.0.1",
-    "@cleanup/data-access-cart": "0.0.1"
+    "@cleanup/data-access-cart": "0.0.1",
+    "@cleanup/shared-ui-design-button": "^0.0.1",
+    "@cleanup/shared-ui-design-surface": "^0.0.1",
+    "@cleanup/shared-ui-design-text": "^0.0.1"
   },
   "sideEffects": false
 }

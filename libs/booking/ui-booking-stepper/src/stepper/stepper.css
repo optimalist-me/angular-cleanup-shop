@@ -3,7 +3,7 @@
 }
 
 .stepper {
-  margin: 2rem 0;
+  margin: var(--ds-space-6) 0;
 }
 
 .stepper__list {
@@ -11,7 +11,7 @@
   padding: 0;
   margin: 0;
   display: flex;
-  gap: 2rem;
+  gap: var(--ds-space-4);
   justify-content: center;
   align-items: flex-start;
 }
@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-2);
   position: relative;
   flex: 1;
   max-width: 150px;
@@ -29,28 +29,31 @@
 .stepper__step {
   width: 48px;
   height: 48px;
-  border-radius: 50%;
+  border-radius: var(--ds-radius-pill);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
-  font-size: 1.125rem;
-  transition: all 0.2s ease;
-  background: #f1f4f6;
-  color: #5b6770;
-  border: 2px solid #d6dde3;
+  font-weight: var(--ds-font-weight-semibold);
+  font-size: var(--ds-font-size-300);
+  transition:
+    background-color var(--ds-duration-fast) var(--ds-easing-standard),
+    color var(--ds-duration-fast) var(--ds-easing-standard),
+    border-color var(--ds-duration-fast) var(--ds-easing-standard);
+  background: var(--ds-surface-subtle);
+  color: var(--ds-text-muted);
+  border: 2px solid var(--ds-border-subtle);
 }
 
 .stepper__step--active {
-  background: #1a7f68;
-  color: white;
-  border-color: #1a7f68;
+  background: var(--ds-action-primary-bg);
+  color: var(--ds-action-primary-fg);
+  border-color: var(--ds-action-primary-bg);
 }
 
 .stepper__step--completed {
-  background: #0f7660;
-  color: white;
-  border-color: #0f7660;
+  background: var(--ds-action-primary-hover);
+  color: var(--ds-action-primary-fg);
+  border-color: var(--ds-action-primary-hover);
 }
 
 .stepper__number,
@@ -59,9 +62,5 @@
 }
 
 .stepper__label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #5b6770;
   text-align: center;
-  line-height: 1.25;
 }

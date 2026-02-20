@@ -1,4 +1,6 @@
 name: CI
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 on:
   push:
@@ -35,6 +37,7 @@ jobs:
 
       - run: yarn install --immutable
       - run: yarn playwright install --with-deps
+      - run: bash .github/scripts/check-design-token-css.sh
 
       # Prepend any command with "nx record --" to record its logs to Nx Cloud
       # - run: yarn nx record -- echo Hello World

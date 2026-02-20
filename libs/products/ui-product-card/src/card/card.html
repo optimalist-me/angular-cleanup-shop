@@ -17,26 +17,60 @@
       tone="accent"
     ></products-tag>
     }
-    <h3 class="card__title">{{ name() }}</h3>
+    <h3 class="card__title">
+      <shared-design-text size="lg" weight="semibold">
+        {{ name() }}
+      </shared-design-text>
+    </h3>
   </header>
 
   @if (shortDescription()) {
-  <p class="card__summary">{{ shortDescription() }}</p>
+  <p class="card__summary">
+    <shared-design-text tone="muted" size="sm">
+      {{ shortDescription() }}
+    </shared-design-text>
+  </p>
   } @if (hasDetails()) {
   <dl class="card__details">
     @if (outcome()) {
     <div class="card__detail">
-      <dt>Outcome</dt>
-      <dd>{{ outcome() }}</dd>
+      <dt>
+        <shared-design-text
+          tone="muted"
+          size="xs"
+          weight="medium"
+          [uppercase]="true"
+        >
+          Outcome
+        </shared-design-text>
+      </dt>
+      <dd>
+        <shared-design-text size="sm">{{ outcome() }}</shared-design-text>
+      </dd>
     </div>
     } @if (pattern()) {
     <div class="card__detail">
-      <dt>Pattern</dt>
-      <dd>{{ pattern() }}</dd>
+      <dt>
+        <shared-design-text
+          tone="muted"
+          size="xs"
+          weight="medium"
+          [uppercase]="true"
+        >
+          Pattern
+        </shared-design-text>
+      </dt>
+      <dd>
+        <shared-design-text size="sm">{{ pattern() }}</shared-design-text>
+      </dd>
     </div>
     }
   </dl>
   } @if (ctaHref(); as href) {
-  <a class="card__cta" [href]="href">{{ ctaLabel() }}</a>
+  <a class="card__cta" [href]="href">
+    <shared-design-text tone="inverse" size="sm" weight="semibold">
+      {{ ctaLabel() }}
+    </shared-design-text>
+  </a>
   }
 </article>

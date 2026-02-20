@@ -1,9 +1,17 @@
 <section class="detail">
   <div class="detail__inner">
-    <a class="detail__back" routerLink="/products">Back to products</a>
+    <a class="detail__back" routerLink="/products">
+      <shared-design-text tone="accent" size="sm" weight="semibold">
+        Back to products
+      </shared-design-text>
+    </a>
 
     @if (isLoading()) {
-    <p class="detail__state">Loading product...</p>
+    <p class="detail__state">
+      <shared-design-text tone="muted" size="md"
+        >Loading product...</shared-design-text
+      >
+    </p>
     } @else if (product(); as item) {
     <div class="detail__content">
       <div class="detail__media">
@@ -20,50 +28,126 @@
         @if (tagLabel(); as label) {
         <products-tag class="detail__tag" [label]="label" tone="accent" />
         }
-        <h1 class="detail__title">{{ item.name }}</h1>
-        <p class="detail__summary">{{ item.shortDescription }}</p>
-        <p class="detail__description">{{ item.description }}</p>
+        <h1 class="detail__title">
+          <shared-design-text size="xl" weight="semibold">
+            {{ item.name }}
+          </shared-design-text>
+        </h1>
+        <p class="detail__summary">
+          <shared-design-text tone="muted" size="lg">
+            {{ item.shortDescription }}
+          </shared-design-text>
+        </p>
+        <p class="detail__description">
+          <shared-design-text size="md"
+            >{{ item.description }}</shared-design-text
+          >
+        </p>
         <div class="detail__meta">
-          <div class="detail__meta-item">
-            <span>Price</span>
-            <strong>{{ item.price | currency: 'EUR':'symbol':'1.0-0' }}</strong>
-          </div>
-          <div class="detail__meta-item">
-            <span>Timeline</span>
-            <strong>{{ item.timeline }}</strong>
-          </div>
+          <shared-design-surface
+            class="detail__meta-item"
+            tone="subtle"
+            padding="sm"
+            radius="md"
+          >
+            <span class="detail__meta-label">
+              <shared-design-text
+                tone="muted"
+                size="xs"
+                weight="medium"
+                [uppercase]="true"
+              >
+                Price
+              </shared-design-text>
+            </span>
+            <strong class="detail__meta-value">
+              <shared-design-text size="md" weight="semibold">
+                {{ item.price | currency: 'EUR':'symbol':'1.0-0' }}
+              </shared-design-text>
+            </strong>
+          </shared-design-surface>
+          <shared-design-surface
+            class="detail__meta-item"
+            tone="subtle"
+            padding="sm"
+            radius="md"
+          >
+            <span class="detail__meta-label">
+              <shared-design-text
+                tone="muted"
+                size="xs"
+                weight="medium"
+                [uppercase]="true"
+              >
+                Timeline
+              </shared-design-text>
+            </span>
+            <strong class="detail__meta-value">
+              <shared-design-text size="md" weight="semibold">
+                {{ item.timeline }}
+              </shared-design-text>
+            </strong>
+          </shared-design-surface>
         </div>
         <div class="detail__actions">
-          <button type="button" class="detail__cta" (click)="addToCart()">
-            Add to cart
-          </button>
+          <shared-design-button
+            tone="primary"
+            size="md"
+            label="Add to cart"
+            (pressed)="addToCart()"
+          />
           <a class="detail__cta detail__cta--ghost" routerLink="/cart">
-            View cart
+            <shared-design-text tone="accent" size="sm" weight="semibold">
+              View cart
+            </shared-design-text>
           </a>
         </div>
       </header>
 
       <div class="detail__grid">
-        <article class="detail__panel">
+        <shared-design-surface
+          class="detail__panel"
+          tone="default"
+          padding="md"
+          radius="lg"
+        >
           <h2>Outcome</h2>
           <p>{{ item.outcome }}</p>
-        </article>
-        <article class="detail__panel detail__panel--muted">
+        </shared-design-surface>
+        <shared-design-surface
+          class="detail__panel detail__panel--muted"
+          tone="subtle"
+          padding="md"
+          radius="lg"
+        >
           <h2>Pattern</h2>
           <p>{{ item.pattern }}</p>
-        </article>
-        <article class="detail__panel detail__panel--wide">
+        </shared-design-surface>
+        <shared-design-surface
+          class="detail__panel detail__panel--wide"
+          tone="default"
+          padding="md"
+          radius="lg"
+        >
           <h2>Best for</h2>
           <ul>
             @for (entry of item.bestFor; track entry) {
-            <li>{{ entry }}</li>
+            <li>
+              <shared-design-text tone="muted" size="md"
+                >{{ entry }}</shared-design-text
+              >
+            </li>
             }
           </ul>
-        </article>
+        </shared-design-surface>
       </div>
     </div>
     } @else if (notFound()) {
-    <p class="detail__state">Product not found.</p>
+    <p class="detail__state">
+      <shared-design-text tone="muted" size="md"
+        >Product not found.</shared-design-text
+      >
+    </p>
     }
   </div>
 </section>

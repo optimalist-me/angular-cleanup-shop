@@ -1,33 +1,96 @@
 <footer class="footer">
   <div class="footer__inner">
     <div class="footer__brand">
-      <p class="footer__title">Angular Cleanup Shop</p>
+      <p class="footer__title">
+        <shared-design-text size="lg" weight="semibold">
+          Angular Cleanup Shop
+        </shared-design-text>
+      </p>
       <p class="footer__subtitle">
-        Structural friction reduction for Angular and Nx codebases.
+        <shared-design-text tone="muted" size="sm">
+          Structural friction reduction for Angular and Nx codebases.
+        </shared-design-text>
       </p>
     </div>
     <div class="footer__links">
       <div class="footer__column">
-        <p class="footer__heading">Explore</p>
-        <a class="footer__link" routerLink="/products">Products</a>
-        <a class="footer__link" routerLink="/playbook">Playbook</a>
-        <a class="footer__link" routerLink="/architecture">Architecture</a>
+        <p class="footer__heading">
+          <shared-design-text
+            tone="muted"
+            size="xs"
+            weight="medium"
+            [uppercase]="true"
+          >
+            Explore
+          </shared-design-text>
+        </p>
+        <a class="footer__link" routerLink="/products">
+          <shared-design-text size="sm">Products</shared-design-text>
+        </a>
+        <a class="footer__link" routerLink="/playbook">
+          <shared-design-text size="sm">Playbook</shared-design-text>
+        </a>
+        <a class="footer__link" routerLink="/architecture">
+          <shared-design-text size="sm">Architecture</shared-design-text>
+        </a>
       </div>
       <div class="footer__column">
-        <p class="footer__heading">Engage</p>
-        <a class="footer__link" routerLink="/book">Book a fit check</a>
-        <a class="footer__link" routerLink="/faq">FAQ</a>
+        <p class="footer__heading">
+          <shared-design-text
+            tone="muted"
+            size="xs"
+            weight="medium"
+            [uppercase]="true"
+          >
+            Engage
+          </shared-design-text>
+        </p>
+        <a class="footer__link" routerLink="/book">
+          <shared-design-text size="sm">Book a fit check</shared-design-text>
+        </a>
+        <a class="footer__link" routerLink="/faq">
+          <shared-design-text size="sm">FAQ</shared-design-text>
+        </a>
       </div>
       <div class="footer__column">
-        <p class="footer__heading">Trust</p>
-        <p class="footer__text">Nx Partner</p>
-        <p class="footer__text">Nx Certified Expert</p>
-        <p class="footer__text">Production-first refactoring</p>
+        <p class="footer__heading">
+          <shared-design-text
+            tone="muted"
+            size="xs"
+            weight="medium"
+            [uppercase]="true"
+          >
+            Trust
+          </shared-design-text>
+        </p>
+        <p class="footer__text">
+          <shared-design-text tone="muted" size="sm"
+            >Nx Partner</shared-design-text
+          >
+        </p>
+        <p class="footer__text">
+          <shared-design-text tone="muted" size="sm"
+            >Nx Certified Expert</shared-design-text
+          >
+        </p>
+        <p class="footer__text">
+          <shared-design-text tone="muted" size="sm">
+            Production-first refactoring
+          </shared-design-text>
+        </p>
       </div>
     </div>
   </div>
   <div class="footer__meta">
-    <p>Less friction. More efficient development.</p>
-    <p>€800 / day — fixed rate.</p>
+    <p>
+      <shared-design-text tone="muted" size="sm">
+        Less friction. More efficient development.
+      </shared-design-text>
+    </p>
+    <p>
+      <shared-design-text tone="muted" size="sm"
+        >€800 / day - fixed rate.</shared-design-text
+      >
+    </p>
   </div>
 </footer>

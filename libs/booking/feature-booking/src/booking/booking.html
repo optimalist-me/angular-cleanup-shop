@@ -1,35 +1,38 @@
 <section class="booking">
   <div class="booking__inner">
     @if (!isConfirmation()) {
-    <a class="booking__back" routerLink="/">Back to home</a>
+    <a class="booking__back" routerLink="/">
+      <shared-design-text tone="accent" size="sm" weight="semibold">
+        Back to home
+      </shared-design-text>
+    </a>
     <header class="booking__intro">
-      <h1 class="booking__title">Request a 20-min fit check</h1>
+      <h1 class="booking__title">
+        <shared-design-text size="xl" weight="semibold">
+          Request a 20-min fit check
+        </shared-design-text>
+      </h1>
       <p class="booking__subtitle">
-        Share your context and preferred dates. We will confirm the final
-        appointment slot by email.
+        <shared-design-text tone="muted" size="lg">
+          Share your context and preferred dates. We will confirm the final
+          appointment slot by email.
+        </shared-design-text>
       </p>
     </header>
 
-    <ol class="booking__steps">
-      <li
-        class="booking__step"
-        [class.booking__step--active]="step() === 'details'"
-      >
-        1. Details
-      </li>
-      <li
-        class="booking__step"
-        [class.booking__step--active]="step() === 'schedule'"
-      >
-        2. Schedule & confirm
-      </li>
-    </ol>
+    <booking-stepper
+      class="booking__steps"
+      [step]="step()"
+      [steps]="bookingSteps"
+    />
 
     @if (step() === 'details') {
     <form class="booking__form" [formGroup]="detailsForm">
       <fieldset class="booking__fieldset">
         <legend class="booking__legend">
-          Contact and qualification details
+          <shared-design-text size="xl" weight="semibold">
+            Contact and qualification details
+          </shared-design-text>
         </legend>
 
         <div class="booking__field">
@@ -143,10 +146,16 @@
     } @else {
     <form class="booking__form" [formGroup]="scheduleForm">
       <fieldset class="booking__fieldset">
-        <legend class="booking__legend">Scheduling preferences</legend>
+        <legend class="booking__legend">
+          <shared-design-text size="xl" weight="semibold">
+            Scheduling preferences
+          </shared-design-text>
+        </legend>
         <p class="booking__hint">
-          Share 1 to 3 preferred dates. No payment is required for this fit
-          check.
+          <shared-design-text tone="muted" size="sm">
+            Share 1 to 3 preferred dates. No payment is required for this fit
+            check.
+          </shared-design-text>
         </p>
 
         <div formArrayName="preferredDates" class="booking__date-list">
@@ -188,28 +197,73 @@
         }
       </fieldset>
 
-      <section class="booking__review">
-        <h2 class="booking__review-title">Final review</h2>
+      <shared-design-surface
+        class="booking__review"
+        tone="subtle"
+        padding="md"
+        radius="lg"
+      >
+        <h2 class="booking__review-title">
+          <shared-design-text size="lg" weight="semibold"
+            >Final review</shared-design-text
+          >
+        </h2>
         <p class="booking__review-row">
-          <span>Contact</span>
-          <strong>{{ detailsForm.controls.name.value }}</strong>
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Contact</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ detailsForm.controls.name.value }}
+            </shared-design-text>
+          </strong>
         </p>
         <p class="booking__review-row">
-          <span>Email</span>
-          <strong>{{ detailsForm.controls.email.value }}</strong>
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Email</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ detailsForm.controls.email.value }}
+            </shared-design-text>
+          </strong>
         </p>
         <p class="booking__review-row">
-          <span>Company</span>
-          <strong>{{ detailsForm.controls.company.value }}</strong>
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Company</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ detailsForm.controls.company.value }}
+            </shared-design-text>
+          </strong>
         </p>
         <p class="booking__review-row">
-          <span>Team size</span>
-          <strong>{{ detailsForm.controls.teamSize.value }}</strong>
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Team size</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ detailsForm.controls.teamSize.value }}
+            </shared-design-text>
+          </strong>
         </p>
-      </section>
+      </shared-design-surface>
 
       @if (submissionError()) {
-      <p class="booking__error-banner">{{ submissionError() }}</p>
+      <p class="booking__error-banner">
+        <shared-design-text tone="danger" size="sm">
+          {{ submissionError() }}
+        </shared-design-text>
+      </p>
       }
 
       <div class="booking__actions">
@@ -232,78 +286,200 @@
       </div>
     </form>
     } } @else if (loading()) {
-    <a class="booking__back" routerLink="/book">Back to booking</a>
-    <div class="confirmation__panel">
-      <h1 class="confirmation__title">Loading booking confirmation...</h1>
+    <a class="booking__back" routerLink="/book">
+      <shared-design-text tone="accent" size="sm" weight="semibold">
+        Back to booking
+      </shared-design-text>
+    </a>
+    <shared-design-surface
+      class="confirmation__panel"
+      tone="default"
+      padding="lg"
+      radius="lg"
+    >
+      <h1 class="confirmation__title">
+        <shared-design-text size="xl" weight="semibold">
+          Loading booking confirmation...
+        </shared-design-text>
+      </h1>
       <p class="confirmation__subtitle">
-        We are retrieving your request details.
+        <shared-design-text tone="muted" size="lg">
+          We are retrieving your request details.
+        </shared-design-text>
       </p>
-    </div>
+    </shared-design-surface>
     } @else if (error()) {
-    <a class="booking__back" routerLink="/book">Back to booking</a>
-    <div class="confirmation__panel confirmation__panel--error">
-      <h1 class="confirmation__title">We could not load this confirmation.</h1>
-      <p class="confirmation__subtitle">{{ error() }}</p>
+    <a class="booking__back" routerLink="/book">
+      <shared-design-text tone="accent" size="sm" weight="semibold">
+        Back to booking
+      </shared-design-text>
+    </a>
+    <shared-design-surface
+      class="confirmation__panel confirmation__panel--error"
+      tone="default"
+      padding="lg"
+      radius="lg"
+    >
+      <h1 class="confirmation__title">
+        <shared-design-text size="xl" weight="semibold">
+          We could not load this confirmation.
+        </shared-design-text>
+      </h1>
+      <p class="confirmation__subtitle">
+        <shared-design-text tone="muted" size="lg"
+          >{{ error() }}</shared-design-text
+        >
+      </p>
       <div class="confirmation__actions">
         <a
           class="confirmation__button confirmation__button--primary"
           routerLink="/book"
         >
-          Return to booking
+          <shared-design-text tone="inverse" size="sm" weight="semibold">
+            Return to booking
+          </shared-design-text>
         </a>
       </div>
-    </div>
+    </shared-design-surface>
     } @else if (booking(); as details) {
-    <a class="booking__back" routerLink="/book">Back to booking</a>
-    <div class="confirmation__panel confirmation__panel--success">
-      <h1 class="confirmation__title">Appointment request received</h1>
+    <a class="booking__back" routerLink="/book">
+      <shared-design-text tone="accent" size="sm" weight="semibold">
+        Back to booking
+      </shared-design-text>
+    </a>
+    <shared-design-surface
+      class="confirmation__panel confirmation__panel--success"
+      tone="default"
+      padding="lg"
+      radius="lg"
+    >
+      <h1 class="confirmation__title">
+        <shared-design-text size="xl" weight="semibold">
+          Appointment request received
+        </shared-design-text>
+      </h1>
       <p class="confirmation__subtitle">
-        Thanks. We will email <strong>{{ details.email }}</strong> to confirm a
-        slot from your preferred dates.
+        <shared-design-text tone="muted" size="lg">
+          Thanks. We will email <strong>{{ details.email }}</strong> to confirm
+          a slot from your preferred dates.
+        </shared-design-text>
       </p>
 
-      <div class="confirmation__summary">
+      <shared-design-surface
+        class="confirmation__summary"
+        tone="subtle"
+        padding="md"
+        radius="lg"
+      >
         <p class="confirmation__row">
-          <span>Confirmation ID</span>
-          <strong>{{ details.id }}</strong>
+          <span>
+            <shared-design-text tone="muted" size="sm"
+              >Confirmation ID</shared-design-text
+            >
+          </span>
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ details.id }}
+            </shared-design-text>
+          </strong>
         </p>
         <p class="confirmation__row">
-          <span>Submitted</span>
-          <strong>{{ details.createdAt | date: 'medium' }}</strong>
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Submitted</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ details.createdAt | date: 'medium' }}
+            </shared-design-text>
+          </strong>
         </p>
         <p class="confirmation__row">
-          <span>Company</span>
-          <strong>{{ details.company }}</strong>
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Company</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ details.company }}
+            </shared-design-text>
+          </strong>
         </p>
         <p class="confirmation__row">
-          <span>Team size</span>
-          <strong>{{ details.teamSize }}</strong>
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Team size</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ details.teamSize }}
+            </shared-design-text>
+          </strong>
         </p>
         <p class="confirmation__row">
-          <span>Angular version</span>
-          <strong>{{ details.angularVersion }}</strong>
+          <span>
+            <shared-design-text tone="muted" size="sm"
+              >Angular version</shared-design-text
+            >
+          </span>
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ details.angularVersion }}
+            </shared-design-text>
+          </strong>
         </p>
         <p class="confirmation__row">
-          <span>Using Nx</span>
-          <strong>{{ details.usesNx ? 'Yes' : 'No' }}</strong>
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Using Nx</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ details.usesNx ? 'Yes' : 'No' }}
+            </shared-design-text>
+          </strong>
         </p>
-      </div>
+      </shared-design-surface>
 
       <section class="confirmation__section">
-        <h2>Preferred dates</h2>
+        <h2>
+          <shared-design-text size="lg" weight="semibold">
+            Preferred dates
+          </shared-design-text>
+        </h2>
         <ul class="confirmation__list">
           @for (date of details.preferredDates ?? []; track date) {
-          <li>{{ date }}</li>
+          <li><shared-design-text size="md">{{ date }}</shared-design-text></li>
           }
         </ul>
       </section>
 
       <section class="confirmation__section">
-        <h2>Next steps</h2>
+        <h2>
+          <shared-design-text size="lg" weight="semibold"
+            >Next steps</shared-design-text
+          >
+        </h2>
         <ul class="confirmation__list">
-          <li>We will confirm your appointment by email.</li>
-          <li>Bring the repository context and current pain points.</li>
-          <li>No payment is required for this fit check.</li>
+          <li>
+            <shared-design-text size="md">
+              We will confirm your appointment by email.
+            </shared-design-text>
+          </li>
+          <li>
+            <shared-design-text size="md">
+              Bring the repository context and current pain points.
+            </shared-design-text>
+          </li>
+          <li>
+            <shared-design-text size="md">
+              No payment is required for this fit check.
+            </shared-design-text>
+          </li>
         </ul>
       </section>
 
@@ -312,16 +488,20 @@
           class="confirmation__button confirmation__button--primary"
           routerLink="/products"
         >
-          Continue browsing
+          <shared-design-text tone="inverse" size="sm" weight="semibold">
+            Continue browsing
+          </shared-design-text>
         </a>
         <a
           class="confirmation__button confirmation__button--ghost"
           routerLink="/book"
         >
-          Start another request
+          <shared-design-text size="sm" weight="semibold">
+            Start another request
+          </shared-design-text>
         </a>
       </div>
-    </div>
+    </shared-design-surface>
     }
   </div>
 </section>

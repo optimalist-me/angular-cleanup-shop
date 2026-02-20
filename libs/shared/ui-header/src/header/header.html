@@ -7,10 +7,31 @@
   ></button>
   <div class="header__inner">
     <a class="header__brand" routerLink="/">
-      <span class="header__brand-title">Angular Cleanup Shop</span>
-      <span class="header__brand-subtitle"
-        >Less friction. More efficient development.</span
-      >
+      <img
+        class="header__brand-logo"
+        ngSrc="/images/cleanup-logo.png"
+        width="94"
+        height="92"
+        alt="Angular Cleanup Shop logo"
+        priority
+      />
+      <span class="header__brand-copy">
+        <shared-design-text
+          class="header__brand-title"
+          tone="accent"
+          size="xl"
+          weight="semibold"
+        >
+          Angular Cleanup Shop
+        </shared-design-text>
+        <shared-design-text
+          class="header__brand-subtitle"
+          tone="muted"
+          size="sm"
+        >
+          Less friction. More efficient development.
+        </shared-design-text>
+      </span>
     </a>
     <button
       class="header__toggle"
@@ -64,7 +85,7 @@
         (click)="closeMenu()"
       >
         <ng-icon name="heroShoppingCart" size="18"></ng-icon>
-        <span>Cart</span>
+        <shared-design-text size="sm" weight="medium">Cart</shared-design-text>
         @if (hasCartItems()) {
         <span class="header__cart-count" aria-label="Cart items">
           {{ cartCount() }}

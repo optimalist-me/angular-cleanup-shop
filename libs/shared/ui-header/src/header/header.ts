@@ -6,14 +6,22 @@ import {
   input,
   signal,
 } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroShoppingCart } from '@ng-icons/heroicons/outline';
+import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'shared-header',
-  imports: [NgIconComponent, RouterLink, RouterLinkActive],
+  imports: [
+    NgOptimizedImage,
+    NgIconComponent,
+    RouterLink,
+    RouterLinkActive,
+    SharedDesignText,
+  ],
   templateUrl: './header.html',
   styleUrl: './header.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

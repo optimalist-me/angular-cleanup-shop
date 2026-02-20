@@ -4,7 +4,8 @@
   "peerDependencies": {
     "@angular/core": "^21.1.0",
     "@cleanup/ui-product-tag": "0.0.1",
-    "@angular/common": "~21.1.0"
+    "@angular/common": "~21.1.0",
+    "@cleanup/shared-ui-design-text": "^0.0.1"
   },
   "sideEffects": false
 }

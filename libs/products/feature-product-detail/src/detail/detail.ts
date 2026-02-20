@@ -10,11 +10,22 @@ import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { map } from 'rxjs';
 import { CartRepository } from '@cleanup/data-access-cart';
 import { ProductsRepository } from '@cleanup/data-access-products';
+import { SharedDesignButton } from '@cleanup/shared-ui-design-button';
+import { SharedDesignSurface } from '@cleanup/shared-ui-design-surface';
+import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 import { ProductTag } from '@cleanup/ui-product-tag';
 
 @Component({
   selector: 'products-detail',
-  imports: [CurrencyPipe, NgOptimizedImage, ProductTag, RouterLink],
+  imports: [
+    CurrencyPipe,
+    NgOptimizedImage,
+    ProductTag,
+    RouterLink,
+    SharedDesignButton,
+    SharedDesignSurface,
+    SharedDesignText,
+  ],
   templateUrl: './detail.html',
   styleUrl: './detail.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

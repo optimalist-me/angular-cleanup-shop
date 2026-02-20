@@ -3,13 +3,25 @@
 
   <marketing-section
     eyebrow="The problem"
-    title="Structural friction quietly reduces delivery velocity — until it becomes visible."
+    title="Structural friction quietly reduces delivery velocity, until it becomes visible."
     subtitle="We reduce architectural drag in mature Angular and Nx codebases so teams ship with lower risk, clearer ownership, and predictable change."
   >
     <ul class="home__list">
-      <li>Faster reviews, fewer regressions, and calmer releases.</li>
-      <li>Clearer ownership and fewer “untouchable” areas.</li>
-      <li>Lower cost of change across the entire frontend.</li>
+      <li>
+        <shared-design-text tone="muted" size="lg">
+          Faster reviews, fewer regressions, and calmer releases.
+        </shared-design-text>
+      </li>
+      <li>
+        <shared-design-text tone="muted" size="lg">
+          Clearer ownership and fewer “untouchable” areas.
+        </shared-design-text>
+      </li>
+      <li>
+        <shared-design-text tone="muted" size="lg">
+          Lower cost of change across the entire frontend.
+        </shared-design-text>
+      </li>
     </ul>
   </marketing-section>
 
@@ -20,24 +32,59 @@
     tone="muted"
   >
     <div class="home__grid">
-      <div class="home__card">
-        <h3>What we deliver</h3>
-        <p>
-          Structural improvements that reduce entropy: boundaries, state
-          discipline, and pragmatic refactoring.
+      <shared-design-surface
+        class="home__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="home__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            What we deliver
+          </shared-design-text>
+        </h3>
+        <p class="home__card-copy">
+          <shared-design-text tone="muted" size="md">
+            Structural improvements that reduce entropy: boundaries, state
+            discipline, and pragmatic refactoring.
+          </shared-design-text>
         </p>
-      </div>
-      <div class="home__card">
-        <h3>What we refuse</h3>
-        <p>Rewrite projects, staff augmentation, and velocity theatre.</p>
-      </div>
-      <div class="home__card">
-        <h3>Why it pays</h3>
-        <p>
-          Every reduction in friction compounds: future features become cheaper,
-          safer, and faster to review.
+      </shared-design-surface>
+      <shared-design-surface
+        class="home__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="home__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            What we refuse
+          </shared-design-text>
+        </h3>
+        <p class="home__card-copy">
+          <shared-design-text tone="muted" size="md">
+            Rewrite projects, staff augmentation, and velocity theatre.
+          </shared-design-text>
         </p>
-      </div>
+      </shared-design-surface>
+      <shared-design-surface
+        class="home__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="home__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            Why it pays
+          </shared-design-text>
+        </h3>
+        <p class="home__card-copy">
+          <shared-design-text tone="muted" size="md">
+            Every reduction in friction compounds: future features become
+            cheaper, safer, and faster to review.
+          </shared-design-text>
+        </p>
+      </shared-design-surface>
     </div>
   </marketing-section>
 
@@ -47,69 +94,198 @@
     subtitle="Each product is a clear outcome paired with a proven structural pattern. No gimmicks, just disciplined improvements."
   >
     <div class="home__product-grid">
-      <article
-        class="home__product-card"
-        routerLink="/products/boundary-polish"
-        tabindex="0"
-      >
-        <h3>Boundary Polish</h3>
-        <p>Restores domain boundaries and removes cross-team coupling.</p>
-        <span class="home__pill">Boundaries</span>
-      </article>
-      <article
-        class="home__product-card"
-        routerLink="/products/state-simplifier"
-        tabindex="0"
-      >
-        <h3>State Simplifier</h3>
-        <p>
-          Replaces global complexity with local signals and clear derived state.
-        </p>
-        <span class="home__pill">State</span>
-      </article>
-      <article
-        class="home__product-card"
-        routerLink="/products/template-detangler"
-        tabindex="0"
-      >
-        <h3>Template Detangler</h3>
-        <p>Turns template logic into readable, declarative views.</p>
-        <span class="home__pill">Components</span>
-      </article>
-      <article
-        class="home__product-card"
-        routerLink="/products/rxjs-untangler"
-        tabindex="0"
-      >
-        <h3>RxJS Untangler</h3>
-        <p>Transforms nested operator chains into readable data flows.</p>
-        <span class="home__pill">RxJS</span>
-      </article>
-      <article
-        class="home__product-card"
-        routerLink="/products/onpush-primer"
-        tabindex="0"
-      >
-        <h3>OnPush Primer</h3>
-        <p>Stabilizes change detection and reduces wasted renders.</p>
-        <span class="home__pill">Performance</span>
-      </article>
-      <article
-        class="home__product-card"
-        routerLink="/products/test-stabilizer"
-        tabindex="0"
-      >
-        <h3>Test Stabilizer</h3>
-        <p>Cuts flakiness and increases confidence in production changes.</p>
-        <span class="home__pill">Testing</span>
-      </article>
+      <a class="home__product-link" routerLink="/products/boundary-polish">
+        <shared-design-surface
+          class="home__product-card"
+          tone="default"
+          padding="md"
+          radius="lg"
+        >
+          <h3 class="home__product-title">
+            <shared-design-text size="lg" weight="semibold">
+              Boundary Polish
+            </shared-design-text>
+          </h3>
+          <p class="home__product-copy">
+            <shared-design-text tone="muted" size="md">
+              Restores domain boundaries and removes cross-team coupling.
+            </shared-design-text>
+          </p>
+          <span class="home__pill">
+            <shared-design-text
+              tone="accent"
+              size="sm"
+              weight="medium"
+              [uppercase]="true"
+            >
+              Boundaries
+            </shared-design-text>
+          </span>
+        </shared-design-surface>
+      </a>
+      <a class="home__product-link" routerLink="/products/state-simplifier">
+        <shared-design-surface
+          class="home__product-card"
+          tone="default"
+          padding="md"
+          radius="lg"
+        >
+          <h3 class="home__product-title">
+            <shared-design-text size="lg" weight="semibold">
+              State Simplifier
+            </shared-design-text>
+          </h3>
+          <p class="home__product-copy">
+            <shared-design-text tone="muted" size="md">
+              Replaces global complexity with local signals and clear derived
+              state.
+            </shared-design-text>
+          </p>
+          <span class="home__pill">
+            <shared-design-text
+              tone="accent"
+              size="sm"
+              weight="medium"
+              [uppercase]="true"
+            >
+              State
+            </shared-design-text>
+          </span>
+        </shared-design-surface>
+      </a>
+      <a class="home__product-link" routerLink="/products/template-detangler">
+        <shared-design-surface
+          class="home__product-card"
+          tone="default"
+          padding="md"
+          radius="lg"
+        >
+          <h3 class="home__product-title">
+            <shared-design-text size="lg" weight="semibold">
+              Template Detangler
+            </shared-design-text>
+          </h3>
+          <p class="home__product-copy">
+            <shared-design-text tone="muted" size="md">
+              Turns template logic into readable, declarative views.
+            </shared-design-text>
+          </p>
+          <span class="home__pill">
+            <shared-design-text
+              tone="accent"
+              size="sm"
+              weight="medium"
+              [uppercase]="true"
+            >
+              Components
+            </shared-design-text>
+          </span>
+        </shared-design-surface>
+      </a>
+      <a class="home__product-link" routerLink="/products/rxjs-untangler">
+        <shared-design-surface
+          class="home__product-card"
+          tone="default"
+          padding="md"
+          radius="lg"
+        >
+          <h3 class="home__product-title">
+            <shared-design-text size="lg" weight="semibold">
+              RxJS Untangler
+            </shared-design-text>
+          </h3>
+          <p class="home__product-copy">
+            <shared-design-text tone="muted" size="md">
+              Transforms nested operator chains into readable data flows.
+            </shared-design-text>
+          </p>
+          <span class="home__pill">
+            <shared-design-text
+              tone="accent"
+              size="sm"
+              weight="medium"
+              [uppercase]="true"
+            >
+              RxJS
+            </shared-design-text>
+          </span>
+        </shared-design-surface>
+      </a>
+      <a class="home__product-link" routerLink="/products/onpush-primer">
+        <shared-design-surface
+          class="home__product-card"
+          tone="default"
+          padding="md"
+          radius="lg"
+        >
+          <h3 class="home__product-title">
+            <shared-design-text size="lg" weight="semibold">
+              OnPush Primer
+            </shared-design-text>
+          </h3>
+          <p class="home__product-copy">
+            <shared-design-text tone="muted" size="md">
+              Stabilizes change detection and reduces wasted renders.
+            </shared-design-text>
+          </p>
+          <span class="home__pill">
+            <shared-design-text
+              tone="accent"
+              size="sm"
+              weight="medium"
+              [uppercase]="true"
+            >
+              Performance
+            </shared-design-text>
+          </span>
+        </shared-design-surface>
+      </a>
+      <a class="home__product-link" routerLink="/products/test-stabilizer">
+        <shared-design-surface
+          class="home__product-card"
+          tone="default"
+          padding="md"
+          radius="lg"
+        >
+          <h3 class="home__product-title">
+            <shared-design-text size="lg" weight="semibold">
+              Test Stabilizer
+            </shared-design-text>
+          </h3>
+          <p class="home__product-copy">
+            <shared-design-text tone="muted" size="md">
+              Cuts flakiness and increases confidence in production changes.
+            </shared-design-text>
+          </p>
+          <span class="home__pill">
+            <shared-design-text
+              tone="accent"
+              size="sm"
+              weight="medium"
+              [uppercase]="true"
+            >
+              Testing
+            </shared-design-text>
+          </span>
+        </shared-design-surface>
+      </a>
     </div>
     <div class="home__actions">
       <a class="home__link home__link--primary" routerLink="/products">
-        Explore outcomes
+        <shared-design-text tone="inverse" size="md" weight="semibold">
+          Explore outcomes
+        </shared-design-text>
       </a>
-      <a class="home__link" routerLink="/playbook">Read the playbook</a>
-      <a class="home__link" routerLink="/architecture">See architecture</a>
+      <a class="home__link" routerLink="/playbook">
+        <shared-design-text tone="accent" size="md" weight="semibold">
+          Read the playbook
+        </shared-design-text>
+      </a>
+      <a class="home__link" routerLink="/architecture">
+        <shared-design-text tone="accent" size="md" weight="semibold">
+          See architecture
+        </shared-design-text>
+      </a>
     </div>
   </marketing-section>
 
@@ -120,26 +296,60 @@
     tone="muted"
   >
     <div class="home__trust">
-      <div class="home__trust-item">
-        <h3>Nx Partner</h3>
-        <p>
-          Aligned with Nx best practices for scalable monorepos and domain
-          boundaries.
+      <shared-design-surface
+        class="home__trust-item"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="home__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            Nx Partner
+          </shared-design-text>
+        </h3>
+        <p class="home__card-copy">
+          <shared-design-text tone="muted" size="md">
+            Aligned with Nx best practices for scalable monorepos and domain
+            boundaries.
+          </shared-design-text>
         </p>
-      </div>
-      <div class="home__trust-item">
-        <h3>Nx Certified Expert</h3>
-        <p>
-          Deep Nx expertise applied to real-world Angular delivery constraints.
+      </shared-design-surface>
+      <shared-design-surface
+        class="home__trust-item"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="home__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            Nx Certified Expert
+          </shared-design-text>
+        </h3>
+        <p class="home__card-copy">
+          <shared-design-text tone="muted" size="md">
+            Deep Nx expertise applied to real-world Angular delivery
+            constraints.
+          </shared-design-text>
         </p>
-      </div>
-      <div class="home__trust-item">
-        <h3>Production-safe</h3>
-        <p>
-          Small, reviewable changes with clear rollback paths and low
-          operational risk.
+      </shared-design-surface>
+      <shared-design-surface
+        class="home__trust-item"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="home__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            Production-safe
+          </shared-design-text>
+        </h3>
+        <p class="home__card-copy">
+          <shared-design-text tone="muted" size="md">
+            Small, reviewable changes with clear rollback paths and low
+            operational risk.
+          </shared-design-text>
         </p>
-      </div>
+      </shared-design-surface>
     </div>
   </marketing-section>
 
@@ -152,7 +362,9 @@
   >
     <div class="home__actions home__actions--center">
       <a class="home__link home__link--primary" routerLink="/book">
-        Request a 20-min fit check
+        <shared-design-text tone="inverse" size="md" weight="semibold">
+          Request a 20-min fit check
+        </shared-design-text>
       </a>
     </div>
   </marketing-section>

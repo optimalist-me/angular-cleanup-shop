@@ -5,55 +5,132 @@
     subtitle="Short, calm answers to the most common questions about the Angular Cleanup Shop."
   >
     <div class="faq__grid">
-      <article class="faq__card">
-        <h3>Is this just refactoring?</h3>
-        <p>
-          No. We reduce structural friction so teams can move faster with less
-          risk. Cleanup is the means; efficiency is the outcome.
+      <shared-design-surface
+        class="faq__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="faq__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            Is this just refactoring?
+          </shared-design-text>
+        </h3>
+        <p class="faq__card-copy">
+          <shared-design-text tone="muted" size="md">
+            No. We reduce structural friction so teams can move faster with less
+            risk. Cleanup is the means; efficiency is the outcome.
+          </shared-design-text>
         </p>
-      </article>
-      <article class="faq__card">
-        <h3>Why only one day per week?</h3>
-        <p>
-          Consistency beats intensity. A weekly cadence keeps changes small,
-          reviewable, and low-risk while protecting your delivery timeline.
+      </shared-design-surface>
+      <shared-design-surface
+        class="faq__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="faq__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            Why only one day per week?
+          </shared-design-text>
+        </h3>
+        <p class="faq__card-copy">
+          <shared-design-text tone="muted" size="md">
+            Consistency beats intensity. A weekly cadence keeps changes small,
+            reviewable, and low-risk while protecting your delivery timeline.
+          </shared-design-text>
         </p>
-      </article>
-      <article class="faq__card">
-        <h3>Can you also build features?</h3>
-        <p>
-          No. This model is maintenance-first. Feature delivery remains with
-          your team so structural improvements stay focused and predictable.
+      </shared-design-surface>
+      <shared-design-surface
+        class="faq__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="faq__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            Can you also build features?
+          </shared-design-text>
+        </h3>
+        <p class="faq__card-copy">
+          <shared-design-text tone="muted" size="md">
+            No. This model is maintenance-first. Feature delivery remains with
+            your team so structural improvements stay focused and predictable.
+          </shared-design-text>
         </p>
-      </article>
-      <article class="faq__card">
-        <h3>Do you work with Nx monorepos?</h3>
-        <p>
-          Yes. Nx is a first-class environment for this work: boundaries,
-          ownership, and dependency rules become enforceable.
+      </shared-design-surface>
+      <shared-design-surface
+        class="faq__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="faq__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            Do you work with Nx monorepos?
+          </shared-design-text>
+        </h3>
+        <p class="faq__card-copy">
+          <shared-design-text tone="muted" size="md">
+            Yes. Nx is a first-class environment for this work: boundaries,
+            ownership, and dependency rules become enforceable.
+          </shared-design-text>
         </p>
-      </article>
-      <article class="faq__card">
-        <h3>What is the day rate?</h3>
-        <p>
-          €800 per day, fixed. The value is in reduced entropy and lower cost of
-          change, not hours logged.
+      </shared-design-surface>
+      <shared-design-surface
+        class="faq__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="faq__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            What is the day rate?
+          </shared-design-text>
+        </h3>
+        <p class="faq__card-copy">
+          <shared-design-text tone="muted" size="md">
+            EUR 800 per day, fixed. The value is in reduced entropy and lower
+            cost of change, not hours logged.
+          </shared-design-text>
         </p>
-      </article>
-      <article class="faq__card">
-        <h3>What does success look like after 4–8 weeks?</h3>
-        <p>
-          Smaller components, clearer ownership, safer PRs, and teams that ship
-          with more confidence and less overhead.
+      </shared-design-surface>
+      <shared-design-surface
+        class="faq__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="faq__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            What does success look like after 4-8 weeks?
+          </shared-design-text>
+        </h3>
+        <p class="faq__card-copy">
+          <shared-design-text tone="muted" size="md">
+            Smaller components, clearer ownership, safer PRs, and teams that
+            ship with more confidence and less overhead.
+          </shared-design-text>
         </p>
-      </article>
-      <article class="faq__card">
-        <h3>When is this not a fit?</h3>
-        <p>
-          If you need urgent feature throughput, a rewrite, or temporary
-          capacity, this model will feel too slow and deliberate.
+      </shared-design-surface>
+      <shared-design-surface
+        class="faq__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3 class="faq__card-title">
+          <shared-design-text size="lg" weight="semibold">
+            When is this not a fit?
+          </shared-design-text>
+        </h3>
+        <p class="faq__card-copy">
+          <shared-design-text tone="muted" size="md">
+            If you need urgent feature throughput, a rewrite, or temporary
+            capacity, this model will feel too slow and deliberate.
+          </shared-design-text>
         </p>
-      </article>
+      </shared-design-surface>
     </div>
   </marketing-section>
 
@@ -66,9 +143,15 @@
   >
     <div class="faq__actions">
       <a class="faq__link faq__link--primary" routerLink="/book">
-        Request a 20-min fit check
+        <shared-design-text tone="inverse" size="md" weight="semibold">
+          Request a 20-min fit check
+        </shared-design-text>
       </a>
-      <a class="faq__link" routerLink="/playbook">Read the playbook</a>
+      <a class="faq__link" routerLink="/playbook">
+        <shared-design-text tone="accent" size="md" weight="semibold">
+          Read the playbook
+        </shared-design-text>
+      </a>
     </div>
   </marketing-section>
 </div>

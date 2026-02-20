@@ -1,0 +1,8 @@
+# Regex allowlist for .github/scripts/check-design-token-css.sh
+#
+# Rules are matched against full rg output lines in this format:
+# path/to/file.css:line-number:line-content
+#
+# Keep rules narrow and file-scoped to avoid masking real violations.
+# Example:
+# ^libs/shared/ui-legacy/src/legacy/legacy\.css:[0-9]+:.*#[0-9A-Fa-f]{6}\b
