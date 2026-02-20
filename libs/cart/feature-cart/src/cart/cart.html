@@ -1,11 +1,21 @@
 <section class="cart">
   <div class="cart__inner">
-    <a class="cart__back" routerLink="/products">Back to products</a>
+    <a class="cart__back" routerLink="/products">
+      <shared-design-text tone="accent" size="sm" weight="semibold">
+        Back to products
+      </shared-design-text>
+    </a>
 
     <header class="cart__intro">
-      <h1 class="cart__title">Your cart</h1>
+      <h1 class="cart__title">
+        <shared-design-text size="xl" weight="semibold"
+          >Your cart</shared-design-text
+        >
+      </h1>
       <p class="cart__subtitle">
-        Review the cleanups you are about to schedule.
+        <shared-design-text tone="muted" size="lg">
+          Review the cleanups you are about to schedule.
+        </shared-design-text>
       </p>
     </header>
 
@@ -36,10 +46,23 @@
       </aside>
     </div>
     } @else {
-    <div class="cart__empty">
-      <p>Your cart is empty.</p>
-      <a class="cart__empty-link" routerLink="/products"> Browse products </a>
-    </div>
+    <shared-design-surface
+      class="cart__empty"
+      tone="default"
+      padding="lg"
+      radius="lg"
+    >
+      <p>
+        <shared-design-text tone="muted" size="md"
+          >Your cart is empty.</shared-design-text
+        >
+      </p>
+      <a class="cart__empty-link" routerLink="/products">
+        <shared-design-text tone="inverse" size="sm" weight="semibold">
+          Browse products
+        </shared-design-text>
+      </a>
+    </shared-design-surface>
     }
   </div>
 </section>

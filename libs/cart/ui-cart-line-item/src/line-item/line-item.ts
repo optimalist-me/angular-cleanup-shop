@@ -5,10 +5,11 @@ import {
   output,
 } from '@angular/core';
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
+import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 
 @Component({
   selector: 'cart-line-item',
-  imports: [CurrencyPipe, NgOptimizedImage],
+  imports: [CurrencyPipe, NgOptimizedImage, SharedDesignText],
   templateUrl: './line-item.html',
   styleUrl: './line-item.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

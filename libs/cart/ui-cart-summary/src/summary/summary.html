@@ -1,15 +1,31 @@
 <section class="summary">
   <header class="summary__header">
-    <h2 class="summary__title">Order summary</h2>
-    <span class="summary__count">{{ formattedItems() }}</span>
+    <h2 class="summary__title">
+      <shared-design-text size="lg" weight="semibold">
+        Order summary
+      </shared-design-text>
+    </h2>
+    <span class="summary__count">
+      <shared-design-text tone="muted" size="sm">
+        {{ formattedItems() }}
+      </shared-design-text>
+    </span>
   </header>
 
   <div class="summary__row">
-    <span>Subtotal</span>
-    <strong>{{ subtotal() | currency: 'EUR':'symbol':'1.0-0' }}</strong>
+    <span>
+      <shared-design-text tone="muted" size="md">Subtotal</shared-design-text>
+    </span>
+    <strong>
+      <shared-design-text size="md" weight="semibold">
+        {{ subtotal() | currency: 'EUR':'symbol':'1.0-0' }}
+      </shared-design-text>
+    </strong>
   </div>
 
   <button type="button" class="summary__cta" (click)="submitCheckout()">
-    {{ ctaLabel() }}
+    <shared-design-text tone="inverse" size="sm" weight="semibold">
+      {{ ctaLabel() }}
+    </shared-design-text>
   </button>
 </section>

@@ -6,12 +6,20 @@ import {
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CartRepository } from '@cleanup/data-access-cart';
+import { SharedDesignSurface } from '@cleanup/shared-ui-design-surface';
+import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 import { CartLineItem } from '@cleanup/ui-cart-line-item';
 import { CartSummary } from '@cleanup/ui-cart-summary';
 
 @Component({
   selector: 'cart-cart',
-  imports: [CartLineItem, CartSummary, RouterLink],
+  imports: [
+    CartLineItem,
+    CartSummary,
+    RouterLink,
+    SharedDesignSurface,
+    SharedDesignText,
+  ],
   templateUrl: './cart.html',
   styleUrl: './cart.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
