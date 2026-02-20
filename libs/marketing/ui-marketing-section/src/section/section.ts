@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 
 @Component({
   selector: 'marketing-section',
-  imports: [],
+  imports: [SharedDesignText],
   templateUrl: './section.html',
   styleUrl: './section.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

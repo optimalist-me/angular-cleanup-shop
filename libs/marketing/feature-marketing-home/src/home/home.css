@@ -9,115 +9,94 @@
 
 .home__list {
   margin: 0;
-  padding-left: 20px;
-  color: #5b6770;
+  padding-left: var(--ds-space-5);
   display: grid;
-  gap: 8px;
-  line-height: 1.6;
+  gap: var(--ds-space-2);
+}
+
+.home__list li {
+  line-height: var(--ds-line-height-base);
 }
 
 .home__grid {
   display: grid;
-  gap: 16px;
+  gap: var(--ds-space-4);
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .home__card {
-  border: 1px solid #d6dde3;
-  border-radius: 16px;
-  padding: 16px;
-  background: #ffffff;
-  color: #1f2933;
-  display: grid;
-  gap: 8px;
+  height: 100%;
 }
 
-.home__card h3 {
+.home__card-title,
+.home__card-copy,
+.home__product-title,
+.home__product-copy {
   margin: 0;
-  font-size: 16px;
 }
 
-.home__card p {
-  margin: 0;
-  font-size: 14px;
-  color: #5b6770;
-  line-height: 1.5;
+.home__card-copy,
+.home__product-copy {
+  line-height: var(--ds-line-height-base);
 }
 
 .home__product-grid {
   display: grid;
-  gap: 16px;
+  gap: var(--ds-space-4);
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.home__product-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--ds-surface-radius);
+  transition:
+    transform var(--ds-duration-fast) var(--ds-easing-standard),
+    box-shadow var(--ds-duration-fast) var(--ds-easing-standard);
+}
+
+.home__product-link:hover,
+.home__product-link:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--ds-shadow-1);
+}
+
+.home__product-link:focus-visible {
+  outline: none;
+}
+
 .home__product-card {
-  border: 1px solid #d6dde3;
-  border-radius: 18px;
-  padding: 18px;
-  background: #ffffff;
-  display: grid;
-  gap: 8px;
-  color: #1f2933;
-  min-height: 140px;
-}
-
-.home__product-card h3 {
-  margin: 0;
-  font-size: 16px;
-}
-
-.home__product-card p {
-  margin: 0;
-  font-size: 14px;
-  color: #5b6770;
-  line-height: 1.5;
+  height: 100%;
+  min-height: 170px;
 }
 
 .home__pill {
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid #d6dde3;
-  font-size: 12px;
-  color: #1a7f68;
-  background: #f4f7f6;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  min-height: 24px;
+  padding: 0 var(--ds-space-2);
+  border-radius: var(--ds-radius-pill);
+  border: var(--ds-border-width-default) solid var(--ds-border-subtle);
+  background: var(--ds-surface-subtle);
+  margin-top: var(--ds-space-1);
 }
 
 .home__trust {
   display: grid;
-  gap: 16px;
+  gap: var(--ds-space-4);
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .home__trust-item {
-  border: 1px solid #d6dde3;
-  border-radius: 16px;
-  padding: 16px;
-  background: #ffffff;
-  display: grid;
-  gap: 8px;
-}
-
-.home__trust-item h3 {
-  margin: 0;
-  font-size: 16px;
-}
-
-.home__trust-item p {
-  margin: 0;
-  font-size: 14px;
-  color: #5b6770;
-  line-height: 1.5;
+  height: 100%;
 }
 
 .home__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--ds-space-3);
   align-items: center;
 }
 
@@ -129,19 +108,31 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(26, 127, 104, 0.2);
+  min-height: var(--ds-button-height-md);
+  padding: 0 var(--ds-button-padding-x-md);
+  border-radius: var(--ds-radius-pill);
+  border: var(--ds-border-width-default) solid var(--ds-action-secondary-border);
   text-decoration: none;
-  color: #1a7f68;
-  font-size: 14px;
-  font-weight: 600;
-  background: #e6f2ef;
+  background: var(--ds-action-secondary-bg);
+  transition:
+    background-color var(--ds-duration-fast) var(--ds-easing-standard),
+    border-color var(--ds-duration-fast) var(--ds-easing-standard);
 }
 
 .home__link--primary {
-  background: #1a7f68;
-  color: #ffffff;
+  background: var(--ds-action-primary-bg);
+  border-color: transparent;
+}
+
+.home__link:hover,
+.home__link:focus-visible {
+  background: var(--ds-action-secondary-hover);
+  border-color: var(--ds-field-border-focus);
+}
+
+.home__link--primary:hover,
+.home__link--primary:focus-visible {
+  background: var(--ds-action-primary-hover);
   border-color: transparent;
 }
 
