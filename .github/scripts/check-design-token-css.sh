@@ -18,6 +18,17 @@ css_globs=(
 has_violations=0
 
 declare -a allowlist_rules=()
+search_tool=""
+
+if command -v rg >/dev/null 2>&1; then
+  search_tool="rg"
+elif command -v grep >/dev/null 2>&1; then
+  search_tool="grep"
+  echo "Warning: rg (ripgrep) not found. Falling back to grep for CSS token guard checks." >&2
+else
+  echo "Error: neither rg nor grep is available. Cannot run CSS token guard." >&2
+  exit 1
+fi
 
 if [[ -f "$allowlist_file" ]]; then
   while IFS= read -r line; do
@@ -39,14 +50,43 @@ is_allowlisted() {
   return 1
 }
 
+run_search() {
+  local pattern="$1"
+
+  if [[ "$search_tool" == "rg" ]]; then
+    rg -n -e "$pattern" "${css_globs[@]}" "${scan_paths[@]}"
+    return
+  fi
+
+  grep -R -n -E \
+    --include="*.css" \
+    --include="*.scss" \
+    "$pattern" \
+    "${scan_paths[@]}"
+}
+
 check_pattern() {
   local description="$1"
   local pattern="$2"
   local header_printed=0
   local has_blocking_matches=0
   local all_matches
+  local search_status
 
-  all_matches="$(rg -n -e "$pattern" "${css_globs[@]}" "${scan_paths[@]}" || true)"
+  set +e
+  all_matches="$(run_search "$pattern" 2>&1)"
+  search_status=$?
+  set -e
+
+  if [[ "$search_status" -eq 1 ]]; then
+    return
+  fi
+
+  if [[ "$search_status" -ne 0 ]]; then
+    echo "Error while checking for forbidden $description." >&2
+    echo "$all_matches" >&2
+    exit 1
+  fi
 
   [[ -z "$all_matches" ]] && return
 
