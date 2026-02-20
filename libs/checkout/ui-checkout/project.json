@@ -1,0 +1,32 @@
+{
+  "name": "ui-checkout",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/checkout/ui-checkout/src",
+  "prefix": "checkout",
+  "projectType": "library",
+  "tags": ["domain:checkout", "type:ui", "scope:lib"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/checkout/ui-checkout/ng-package.json",
+        "tsConfig": "libs/checkout/ui-checkout/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/checkout/ui-checkout/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/angular:unit-test",
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

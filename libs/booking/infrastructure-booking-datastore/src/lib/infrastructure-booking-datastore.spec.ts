@@ -27,8 +27,14 @@ async function withDatastore<T>(
       name TEXT NOT NULL,
       company TEXT NOT NULL,
       team_size INTEGER NOT NULL,
+      angular_version TEXT NOT NULL,
+      uses_nx INTEGER NOT NULL,
+      pain_area TEXT NOT NULL,
       notes TEXT,
       preferred_dates TEXT,
+      cart_items TEXT NOT NULL,
+      cart_subtotal REAL NOT NULL,
+      cart_item_count INTEGER NOT NULL,
       created_at TEXT NOT NULL,
       completed_at TEXT
     );
@@ -53,7 +59,11 @@ describe('booking datastore', () => {
         name: 'Lena',
         company: 'Cleanup Shop',
         teamSize: 4,
+        angularVersion: '21',
+        usesNx: true,
+        painArea: 'boundaries',
         notes: 'Prefers mornings',
+        preferredDates: ['2026-03-01'],
       });
 
       const fetched = await datastore.getBooking(saved.id);
@@ -71,19 +81,27 @@ describe('booking datastore', () => {
         name: 'Tori',
         company: 'Cleanup Shop',
         teamSize: 2,
+        angularVersion: '20',
+        usesNx: true,
+        painArea: 'state',
+        preferredDates: ['2026-03-01'],
       });
       const alex = await datastore.saveBooking({
         email: 'alex@example.com',
         name: 'Alex',
         company: 'Cleanup Shop',
         teamSize: 6,
+        angularVersion: '21',
+        usesNx: false,
+        painArea: 'testing',
+        preferredDates: ['2026-03-10'],
       });
 
       const all = await datastore.getAllBookings();
       const filtered = await datastore.getBookingsByEmail('tori@example.com');
 
-      expect(all.some(b => b.id === tori.id)).toBe(true);
-      expect(all.some(b => b.id === alex.id)).toBe(true);
+      expect(all.some((b) => b.id === tori.id)).toBe(true);
+      expect(all.some((b) => b.id === alex.id)).toBe(true);
       expect(filtered).toHaveLength(1);
       expect(filtered[0]?.email).toBe('tori@example.com');
     });
@@ -96,6 +114,10 @@ describe('booking datastore', () => {
         name: 'Sam',
         company: 'Cleanup Shop',
         teamSize: 3,
+        angularVersion: '21',
+        usesNx: true,
+        painArea: 'boundaries',
+        preferredDates: ['2026-03-08'],
       });
 
       const completed = await datastore.markBookingCompleted(saved.id);

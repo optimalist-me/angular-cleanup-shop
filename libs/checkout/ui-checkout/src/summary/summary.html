@@ -1,0 +1,11 @@
+<section class="summary">
+  <header class="summary__header">
+    <h2 class="summary__title">{{ caption() }}</h2>
+    <span class="summary__count">{{ formattedItems() }}</span>
+  </header>
+
+  <div class="summary__row">
+    <span>Subtotal</span>
+    <strong>{{ subtotal() | currency: 'EUR':'symbol':'1.0-0' }}</strong>
+  </div>
+</section>

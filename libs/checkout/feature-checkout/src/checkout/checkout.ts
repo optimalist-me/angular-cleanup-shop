@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -15,35 +15,42 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { catchError, of, startWith, take } from 'rxjs';
 import { BookingsRepository } from '@cleanup/data-access-booking';
-import { BookingDetails, BookingRequest } from '@cleanup/models-booking';
-import { catchError, map, of, startWith, switchMap, take } from 'rxjs';
+import { CartRepository } from '@cleanup/data-access-cart';
+import { type BookingRequest } from '@cleanup/models-booking';
+import { CartLineItem } from '@cleanup/ui-cart-line-item';
+import { CheckoutSummary } from '@cleanup/ui-checkout';
 
-type ConfirmationState = {
-  loading: boolean;
-  bookingId: string | null;
-  booking: BookingDetails | null;
-  error: string | null;
-};
-
-type BookingStep = 'details' | 'schedule';
+type CheckoutStep = 'review' | 'details' | 'schedule';
 
 @Component({
-  selector: 'booking-booking',
-  imports: [CommonModule, RouterLink, DatePipe, ReactiveFormsModule],
-  templateUrl: './booking.html',
-  styleUrl: './booking.css',
+  selector: 'checkout-checkout',
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    CartLineItem,
+    CheckoutSummary,
+  ],
+  templateUrl: './checkout.html',
+  styleUrl: './checkout.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BookingBooking {
-  private readonly route = inject(ActivatedRoute);
+export class CheckoutCheckout {
+  private readonly cartRepository = inject(CartRepository);
   private readonly bookingsRepository = inject(BookingsRepository);
   private readonly router = inject(Router);
 
-  readonly step = signal<BookingStep>('details');
+  readonly step = signal<CheckoutStep>('review');
   readonly submitting = signal(false);
   readonly submissionError = signal<string | null>(null);
+
+  readonly items = this.cartRepository.items;
+  readonly itemCount = this.cartRepository.itemCount;
+  readonly subtotal = this.cartRepository.subtotal;
+  readonly hasItems = computed(() => this.items().length > 0);
 
   readonly detailsForm = new FormGroup({
     name: new FormControl('', {
@@ -96,70 +103,6 @@ export class BookingBooking {
     { initialValue: this.scheduleForm.status },
   );
 
-  readonly confirmationState = toSignal(
-    this.route.paramMap.pipe(
-      map((params) => params.get('bookingId')),
-      switchMap((bookingId) => {
-        if (!bookingId) {
-          return of<ConfirmationState>({
-            loading: false,
-            bookingId: null,
-            booking: null,
-            error: null,
-          });
-        }
-
-        return this.bookingsRepository.getBookingById(bookingId).pipe(
-          map((response) => {
-            if (response.success && response.booking) {
-              return {
-                loading: false,
-                bookingId,
-                booking: response.booking,
-                error: null,
-              } satisfies ConfirmationState;
-            }
-
-            return {
-              loading: false,
-              bookingId,
-              booking: null,
-              error: response.message ?? 'Booking could not be found.',
-            } satisfies ConfirmationState;
-          }),
-          startWith({
-            loading: true,
-            bookingId,
-            booking: null,
-            error: null,
-          } satisfies ConfirmationState),
-          catchError(() =>
-            of<ConfirmationState>({
-              loading: false,
-              bookingId,
-              booking: null,
-              error: 'Could not load booking details.',
-            }),
-          ),
-        );
-      }),
-    ),
-    {
-      initialValue: {
-        loading: true,
-        bookingId: null,
-        booking: null,
-        error: null,
-      } satisfies ConfirmationState,
-    },
-  );
-
-  readonly isConfirmation = computed(
-    () => this.confirmationState().bookingId !== null,
-  );
-  readonly booking = computed(() => this.confirmationState().booking);
-  readonly error = computed(() => this.confirmationState().error);
-  readonly loading = computed(() => this.confirmationState().loading);
   readonly canContinueFromDetails = computed(
     () => this.detailsStatus() === 'VALID',
   );
@@ -174,6 +117,19 @@ export class BookingBooking {
     return this.scheduleForm.controls.preferredDates.controls;
   }
 
+  updateQuantity(id: string, quantity: number): void {
+    this.cartRepository.updateQuantity(id, quantity);
+  }
+
+  removeItem(id: string): void {
+    this.cartRepository.removeItem(id);
+  }
+
+  toDetailsStep(): void {
+    this.submissionError.set(null);
+    this.step.set('details');
+  }
+
   toScheduleStep(): void {
     if (this.detailsForm.invalid) {
       this.detailsForm.markAllAsTouched();
@@ -182,6 +138,10 @@ export class BookingBooking {
 
     this.submissionError.set(null);
     this.step.set('schedule');
+  }
+
+  backToReview(): void {
+    this.step.set('review');
   }
 
   backToDetails(): void {
@@ -218,7 +178,7 @@ export class BookingBooking {
     dates.updateValueAndValidity();
   }
 
-  submitBooking(): void {
+  submit(): void {
     if (!this.canSubmit()) {
       this.detailsForm.markAllAsTouched();
       this.scheduleForm.markAllAsTouched();
@@ -227,7 +187,7 @@ export class BookingBooking {
 
     const payload = this.buildRequest();
     if (!payload) {
-      this.submissionError.set('Missing required booking details.');
+      this.submissionError.set('Missing required checkout details.');
       return;
     }
 
@@ -252,13 +212,14 @@ export class BookingBooking {
           return;
         }
 
-        if (!response.success || !response.bookingId) {
+        if (!response?.success || !response.bookingId) {
           this.submissionError.set(
-            response.message ?? 'We could not submit your request.',
+            response?.message ?? 'We could not submit your request.',
           );
           return;
         }
 
+        this.cartRepository.clear();
         void this.router.navigate(['/book/confirmed', response.bookingId]);
       });
   }

@@ -49,6 +49,21 @@ export const appRoutes: Route[] = [
       import('@cleanup/feature-cart').then((m) => m.cartRoutes),
   },
   {
+    path: 'checkout',
+    loadChildren: () =>
+      import('@cleanup/feature-checkout').then((m) => m.checkoutRoutes),
+  },
+  {
+    path: 'book/confirmed/:bookingId',
+    loadChildren: () =>
+      import('@cleanup/feature-booking').then((m) => m.bookingRoutes),
+  },
+  {
+    path: 'book/confirmed',
+    redirectTo: '/book',
+    pathMatch: 'full',
+  },
+  {
     path: 'book',
     loadChildren: () =>
       import('@cleanup/feature-booking').then((m) => m.bookingRoutes),

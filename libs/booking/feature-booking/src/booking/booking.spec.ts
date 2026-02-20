@@ -1,219 +1,352 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BookingBooking } from './booking';
+import { convertToParamMap, provideRouter } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { BookingsRepository } from '@cleanup/data-access-booking';
-import { provideRouter, Router } from '@angular/router';
-import { vi } from 'vitest';
+import { BookingBooking } from './booking';
 
 describe('BookingBooking', () => {
-  let component: BookingBooking;
   let fixture: ComponentFixture<BookingBooking>;
-  let repository: BookingsRepository;
+  let component: BookingBooking;
+  let paramMap$: BehaviorSubject<ReturnType<typeof convertToParamMap>>;
+  let bookingsRepositoryStub: {
+    getBookingById: ReturnType<typeof vi.fn>;
+    createBooking: ReturnType<typeof vi.fn>;
+  };
 
-  beforeEach(async () => {
+  const successResponse = {
+    success: true,
+    booking: {
+      id: 'booking-1',
+      name: 'Maya Stone',
+      email: 'maya@cleanup.shop',
+      company: 'Cleanup Labs',
+      teamSize: 8,
+      angularVersion: '21',
+      usesNx: true,
+      painArea: 'boundaries' as const,
+      notes: 'Need guidance',
+      preferredDates: ['2026-03-11'],
+      createdAt: '2026-03-01T00:00:00.000Z',
+    },
+  };
+
+  async function setup(options?: {
+    bookingId?: string | null;
+    getResponse$?: Observable<unknown>;
+    createResponse$?: Observable<unknown>;
+  }): Promise<void> {
+    const bookingId = options?.bookingId;
+    paramMap$ = new BehaviorSubject(
+      convertToParamMap(bookingId ? { bookingId } : {}),
+    );
+
+    bookingsRepositoryStub = {
+      getBookingById: vi.fn(() => options?.getResponse$ ?? of(successResponse)),
+      createBooking: vi.fn(
+        () =>
+          options?.createResponse$ ??
+          of({
+            success: true,
+            bookingId: 'booking-123',
+            message: 'Created',
+          }),
+      ),
+    };
+
     await TestBed.configureTestingModule({
       imports: [BookingBooking],
-      providers: [BookingsRepository, provideRouter([])],
+      providers: [
+        provideRouter([]),
+        {
+          provide: ActivatedRoute,
+          useValue: { paramMap: paramMap$.asObservable() },
+        },
+        {
+          provide: BookingsRepository,
+          useValue: bookingsRepositoryStub,
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BookingBooking);
     component = fixture.componentInstance;
-    repository = TestBed.inject(BookingsRepository);
-    fixture.detectChanges();
-  });
+    await fixture.whenStable();
+  }
 
-  it('should create', () => {
+  it('should create', async () => {
+    await setup();
     expect(component).toBeTruthy();
   });
 
-  it('should inject BookingsRepository', () => {
-    expect(component.repository).toBe(repository);
-  });
-
-  it('should expose repository signals', () => {
-    expect(component.step$).toBeDefined();
-    expect(component.draft$).toBeDefined();
-    expect(component.status$).toBeDefined();
-    expect(component.error$).toBeDefined();
-    expect(component.confirmation$).toBeDefined();
-    expect(component.canSubmit$).toBeDefined();
-  });
-
-  it('should start on info step', () => {
-    expect(component.step$()).toBe('info');
-  });
-
-  it('should render info step form initially', () => {
+  it('shows booking form when bookingId route param is absent', async () => {
+    await setup();
     fixture.detectChanges();
-    const form = fixture.nativeElement.querySelector('.booking__form');
-    expect(form).toBeTruthy();
-    const legend = fixture.nativeElement.querySelector('.booking__legend');
-    expect(legend?.textContent).toContain('About your organization');
+
+    expect(component.isConfirmation()).toBe(false);
+    const element = fixture.nativeElement as HTMLElement;
+    expect(element.querySelector('.booking__title')?.textContent).toContain(
+      'Request a 20-min fit check',
+    );
   });
 
-  it('should update draft on name change', () => {
-    component.onName('Jane Doe');
-    expect(component.draft$().name).toBe('Jane Doe');
+  it('does not fetch booking details when bookingId route param is absent', async () => {
+    await setup();
+
+    expect(bookingsRepositoryStub.getBookingById).not.toHaveBeenCalled();
   });
 
-  it('should update draft on email change', () => {
-    component.onEmail('jane@example.com');
-    expect(component.draft$().email).toBe('jane@example.com');
+  it('stays on details when details form is invalid and marks controls touched', async () => {
+    await setup();
+
+    component.toScheduleStep();
+
+    expect(component.step()).toBe('details');
+    expect(component.detailsForm.controls.name.touched).toBe(true);
+    expect(component.detailsForm.controls.email.touched).toBe(true);
   });
 
-  it('should update draft on company change', () => {
-    component.onCompany('Acme Inc');
-    expect(component.draft$().company).toBe('Acme Inc');
+  it('moves to schedule when details form is valid', async () => {
+    await setup();
+    fillValidDetails(component);
+    component.submissionError.set('previous');
+
+    component.toScheduleStep();
+
+    expect(component.step()).toBe('schedule');
+    expect(component.submissionError()).toBeNull();
   });
 
-  it('should update draft on team size change', () => {
-    const event = new Event('change');
-    Object.defineProperty(event, 'target', {
-      value: { value: '5' },
-      enumerable: true,
-    });
-    component.onTeamSize(event);
-    expect(component.draft$().teamSize).toBe(5);
+  it('supports back navigation helper', async () => {
+    await setup();
+    component.step.set('schedule');
+    component.backToDetails();
+    expect(component.step()).toBe('details');
   });
 
-  it('should handle invalid team size', () => {
-    const event = new Event('change');
-    Object.defineProperty(event, 'target', {
-      value: { value: 'invalid' },
-      enumerable: true,
-    });
-    component.onTeamSize(event);
-    expect(component.draft$().teamSize).toBeUndefined();
-  });
+  it('adds preferred dates up to 3 and stops after that', async () => {
+    await setup();
 
-  it('should update draft on notes change', () => {
-    const event = new Event('input');
-    Object.defineProperty(event, 'target', {
-      value: { value: 'Some notes' },
-      enumerable: true,
-    });
-    component.onNotes(event);
-    expect(component.draft$().notes).toBe('Some notes');
-  });
-
-  it('should update draft on preferred date change', () => {
-    const event = new Event('input');
-    Object.defineProperty(event, 'target', {
-      value: { value: '2026-02-20' },
-      enumerable: true,
-    });
-    component.onPreferredDate(0, '2026-02-20');
-    expect(component.draft$().preferredDates?.[0]).toBe('2026-02-20');
-  });
-
-  it('should not add more than 3 preferred dates', () => {
-    // Fill up to 3 dates
-    component.onPreferredDate(0, '2026-02-20');
     component.addPreferredDate();
-    component.onPreferredDate(1, '2026-02-21');
     component.addPreferredDate();
-    component.onPreferredDate(2, '2026-02-22');
-    // Try to add a 4th
     component.addPreferredDate();
-    expect(component.draft$().preferredDates?.length).toBe(3);
+
+    expect(component.preferredDateControls).toHaveLength(3);
   });
 
-  it('should not remove the last preferred date', () => {
-    // Only one date present
-    const initialLength = component.draft$()?.preferredDates?.length ?? 0;
+  it('handles removing preferred dates for both single and multi-date states', async () => {
+    await setup();
+
+    component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
     component.removePreferredDate(0);
-    const length = component.draft$()?.preferredDates?.length ?? 0;
-    expect(length).toBeGreaterThanOrEqual(1);
-    if (initialLength > 1) {
-      expect(length).toBe(initialLength - 1);
-    } else {
-      expect(length).toBe(1);
-    }
+    expect(component.preferredDateControls).toHaveLength(1);
+    expect(component.preferredDateControls[0].value).toBe('');
+
+    component.addPreferredDate();
+    component.preferredDateControls[0].setValue('2026-03-20');
+    component.preferredDateControls[1].setValue('2026-03-21');
+
+    component.removePreferredDate(1);
+
+    expect(component.preferredDateControls).toHaveLength(1);
+    expect(component.scheduleForm.controls.preferredDates.dirty).toBe(true);
   });
 
-  it('canSubmitSchedule$ should be false if preferredDates is empty', () => {
-    // Clear all dates
-    component.repository.updateDraft({ preferredDates: [] });
-    expect(component.canSubmitSchedule$()).toBe(false);
+  it('reports helper-based control errors', async () => {
+    await setup();
+
+    component.detailsForm.controls.name.markAsTouched();
+    component.detailsForm.controls.name.setValue('');
+    component.scheduleForm.controls.preferredDates.at(0).markAsTouched();
+    component.scheduleForm.controls.preferredDates.at(0).setValue('');
+
+    expect(component.hasDetailsControlError('name', 'required')).toBe(true);
+    expect(component.hasDetailsControlError('company', 'required')).toBe(false);
+    expect(component.hasPreferredDateError(0)).toBe(true);
   });
 
-  it('canSubmitSchedule$ should be false if any preferredDate is empty', () => {
-    component.repository.updateDraft({ preferredDates: ['2026-02-20', ''] });
-    expect(component.canSubmitSchedule$()).toBe(false);
+  it('marks forms touched and skips submit when submit is not allowed', async () => {
+    await setup();
+
+    component.submitBooking();
+
+    expect(component.detailsForm.controls.name.touched).toBe(true);
+    expect(component.scheduleForm.controls.preferredDates.at(0).touched).toBe(
+      true,
+    );
+    expect(bookingsRepositoryStub.createBooking).not.toHaveBeenCalled();
   });
 
-  it('canSubmitSchedule$ should be true if all preferredDates are filled', () => {
-    component.repository.updateDraft({ preferredDates: ['2026-02-20', '2026-02-21'] });
-    expect(component.canSubmitSchedule$()).toBe(true);
+  it('handles null payload returned by buildRequest', async () => {
+    await setup();
+    fillValidDetails(component);
+    component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
+    vi.spyOn(
+      component as object as { buildRequest: () => unknown },
+      'buildRequest',
+    ).mockReturnValue(null);
+
+    component.submitBooking();
+
+    expect(component.submissionError()).toBe(
+      'Missing required booking details.',
+    );
+    expect(bookingsRepositoryStub.createBooking).not.toHaveBeenCalled();
   });
 
-  it('should call next on repository when next is clicked', () => {
-    const spy = vi.spyOn(repository, 'nextStep');
-    component.next();
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('should transition to schedule step', () => {
-    component.next();
-    expect(component.step$()).toBe('schedule');
-  });
-
-  it('should transition to confirm step from schedule', () => {
-    repository.nextStep(); // info -> schedule
-    component.next();
-    expect(component.step$()).toBe('confirm');
-  });
-
-  it('should call previous on repository when previous is clicked', () => {
-    const spy = vi.spyOn(repository, 'previousStep');
-    repository.nextStep(); // move to schedule first
-    component.previous();
-    expect(spy).toHaveBeenCalled();
-    expect(component.step$()).toBe('info');
-  });
-
-  it('should call submit on repository when submit is clicked', () => {
-    const spy = vi.spyOn(repository, 'submit');
-    component.submit();
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('should reset and navigate back to cart', () => {
-    const resetSpy = vi.spyOn(repository, 'reset');
-    const router = TestBed.inject(Router);
-    vi.spyOn(router, 'navigate');
-    component.back();
-    expect(resetSpy).toHaveBeenCalled();
-  });
-
-  it('should continue shopping and reset', () => {
-    const resetSpy = vi.spyOn(repository, 'reset');
-    const router = TestBed.inject(Router);
-    vi.spyOn(router, 'navigate');
-    component.continueShopping();
-    expect(resetSpy).toHaveBeenCalled();
-  });
-
-  it('should show schedule placeholder on schedule step', () => {
-    repository.nextStep(); // move to schedule
-    fixture.detectChanges();
-    const legend = fixture.nativeElement.querySelector('.booking__legend');
-    expect(legend?.textContent).toContain('Schedule your fit check');
-  });
-
-  it('should show confirmation summary on confirm step', () => {
-    component.onName('Jane Doe');
-    component.onEmail('jane@example.com');
-    component.onCompany('Acme Inc');
-    const event = new Event('change');
-    Object.defineProperty(event, 'target', {
-      value: { value: '5' },
-      enumerable: true,
+  it('surfaces API errors from submit', async () => {
+    await setup({
+      createResponse$: throwError(() => new Error('network down')),
     });
-    component.onTeamSize(event);
-    repository.nextStep(); // to schedule
-    repository.nextStep(); // to confirm
+    fillValidDetails(component);
+    component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
+
+    component.submitBooking();
+
+    expect(component.submitting()).toBe(false);
+    expect(component.submissionError()).toBe(
+      'We could not submit your request. Please try again.',
+    );
+  });
+
+  it('surfaces unsuccessful API responses', async () => {
+    await setup({
+      createResponse$: of({
+        success: false,
+        message: 'Server rejected booking',
+      }),
+    });
+    fillValidDetails(component);
+    component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
+
+    component.submitBooking();
+
+    expect(component.submitting()).toBe(false);
+    expect(component.submissionError()).toBe('Server rejected booking');
+  });
+
+  it('submits booking and navigates to confirmation on success', async () => {
+    await setup();
+    fillValidDetails(component, { usesNx: 'no' });
+    component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
+    const router = TestBed.inject(Router);
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+    component.submitBooking();
+
+    expect(bookingsRepositoryStub.createBooking).toHaveBeenCalledWith(
+      expect.objectContaining({
+        usesNx: false,
+      }),
+    );
+    expect(navigateSpy).toHaveBeenCalledWith([
+      '/book/confirmed',
+      'booking-123',
+    ]);
+  });
+
+  it('returns null from buildRequest for invalid edge cases', async () => {
+    await setup();
+    fillValidDetails(component);
+    component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
+
+    component.detailsForm.controls.teamSize.setValue(null);
+    expect(
+      (component as object as { buildRequest: () => unknown }).buildRequest(),
+    ).toBeNull();
+
+    component.detailsForm.controls.teamSize.setValue(8);
+    component.detailsForm.controls.usesNx.setValue('');
+    expect(
+      (component as object as { buildRequest: () => unknown }).buildRequest(),
+    ).toBeNull();
+
+    component.detailsForm.controls.usesNx.setValue('yes');
+    component.scheduleForm.controls.preferredDates.push(
+      new FormControl('2026-03-21', { nonNullable: true }),
+    );
+    component.scheduleForm.controls.preferredDates.push(
+      new FormControl('2026-03-22', { nonNullable: true }),
+    );
+    component.scheduleForm.controls.preferredDates.push(
+      new FormControl('2026-03-23', { nonNullable: true }),
+    );
+    component.preferredDateControls.forEach((control, index) => {
+      control.setValue(`2026-03-${String(index + 20).padStart(2, '0')}`);
+    });
+    expect(
+      (component as object as { buildRequest: () => unknown }).buildRequest(),
+    ).toBeNull();
+  });
+
+  it('fetches booking details from bookingId route param', async () => {
+    await setup({ bookingId: 'booking-1' });
+
+    expect(component.isConfirmation()).toBe(true);
+    expect(bookingsRepositoryStub.getBookingById).toHaveBeenCalledWith(
+      'booking-1',
+    );
+  });
+
+  it('renders confirmation content when booking exists', async () => {
+    await setup({ bookingId: 'booking-1' });
     fixture.detectChanges();
-    const legend = fixture.nativeElement.querySelector('.booking__legend');
-    expect(legend?.textContent).toContain('Confirm your booking');
+
+    const element = fixture.nativeElement as HTMLElement;
+    expect(
+      element.querySelector('.confirmation__title')?.textContent,
+    ).toContain('Appointment request received');
+    expect(
+      element.querySelector('.confirmation__summary')?.textContent,
+    ).toContain('booking-1');
+  });
+
+  it('surfaces API not-found message from response', async () => {
+    await setup({
+      bookingId: 'missing-booking',
+      getResponse$: of({
+        success: false,
+        message: 'Booking not found',
+      }),
+    });
+
+    expect(component.error()).toBe('Booking not found');
+  });
+
+  it('uses default not-found message when API omits one', async () => {
+    await setup({
+      bookingId: 'missing-booking',
+      getResponse$: of({
+        success: false,
+      }),
+    });
+
+    expect(component.error()).toBe('Booking could not be found.');
+  });
+
+  it('surfaces transport failures from confirmation API call', async () => {
+    await setup({
+      bookingId: 'booking-1',
+      getResponse$: throwError(() => new Error('network down')),
+    });
+
+    expect(component.error()).toBe('Could not load booking details.');
+    expect(component.loading()).toBe(false);
   });
 });
+
+function fillValidDetails(
+  component: BookingBooking,
+  options?: { usesNx?: 'yes' | 'no' },
+): void {
+  component.detailsForm.setValue({
+    name: 'Maya Stone',
+    email: 'maya@cleanup.shop',
+    company: 'Cleanup Labs',
+    teamSize: 8,
+    angularVersion: '21',
+    usesNx: options?.usesNx ?? 'yes',
+    notes: 'Need guidance',
+  });
+}
