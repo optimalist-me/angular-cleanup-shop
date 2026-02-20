@@ -18,6 +18,12 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BookingsRepository } from '@cleanup/data-access-booking';
 import { BookingDetails, BookingRequest } from '@cleanup/models-booking';
+import {
+  BookingStepper,
+  type BookingStepperItem,
+} from '@cleanup/ui-booking-stepper';
+import { SharedDesignSurface } from '@cleanup/shared-ui-design-surface';
+import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 import { catchError, map, of, startWith, switchMap, take } from 'rxjs';
 
 type ConfirmationState = {
@@ -31,7 +37,15 @@ type BookingStep = 'details' | 'schedule';
 
 @Component({
   selector: 'booking-booking',
-  imports: [CommonModule, RouterLink, DatePipe, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    DatePipe,
+    ReactiveFormsModule,
+    BookingStepper,
+    SharedDesignSurface,
+    SharedDesignText,
+  ],
   templateUrl: './booking.html',
   styleUrl: './booking.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,6 +56,10 @@ export class BookingBooking {
   private readonly router = inject(Router);
 
   readonly step = signal<BookingStep>('details');
+  readonly bookingSteps: BookingStepperItem[] = [
+    { id: 'details', label: 'Details', number: 1 },
+    { id: 'schedule', label: 'Schedule & confirm', number: 2 },
+  ];
   readonly submitting = signal(false);
   readonly submissionError = signal<string | null>(null);
 
