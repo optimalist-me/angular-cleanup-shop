@@ -18,7 +18,9 @@ describe('SharedDesignSurface', () => {
     fixture.componentRef.setInput('radius', 'md');
     fixture.detectChanges();
 
-    const section = fixture.nativeElement.querySelector('section') as HTMLElement;
+    const section = fixture.nativeElement.querySelector(
+      'section',
+    ) as HTMLElement;
     expect(section.classList.contains('ds-surface--tone-raised')).toBe(true);
     expect(section.classList.contains('ds-surface--padding-lg')).toBe(true);
     expect(section.classList.contains('ds-surface--radius-md')).toBe(true);
@@ -29,7 +31,9 @@ describe('SharedDesignSurface', () => {
     fixture.componentRef.setInput('bordered', false);
     fixture.detectChanges();
 
-    const section = fixture.nativeElement.querySelector('section') as HTMLElement;
+    const section = fixture.nativeElement.querySelector(
+      'section',
+    ) as HTMLElement;
     expect(section.classList.contains('ds-surface--bordered')).toBe(false);
   });
 });

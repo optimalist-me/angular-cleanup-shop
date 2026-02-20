@@ -34,8 +34,12 @@ describe('design token utilities', () => {
 
   it('should expose light and dark semantic themes', () => {
     expect(Object.keys(designSemanticThemes)).toEqual(['light', 'dark']);
-    expect(designSemanticThemes.light.semanticTokens['text-primary']).toBeTruthy();
-    expect(designSemanticThemes.dark.semanticTokens['text-primary']).toBeTruthy();
+    expect(
+      designSemanticThemes.light.semanticTokens['text-primary'],
+    ).toBeTruthy();
+    expect(
+      designSemanticThemes.dark.semanticTokens['text-primary'],
+    ).toBeTruthy();
   });
 
   it('should expose core and component token values', () => {

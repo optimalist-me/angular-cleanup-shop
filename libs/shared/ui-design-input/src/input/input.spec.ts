@@ -20,12 +20,12 @@ describe('SharedDesignInput', () => {
     fixture.detectChanges();
 
     const nativeElement = fixture.nativeElement as HTMLElement;
-    expect(nativeElement.querySelector('.ds-input__label')?.textContent).toContain(
-      'Email',
-    );
-    expect(nativeElement.querySelector('.ds-input__hint')?.textContent).toContain(
-      'Use your work email',
-    );
+    expect(
+      nativeElement.querySelector('.ds-input__label')?.textContent,
+    ).toContain('Email');
+    expect(
+      nativeElement.querySelector('.ds-input__hint')?.textContent,
+    ).toContain('Use your work email');
   });
 
   it('should emit valueChange when typing', () => {
@@ -35,7 +35,9 @@ describe('SharedDesignInput', () => {
     });
 
     fixture.detectChanges();
-    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+    const input = fixture.nativeElement.querySelector(
+      'input',
+    ) as HTMLInputElement;
     input.value = 'new-value';
     input.dispatchEvent(new Event('input'));
 
@@ -50,8 +52,8 @@ describe('SharedDesignInput', () => {
     const input = nativeElement.querySelector('input') as HTMLInputElement;
 
     expect(input.classList.contains('ds-input__control--invalid')).toBe(true);
-    expect(nativeElement.querySelector('.ds-input__error')?.textContent).toContain(
-      'This field is required',
-    );
+    expect(
+      nativeElement.querySelector('.ds-input__error')?.textContent,
+    ).toContain('This field is required');
   });
 });
