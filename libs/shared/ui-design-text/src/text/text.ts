@@ -12,7 +12,7 @@ export type DesignTextTone =
   | 'inverse'
   | 'success'
   | 'danger';
-export type DesignTextSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type DesignTextSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 export type DesignTextWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 
 @Component({
