@@ -1,0 +1,10 @@
+{
+  "name": "@cleanup/shared-util-design-theming",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@cleanup/shared-util-design-tokens": "^0.0.1"
+  },
+  "sideEffects": false
+}

@@ -87,6 +87,11 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "@nx/angular:package": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "plugins": [
@@ -145,6 +150,11 @@
       "displayBlock": true,
       "name": "<Domain><Name>",
       "selector": "<domain>-<name>"
+    }
+  },
+  "release": {
+    "version": {
+      "preVersionCommand": "yarn dlx nx run-many -t build"
     }
   }
 }

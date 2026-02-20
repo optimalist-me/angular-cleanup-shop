@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+.ds-surface {
+  background: var(--ds-surface-card);
+  color: var(--ds-text-primary);
+}
+
+.ds-surface--bordered {
+  border: var(--ds-border-width-default) solid var(--ds-border-subtle);
+}
+
+.ds-surface--tone-default {
+  background: var(--ds-surface-card);
+}
+
+.ds-surface--tone-subtle {
+  background: var(--ds-surface-subtle);
+}
+
+.ds-surface--tone-raised {
+  background: var(--ds-surface-card);
+  box-shadow: var(--ds-shadow-2);
+}
+
+.ds-surface--tone-inverse {
+  background: var(--ds-surface-inverse);
+  color: var(--ds-text-inverse);
+}
+
+.ds-surface--padding-none {
+  padding: 0;
+}
+
+.ds-surface--padding-sm {
+  padding: var(--ds-surface-padding-sm);
+}
+
+.ds-surface--padding-md {
+  padding: var(--ds-surface-padding-md);
+}
+
+.ds-surface--padding-lg {
+  padding: var(--ds-surface-padding-lg);
+}
+
+.ds-surface--radius-none {
+  border-radius: 0;
+}
+
+.ds-surface--radius-md {
+  border-radius: var(--ds-radius-md);
+}
+
+.ds-surface--radius-lg {
+  border-radius: var(--ds-surface-radius);
+}
