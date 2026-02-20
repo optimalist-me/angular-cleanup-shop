@@ -7,31 +7,24 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid #d6dde3;
-  background: #ffffff;
-  color: #1f2933;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-family: 'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  min-height: 24px;
+  padding: 0 var(--ds-space-2);
+  border-radius: var(--ds-radius-pill);
+  border: var(--ds-border-width-default) solid var(--ds-border-subtle);
+  background: var(--ds-surface-card);
 }
 
 .tag--accent {
-  background: #e6f4f1;
-  border-color: #b7ded5;
-  color: #146554;
+  background: var(--ds-surface-subtle);
+  border-color: var(--ds-action-secondary-border);
 }
 
 .tag--muted {
-  background: #f1f4f6;
-  border-color: #d5dde3;
-  color: #5b6770;
+  background: var(--ds-surface-subtle);
+  border-color: var(--ds-border-subtle);
 }
 
 .tag--md {
-  padding: 6px 12px;
-  font-size: 12px;
+  min-height: 28px;
+  padding: 0 var(--ds-space-3);
 }

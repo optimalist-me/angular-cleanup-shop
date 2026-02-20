@@ -1,40 +1,61 @@
 <section class="products">
   <div class="products__inner">
     <header class="products__intro">
-      <p class="products__eyebrow">Products</p>
+      <p class="products__eyebrow">
+        <shared-design-text
+          tone="muted"
+          size="xs"
+          weight="medium"
+          [uppercase]="true"
+        >
+          Products
+        </shared-design-text>
+      </p>
       <h1 class="products__title">
-        Pick the outcome your codebase needs most.
+        <shared-design-text size="xl" weight="semibold">
+          Pick the outcome your codebase needs most.
+        </shared-design-text>
       </h1>
       <p class="products__subtitle">
-        Each product maps to a concrete cleanup outcome and a proven structural
-        pattern.
+        <shared-design-text tone="muted" size="lg">
+          Each product maps to a concrete cleanup outcome and a proven
+          structural pattern.
+        </shared-design-text>
       </p>
-      <p class="products__demo-note">
-        This storefront is a <strong>live Angular/Nx demo application</strong> built to
-        reflect the structural clarity, boundary discipline, and incremental
-        governance we advocate. The products illustrate outcomes and patterns, not
-        purchasable goods.
-      </p>
+      <shared-design-surface
+        class="products__demo-note"
+        tone="default"
+        padding="sm"
+        radius="md"
+      >
+        <p class="products__demo-note-copy">
+          <shared-design-text tone="muted" size="sm">
+            This storefront is a
+            <strong>live Angular/Nx demo application</strong>
+            built to reflect the structural clarity, boundary discipline, and
+            incremental governance we advocate. The products illustrate outcomes
+            and patterns, not purchasable goods.
+          </shared-design-text>
+        </p>
+      </shared-design-surface>
     </header>
 
     <div class="products__filters">
-      <button
-        type="button"
+      <shared-design-button
         class="products__filter"
-        [class.products__filter--active]="!selectedTag()"
-        (click)="selectTag(null)"
-      >
-        All
-      </button>
+        size="sm"
+        [tone]="selectedTag() === null ? 'primary' : 'secondary'"
+        label="All"
+        (pressed)="selectTag(null)"
+      />
       @for (tag of availableTags(); track tag) {
-      <button
-        type="button"
+      <shared-design-button
         class="products__filter"
-        [class.products__filter--active]="selectedTag() === tag"
-        (click)="selectTag(tag)"
-      >
-        {{ tag }}
-      </button>
+        size="sm"
+        [tone]="selectedTag() === tag ? 'primary' : 'secondary'"
+        [label]="tagLabels[tag]"
+        (pressed)="selectTag(tag)"
+      />
       }
     </div>
 
@@ -55,7 +76,11 @@
       }
     </div>
     } @else {
-    <p class="products__empty">Loading products...</p>
+    <p class="products__empty">
+      <shared-design-text tone="muted" size="md"
+        >Loading products...</shared-design-text
+      >
+    </p>
     }
   </div>
 </section>
