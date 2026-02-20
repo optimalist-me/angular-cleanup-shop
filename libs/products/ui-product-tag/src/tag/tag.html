@@ -5,5 +5,12 @@
   [class.tag--md]="size() === 'md'"
   [attr.aria-label]="ariaValue()"
 >
-  {{ label() }}
+  <shared-design-text
+    [tone]="textTone()"
+    size="xs"
+    weight="semibold"
+    [uppercase]="true"
+  >
+    {{ label() }}
+  </shared-design-text>
 </span>

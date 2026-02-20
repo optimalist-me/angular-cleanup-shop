@@ -9,11 +9,19 @@ import {
   ProductsRepository,
   ProductDomainTag,
 } from '@cleanup/data-access-products';
+import { SharedDesignButton } from '@cleanup/shared-ui-design-button';
+import { SharedDesignSurface } from '@cleanup/shared-ui-design-surface';
+import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 import { ProductCard } from '@cleanup/ui-product-card';
 
 @Component({
   selector: 'products-list',
-  imports: [ProductCard],
+  imports: [
+    ProductCard,
+    SharedDesignButton,
+    SharedDesignSurface,
+    SharedDesignText,
+  ],
   templateUrl: './list.html',
   styleUrl: './list.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,6 +44,7 @@ export class ProductsList {
     const tags = new Set(this.products().map((p) => p.domainTag));
     return Array.from(tags).sort();
   });
+  readonly tagLabels = tagLabels;
 
   selectTag(tag: ProductDomainTag | null): void {
     this.selectedTag.set(tag);
