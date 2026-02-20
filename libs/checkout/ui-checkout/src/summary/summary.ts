@@ -5,10 +5,11 @@ import {
   input,
 } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 
 @Component({
   selector: 'checkout-summary',
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, SharedDesignText],
   templateUrl: './summary.html',
   styleUrl: './summary.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
