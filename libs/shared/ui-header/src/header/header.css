@@ -177,7 +177,7 @@
   .header__overlay {
     position: fixed;
     inset: 0;
-    background: rgba(15, 23, 32, 0.3);
+    background: color-mix(in srgb, var(--ds-surface-inverse) 30%, transparent);
     display: none;
   }
 
