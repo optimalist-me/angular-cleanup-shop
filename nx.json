@@ -44,9 +44,13 @@
           "{projectRoot}/src/lib.routes.ts",
           "{projectRoot}/src/models/**/*.ts",
           "{projectRoot}/src/main.ts",
+          "{projectRoot}/src/main.server.ts",
+          "{projectRoot}/src/server.ts",
           "{projectRoot}/src/styles.css",
           "{projectRoot}/src/app/app.config.ts",
+          "{projectRoot}/src/app/app.config.server.ts",
           "{projectRoot}/src/app/app.routes.ts",
+          "{projectRoot}/src/app/app.routes.server.ts",
           "{projectRoot}/src/app/app.css",
           "{projectRoot}/src/index.html"
         ],
