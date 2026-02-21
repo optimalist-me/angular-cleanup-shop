@@ -5,9 +5,14 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideDesignTheming } from '@cleanup/shared-util-design-theming';
 import { appRoutes } from './app.routes';
+import {
+  provideClientHydration,
+  withEventReplay,
+} from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideClientHydration(withEventReplay()),
     provideBrowserGlobalErrorListeners(),
     provideRouter(appRoutes),
     provideDesignTheming(),

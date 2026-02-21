@@ -1,0 +1,32 @@
+# Angular Cleanup Shop
+
+Canonical: https://angularcleanup.shop
+Sitemap: https://angularcleanup.shop/sitemap.xml
+Robots: https://angularcleanup.shop/robots.txt
+
+## Service
+Angular Cleanup Shop provides maintenance-first Angular and Nx cleanup services focused on structural clarity, safe incremental refactoring, and lower long-term change cost.
+
+## Primary Audience
+- Engineering teams maintaining mature Angular applications
+- Teams using Nx monorepos with boundary/ownership drift
+- Teams with rising regression risk and slower reviews
+
+## Key Public Pages
+- https://angularcleanup.shop/
+- https://angularcleanup.shop/playbook
+- https://angularcleanup.shop/architecture
+- https://angularcleanup.shop/faq
+- https://angularcleanup.shop/products
+- https://angularcleanup.shop/book
+
+## Conversion
+Book a fit check: https://angularcleanup.shop/book
+
+## Constraints
+- No rewrite projects
+- No feature-team ownership
+- Incremental, reversible, production-safe changes
+
+## Machine-Friendly Detail
+See: https://angularcleanup.shop/llms-full.txt
