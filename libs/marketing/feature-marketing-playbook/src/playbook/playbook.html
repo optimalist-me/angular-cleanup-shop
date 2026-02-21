@@ -1,14 +1,26 @@
 <div class="playbook">
   <marketing-section
     eyebrow="Playbook"
-    title="A calm, maintenance-first approach to Angular cleanup."
-    subtitle="This playbook explains how we reduce structural friction, keep risk low, and make future features cheaper."
+    title="A calm, governance-first approach to structural cleanup."
+    subtitle="We reduce structural friction, keep risk low, and make every future change cheaper without rewrites or sprint disruption."
   >
     <ul class="playbook__list">
-      <li>We optimize for long-term efficiency, not short-term speed.</li>
+      <li>We optimize for cost-of-change, not short-term velocity.</li>
       <li>Every change is incremental, reversible, and production-safe.</li>
-      <li>Boundaries, ownership, and clarity come before tooling upgrades.</li>
+      <li>
+        Ownership and boundaries come first. Tooling is support. Governance is
+        the system.
+      </li>
     </ul>
+    <div class="playbook__note">
+      <shared-design-text size="md" weight="semibold">
+        What we don’t do
+      </shared-design-text>
+      <shared-design-text tone="muted" size="md">
+        We don’t take feature tickets. We reduce structural friction so your
+        team can ship features faster with less risk.
+      </shared-design-text>
+    </div>
     <div class="playbook__actions">
       <a class="playbook__link playbook__link--primary" routerLink="/book">
         <shared-design-text tone="inverse" size="md" weight="semibold">
@@ -26,7 +38,7 @@
   <marketing-section
     eyebrow="Overview"
     title="Modern Angular practices, applied incrementally."
-    subtitle="We focus on how Angular is used: smaller components, clear state ownership, and explicit side effects."
+    subtitle="We focus on how your system behaves: smaller change surfaces, clear ownership, and predictable side effects."
     tone="muted"
   >
     <div class="playbook__grid">
@@ -38,9 +50,12 @@
       >
         <h3>Core principles</h3>
         <ul class="playbook__list">
-          <li>Standalone components and clear composition.</li>
-          <li>Signals-first state with computed derivations.</li>
-          <li>Strict dependency boundaries across domains.</li>
+          <li>Explicit domain boundaries and ownership.</li>
+          <li>Signals-first state and computed derivations.</li>
+          <li>
+            Small, reviewable PRs that stay within a single domain when
+            possible.
+          </li>
         </ul>
       </shared-design-surface>
       <shared-design-surface
@@ -52,7 +67,9 @@
         <h3>Modern Angular means</h3>
         <ul class="playbook__list">
           <li>Typed reactive forms and explicit side effects.</li>
-          <li>RxJS hygiene without nested operator chains.</li>
+          <li>
+            RxJS hygiene: fewer scattered subscriptions, clearer async flows.
+          </li>
           <li>Pragmatic testing and predictable change detection.</li>
         </ul>
       </shared-design-surface>
@@ -64,8 +81,8 @@
       >
         <h3>Upgrade stance</h3>
         <p>
-          Upgrades are never assumed. Cleanup works within your current version
-          and reduces future upgrade risk.
+          Cleanup works within your current version. Upgrades are optional and
+          scoped separately. Structural clarity makes them safer later.
         </p>
       </shared-design-surface>
     </div>
@@ -86,7 +103,7 @@
         <h3>Version assessment</h3>
         <ul class="playbook__list">
           <li>Current Angular version and supported practices.</li>
-          <li>Upgrade feasibility and risk, without assuming upgrades.</li>
+          <li>Upgrade feasibility and risk without assuming upgrades.</li>
           <li>Constraints that impact cleanup sequencing.</li>
         </ul>
       </shared-design-surface>
@@ -98,9 +115,18 @@
       >
         <h3>Stabilize first</h3>
         <ul class="playbook__list">
-          <li>Identify entropy hotspots and regression risk.</li>
-          <li>Agree on boundaries and ownership early.</li>
-          <li>Define safe, incremental cleanup steps.</li>
+          <li>
+            Identify entropy hotspots: PR sprawl, coupling hubs, and regression
+            risk.
+          </li>
+          <li>
+            Agree on boundaries, ownership, and the ‘public surfaces’ between
+            domains.
+          </li>
+          <li>
+            Define a safe sequencing plan: smallest high-leverage interventions
+            first.
+          </li>
         </ul>
       </shared-design-surface>
     </div>
@@ -123,6 +149,9 @@
         <ul class="playbook__list">
           <li>Single responsibility and clear inputs/outputs.</li>
           <li>Template complexity kept low.</li>
+          <li>
+            Side effects live at the boundary, not scattered across components.
+          </li>
         </ul>
       </shared-design-surface>
       <shared-design-surface
@@ -133,8 +162,11 @@
       >
         <h3>State ownership</h3>
         <ul class="playbook__list">
-          <li>Local signals by default.</li>
-          <li>Computed state for derived values.</li>
+          <li>
+            Local signals by default; promote only when multiple consumers
+            exist.
+          </li>
+          <li>Commands for side effects; computed for derived state.</li>
         </ul>
       </shared-design-surface>
       <shared-design-surface
@@ -145,8 +177,20 @@
       >
         <h3>RxJS hygiene</h3>
         <ul class="playbook__list">
-          <li>Flattened operator chains.</li>
-          <li>Explicit side effects and cleanup.</li>
+          <li>Subscribe once (feature boundary), not everywhere.</li>
+          <li>Flattened operator chains and named pipeline steps.</li>
+        </ul>
+      </shared-design-surface>
+      <shared-design-surface
+        class="playbook__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3>Shared libraries</h3>
+        <ul class="playbook__list">
+          <li>Shared is not a dumping ground.</li>
+          <li>Extract only with clear ownership and a minimal public API.</li>
         </ul>
       </shared-design-surface>
     </div>
@@ -155,7 +199,7 @@
   <marketing-section
     eyebrow="Metrics and guardrails"
     title="Measure what matters, enforce the boundaries."
-    subtitle="Lightweight metrics and guardrails keep improvements consistent across the codebase."
+    subtitle="Lightweight metrics and guardrails keep improvements consistent, and prevent drift from returning."
   >
     <div class="playbook__split">
       <shared-design-surface
@@ -166,9 +210,15 @@
       >
         <h3>Recommended metrics</h3>
         <ul class="playbook__list">
-          <li>Component LOC under 300, service LOC under 200.</li>
+          <li>
+            PR size stays reviewable (small change surface; fewer cross-domain
+            touches).
+          </li>
           <li>No circular dependencies between domains.</li>
-          <li>Lazy-loaded feature routes where applicable.</li>
+          <li>
+            Hotspots tracked: scattered subscriptions, large
+            components/services, flaky tests.
+          </li>
         </ul>
       </shared-design-surface>
       <shared-design-surface
@@ -179,9 +229,18 @@
       >
         <h3>Guardrails</h3>
         <ul class="playbook__list">
-          <li>Nx module boundaries and lint rules.</li>
-          <li>PR checklists that favor clarity over churn.</li>
-          <li>Small, reviewable refactor increments.</li>
+          <li>
+            Module boundary enforcement (Nx, ESLint rules, and CI checks —
+            depending on your stack).
+          </li>
+          <li>
+            Gradual constraint tightening: block new violations, reduce legacy
+            ones incrementally.
+          </li>
+          <li>
+            AI-assisted refactors are allowed only with governance: no secrets,
+            no blind autopilot.
+          </li>
         </ul>
       </shared-design-surface>
     </div>
@@ -209,8 +268,11 @@
         padding="md"
         radius="lg"
       >
-        <h3>Cleanup sprint</h3>
-        <p>2-4 sessions spread over time to reduce risk and cognitive load.</p>
+        <h3>Cleanup sessions</h3>
+        <p>
+          2–4 focused sessions spread over time to reduce risk and review drag —
+          no big-bang refactors.
+        </p>
       </shared-design-surface>
       <shared-design-surface
         class="playbook__card"
@@ -219,7 +281,10 @@
         radius="lg"
       >
         <h3>Continuous hygiene</h3>
-        <p>One day per week to keep the repository calm and predictable.</p>
+        <p>
+          One fixed day per week to keep the repository calm, predictable, and
+          upgrade-ready.
+        </p>
       </shared-design-surface>
     </div>
     <div class="playbook__note">
@@ -237,7 +302,7 @@
   <marketing-section
     eyebrow="Next step"
     title="See if this model fits your team."
-    subtitle="Request a 20-min fit check. Calm, focused, and no sales pressure."
+    subtitle="Request a 20‑min fit check. Calm, focused, and strictly about structural fit — no sales pressure."
     align="center"
     size="compact"
   >
