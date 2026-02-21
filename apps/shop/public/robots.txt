@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Exclude API and non-marketing conversion internals from indexing.
+Disallow: /api/
+Disallow: /cart
+Disallow: /checkout
+Disallow: /book/confirmed
+Disallow: /book/confirmed/
+
+Sitemap: https://angularcleanup.shop/sitemap.xml
