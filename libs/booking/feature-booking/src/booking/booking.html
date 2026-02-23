@@ -130,6 +130,30 @@
             formControlName="notes"
           ></textarea>
         </div>
+
+        <div class="booking__privacy">
+          <label
+            class="booking__checkbox-label"
+            for="booking-privacy-policy-accepted"
+          >
+            <input
+              id="booking-privacy-policy-accepted"
+              class="booking__checkbox"
+              type="checkbox"
+              formControlName="privacyPolicyAccepted"
+            />
+            <span>
+              I have read the
+              <a routerLink="/privacy">privacy policy</a> and understand how my
+              data is processed.
+            </span>
+          </label>
+          @if (hasDetailsControlError('privacyPolicyAccepted', 'required')) {
+          <p class="booking__error-text">
+            You must accept the privacy policy to continue.
+          </p>
+          }
+        </div>
       </fieldset>
 
       <div class="booking__actions">

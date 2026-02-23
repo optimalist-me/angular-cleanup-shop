@@ -47,7 +47,7 @@ Global UI elements:
 
 - Top navigation (minimal)
 - “Architecture Mode” toggle
-- Footer with links (Playbook, Architecture, Book)
+- Footer with links (Playbook, Architecture, Book, Privacy)
 
 ---
 
@@ -65,6 +65,7 @@ Single app routes:
 /playbook                  # Playbook highlights + links to GitHub docs
 /architecture              # Explicit architecture explanation & diagrams
 /faq                       # Fit & constraints, pricing framing, boundaries
+/privacy                   # GDPR privacy statement and data handling details
 ```
 
 Optional (later):
@@ -416,6 +417,7 @@ Even as a single app, structure the code in **domain libs**:
 - cart
 - checkout
 - booking
+- privacy
 - playbook
 - marketing
 - shared

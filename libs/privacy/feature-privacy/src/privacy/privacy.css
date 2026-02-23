@@ -1,0 +1,73 @@
+:host {
+  display: block;
+}
+
+.privacy {
+  background: var(--ds-surface-subtle);
+  color: var(--ds-text-primary);
+  padding: 72px var(--ds-space-5) 96px;
+  font-family: var(--ds-font-family-base);
+}
+
+.privacy__inner {
+  max-width: 920px;
+  margin: 0 auto;
+  display: grid;
+  gap: var(--ds-space-5);
+}
+
+.privacy__intro {
+  display: grid;
+  gap: var(--ds-space-1);
+}
+
+.privacy__title,
+.privacy__subtitle {
+  margin: 0;
+}
+
+.privacy__section {
+  display: grid;
+  gap: var(--ds-space-2);
+}
+
+.privacy__section + .privacy__section {
+  margin-top: var(--ds-space-4);
+}
+
+.privacy__section h2,
+.privacy__section p {
+  margin: 0;
+}
+
+.privacy__section ul {
+  margin: 0;
+  padding-left: var(--ds-space-5);
+  display: grid;
+  gap: var(--ds-space-1);
+}
+
+.privacy__section a {
+  color: var(--ds-text-accent);
+}
+
+.privacy__actions {
+  display: flex;
+  gap: var(--ds-space-3);
+  flex-wrap: wrap;
+}
+
+.privacy__back-link {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  min-height: var(--ds-button-height-sm);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.privacy__back-link:hover,
+.privacy__back-link:focus-visible {
+  opacity: 0.8;
+}

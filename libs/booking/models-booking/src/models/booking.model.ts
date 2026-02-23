@@ -2,6 +2,8 @@ export type BookingStep = 'review' | 'details' | 'schedule';
 
 export type BookingStatus = 'idle' | 'submitting' | 'success' | 'error';
 
+export const PRIVACY_POLICY_VERSION = '2026-02-23';
+
 export type BookingPainArea =
   | 'boundaries'
   | 'state'
@@ -20,6 +22,8 @@ export type BookingRequest = {
   painArea?: BookingPainArea;
   notes: string;
   preferredDates: string[];
+  privacyPolicyAccepted: boolean;
+  privacyPolicyVersion: string;
 };
 
 export type BookingDraft = Partial<BookingRequest>;
@@ -42,6 +46,8 @@ export type BookingDetails = {
   painArea: BookingPainArea;
   notes?: string;
   preferredDates?: string[];
+  privacyPolicyVersion?: string;
+  privacyPolicyAcceptedAt?: string;
   createdAt: string;
   completedAt?: string;
 };

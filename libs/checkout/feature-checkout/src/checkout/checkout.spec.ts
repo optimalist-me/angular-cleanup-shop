@@ -5,6 +5,7 @@ import { provideRouter, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { BookingsRepository } from '@cleanup/data-access-booking';
 import { CartItem, CartRepository } from '@cleanup/data-access-cart';
+import { PRIVACY_POLICY_VERSION } from '@cleanup/models-booking';
 import { CheckoutCheckout } from './checkout';
 
 describe('CheckoutCheckout', () => {
@@ -114,6 +115,15 @@ describe('CheckoutCheckout', () => {
     expect(component.submissionError()).toBeNull();
   });
 
+  it('renders privacy link in details form', () => {
+    component.toDetailsStep();
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+    const link = element.querySelector('a[href="/privacy"]');
+    expect(link?.textContent).toContain('privacy policy');
+  });
+
   it('stays on details when details form is invalid and marks controls touched', () => {
     cartItems.set([boundaryPolish]);
     component.toDetailsStep();
@@ -195,7 +205,10 @@ describe('CheckoutCheckout', () => {
     cartItems.set([boundaryPolish]);
     fillValidDetails(component);
     component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
-    vi.spyOn(component as any, 'buildRequest').mockReturnValue(null);
+    vi.spyOn(
+      component as unknown as { buildRequest: () => unknown },
+      'buildRequest',
+    ).mockReturnValue(null);
 
     component.submit();
 
@@ -249,6 +262,8 @@ describe('CheckoutCheckout', () => {
     expect(bookingsRepositoryStub.createBooking).toHaveBeenCalledWith(
       expect.objectContaining({
         usesNx: false,
+        privacyPolicyAccepted: true,
+        privacyPolicyVersion: PRIVACY_POLICY_VERSION,
       }),
     );
     expect(cartRepositoryStub.clear).toHaveBeenCalled();
@@ -275,6 +290,12 @@ describe('CheckoutCheckout', () => {
     ).toBeNull();
 
     component.detailsForm.controls.usesNx.setValue('yes');
+    component.detailsForm.controls.privacyPolicyAccepted.setValue(false);
+    expect(
+      (component as unknown as { buildRequest: () => unknown }).buildRequest(),
+    ).toBeNull();
+
+    component.detailsForm.controls.privacyPolicyAccepted.setValue(true);
     component.scheduleForm.controls.preferredDates.push(
       new FormControl('2026-03-21', { nonNullable: true }),
     );
@@ -305,5 +326,6 @@ function fillValidDetails(
     angularVersion: '21',
     usesNx: options?.usesNx ?? 'yes',
     notes: 'Need a calmer review flow.',
+    privacyPolicyAccepted: true,
   });
 }

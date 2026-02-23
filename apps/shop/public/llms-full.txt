@@ -18,6 +18,7 @@ Angular Cleanup Shop is a service website and demo application for a maintenance
 - /playbook : operating model and methods
 - /architecture : boundary and dependency model
 - /faq : fit, pricing context, constraints
+- /privacy : GDPR privacy statement and rights information
 - /products : catalog of cleanup outcomes
 - /products/:slug : outcome-specific details
 - /book : fit-check booking request flow

@@ -21,6 +21,8 @@ describe('BookingsRepository', () => {
     painArea: 'boundaries',
     notes: 'Interested in a fit check.',
     preferredDates: ['2026-03-12'],
+    privacyPolicyAccepted: true,
+    privacyPolicyVersion: '2026-02-23',
   };
 
   beforeEach(() => {
@@ -46,6 +48,8 @@ describe('BookingsRepository', () => {
             painArea: request.painArea,
             notes: request.notes,
             preferredDates: request.preferredDates,
+            privacyPolicyVersion: request.privacyPolicyVersion,
+            privacyPolicyAcceptedAt: '2026-03-01T00:00:00.000Z',
             createdAt: '2026-03-01T00:00:00.000Z',
           },
         }),

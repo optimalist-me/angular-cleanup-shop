@@ -30,6 +30,11 @@ export const appRoutes: Route[] = [
       ),
   },
   {
+    path: 'privacy',
+    loadChildren: () =>
+      import('@cleanup/feature-privacy').then((m) => m.privacyRoutes),
+  },
+  {
     path: 'products',
     loadChildren: () =>
       import('@cleanup/feature-products-list').then(

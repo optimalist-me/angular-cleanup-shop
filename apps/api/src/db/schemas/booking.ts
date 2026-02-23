@@ -17,6 +17,8 @@ export async function initializeBookingSchema(db: Database): Promise<void> {
       pain_area TEXT NOT NULL DEFAULT 'boundaries',
       notes TEXT,
       preferred_dates TEXT,
+      privacy_policy_version TEXT,
+      privacy_policy_accepted_at TEXT,
       cart_items TEXT NOT NULL DEFAULT '[]',
       cart_subtotal REAL NOT NULL DEFAULT 0,
       cart_item_count INTEGER NOT NULL DEFAULT 0,
@@ -54,6 +56,16 @@ export async function initializeBookingSchema(db: Database): Promise<void> {
     db,
     'cart_item_count',
     'ALTER TABLE bookings ADD COLUMN cart_item_count INTEGER NOT NULL DEFAULT 0',
+  );
+  await ensureColumn(
+    db,
+    'privacy_policy_version',
+    'ALTER TABLE bookings ADD COLUMN privacy_policy_version TEXT',
+  );
+  await ensureColumn(
+    db,
+    'privacy_policy_accepted_at',
+    'ALTER TABLE bookings ADD COLUMN privacy_policy_accepted_at TEXT',
   );
 }
 

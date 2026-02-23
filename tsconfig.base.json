@@ -95,7 +95,8 @@
       ],
       "@cleanup/shared-ui-design-text": [
         "libs/shared/ui-design-text/src/index.ts"
-      ]
+      ],
+      "@cleanup/feature-privacy": ["libs/privacy/feature-privacy/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

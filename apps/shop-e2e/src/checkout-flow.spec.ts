@@ -19,6 +19,10 @@ test('checkout flow submits and confirms', async ({ page }) => {
   });
 
   await page.route('**/api/bookings', async (route) => {
+    const body = route.request().postDataJSON() as Record<string, unknown>;
+    expect(body.privacyPolicyAccepted).toBe(true);
+    expect(body.privacyPolicyVersion).toBe('2026-02-23');
+
     await route.fulfill({
       status: 201,
       contentType: 'application/json',
@@ -62,6 +66,7 @@ test('checkout flow submits and confirms', async ({ page }) => {
   await page.fill('#angularVersion', '21');
   await page.selectOption('#usesNx', 'yes');
   await page.fill('#notes', 'Interested in a fast audit.');
+  await page.check('#checkout-privacy-policy-accepted');
 
   await page.getByRole('button', { name: 'Continue to scheduling' }).click();
   await page.fill('input[type="date"]', '2026-03-01');

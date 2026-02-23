@@ -191,6 +191,30 @@
             formControlName="notes"
           ></textarea>
         </div>
+
+        <div class="checkout__privacy">
+          <label
+            class="checkout__checkbox-label"
+            for="checkout-privacy-policy-accepted"
+          >
+            <input
+              id="checkout-privacy-policy-accepted"
+              class="checkout__checkbox"
+              type="checkbox"
+              formControlName="privacyPolicyAccepted"
+            />
+            <span>
+              I have read the
+              <a routerLink="/privacy">privacy policy</a> and understand how my
+              data is processed.
+            </span>
+          </label>
+          @if (hasDetailsControlError('privacyPolicyAccepted', 'required')) {
+          <p class="checkout__error-text">
+            You must accept the privacy policy to continue.
+          </p>
+          }
+        </div>
       </fieldset>
 
       <div class="checkout__actions">

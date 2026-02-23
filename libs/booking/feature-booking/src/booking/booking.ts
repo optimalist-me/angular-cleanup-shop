@@ -17,7 +17,11 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BookingsRepository } from '@cleanup/data-access-booking';
-import { BookingDetails, BookingRequest } from '@cleanup/models-booking';
+import {
+  BookingDetails,
+  BookingRequest,
+  PRIVACY_POLICY_VERSION,
+} from '@cleanup/models-booking';
 import {
   BookingStepper,
   type BookingStepperItem,
@@ -90,6 +94,10 @@ export class BookingBooking {
     notes: new FormControl('', {
       nonNullable: true,
       validators: [Validators.maxLength(500)],
+    }),
+    privacyPolicyAccepted: new FormControl(false, {
+      nonNullable: true,
+      validators: [Validators.requiredTrue],
     }),
   });
 
@@ -304,6 +312,11 @@ export class BookingBooking {
     if (!usesNxValue) {
       return null;
     }
+    const privacyPolicyAccepted =
+      this.detailsForm.controls.privacyPolicyAccepted.value;
+    if (!privacyPolicyAccepted) {
+      return null;
+    }
 
     const preferredDates = this.scheduleForm.controls.preferredDates.controls
       .map((control) => control.value.trim())
@@ -322,6 +335,8 @@ export class BookingBooking {
       usesNx: usesNxValue === 'yes',
       notes: this.detailsForm.controls.notes.value.trim(),
       preferredDates,
+      privacyPolicyAccepted,
+      privacyPolicyVersion: PRIVACY_POLICY_VERSION,
     };
   }
 }

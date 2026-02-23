@@ -8,7 +8,12 @@
 
 import * as BookingDatastore from '@angular-cleanup-shop/infrastructure-booking-datastore';
 import { sendBookingConfirmationEmail } from '@angular-cleanup-shop/infrastructure-booking-email';
-import { BookingRequest } from '@cleanup/models-booking';
+import {
+  BookingRequest,
+  PRIVACY_POLICY_VERSION,
+} from '@cleanup/models-booking';
+
+const BOOKING_RETENTION_MONTHS = 12;
 
 export interface ProcessBookingResult {
   success: boolean;
@@ -37,6 +42,7 @@ export async function processBooking(
       };
     }
 
+    const privacyPolicyAcceptedAt = new Date().toISOString();
     const savedBooking = await BookingDatastore.saveBooking({
       email: bookingRequest.email,
       name: bookingRequest.name,
@@ -47,6 +53,8 @@ export async function processBooking(
       painArea: bookingRequest.painArea ?? 'boundaries',
       notes: bookingRequest.notes,
       preferredDates: bookingRequest.preferredDates,
+      privacyPolicyVersion: bookingRequest.privacyPolicyVersion,
+      privacyPolicyAcceptedAt,
     });
 
     const emailResult = await sendBookingConfirmationEmail({
@@ -97,6 +105,14 @@ export async function getUserBookings(email: string) {
   return BookingDatastore.getBookingsByEmail(email);
 }
 
+export async function enforceBookingRetentionPolicy(
+  now = new Date(),
+): Promise<number> {
+  const cutoff = new Date(now);
+  cutoff.setMonth(cutoff.getMonth() - BOOKING_RETENTION_MONTHS);
+  return BookingDatastore.deleteBookingsOlderThan(cutoff.toISOString());
+}
+
 function validateBookingRequest(bookingRequest: BookingRequest): {
   message: string;
   error: string;
@@ -106,12 +122,28 @@ function validateBookingRequest(bookingRequest: BookingRequest): {
     !bookingRequest.name ||
     !bookingRequest.company ||
     !bookingRequest.angularVersion ||
+    !bookingRequest.privacyPolicyVersion ||
     bookingRequest.teamSize === undefined ||
     bookingRequest.teamSize === null
   ) {
     return {
       message: 'Missing required fields',
-      error: 'Email, name, company, angularVersion, and teamSize are required',
+      error:
+        'Email, name, company, angularVersion, teamSize, and privacyPolicyVersion are required',
+    };
+  }
+
+  if (!bookingRequest.privacyPolicyAccepted) {
+    return {
+      message: 'Privacy policy acceptance is required',
+      error: 'Please accept the privacy policy before submitting',
+    };
+  }
+
+  if (bookingRequest.privacyPolicyVersion !== PRIVACY_POLICY_VERSION) {
+    return {
+      message: 'Unsupported privacy policy version',
+      error: 'Please review and accept the latest privacy policy',
     };
   }
 

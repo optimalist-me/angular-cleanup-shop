@@ -7,6 +7,7 @@ import express from 'express';
 import { existsSync } from 'node:fs';
 import * as path from 'path';
 import { pathToFileURL } from 'node:url';
+import { enforceBookingRetentionPolicy } from '@angular-cleanup-shop/application-booking-service';
 import { createBookingRouter } from '@angular-cleanup-shop/presentation-booking-rest';
 import { setDatabase } from '@angular-cleanup-shop/infrastructure-booking-datastore';
 import { initializeDatabase } from './db/sqlite';
@@ -25,6 +26,7 @@ const importEsmModule = new Function(
 const assetsPath = path.join(__dirname, 'assets');
 const shopBrowserPath = path.join(__dirname, '../shop/browser');
 const shopServerBundlePath = path.join(__dirname, '../shop/server/server.mjs');
+const RETENTION_INTERVAL_MS = 24 * 60 * 60 * 1000;
 
 const app = express();
 
@@ -71,7 +73,10 @@ async function loadShopSsrHandler(): Promise<NodeRequestHandlerFunction | null> 
     console.log(`[API] Loaded shop SSR handler from ${shopServerBundlePath}`);
     return reqHandler as NodeRequestHandlerFunction;
   } catch (error) {
-    console.error('[API] Failed to load SSR bundle. Falling back to SPA mode.', error);
+    console.error(
+      '[API] Failed to load SSR bundle. Falling back to SPA mode.',
+      error,
+    );
     return null;
   }
 }
@@ -105,6 +110,26 @@ const port = process.env.PORT || 3333;
 initializeDatabase()
   .then(async (db) => {
     setDatabase(db);
+
+    const runRetentionPolicy = async (source: string) => {
+      try {
+        const deletedCount = await enforceBookingRetentionPolicy();
+        console.log(
+          `[API] Booking retention cleanup (${source}) deleted ${deletedCount} record(s).`,
+        );
+      } catch (error) {
+        console.error(
+          `[API] Booking retention cleanup failed (${source}).`,
+          error,
+        );
+      }
+    };
+
+    await runRetentionPolicy('startup');
+    setInterval(() => {
+      void runRetentionPolicy('interval');
+    }, RETENTION_INTERVAL_MS).unref();
+
     const frontendRequestHandler = await loadShopSsrHandler();
     configureFrontendRouting(frontendRequestHandler);
 

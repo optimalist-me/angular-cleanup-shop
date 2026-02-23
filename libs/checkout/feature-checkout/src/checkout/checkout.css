@@ -113,6 +113,28 @@
   gap: var(--ds-space-1);
 }
 
+.checkout__privacy {
+  display: grid;
+  gap: var(--ds-space-1);
+}
+
+.checkout__checkbox-label {
+  display: flex;
+  gap: var(--ds-space-2);
+  align-items: flex-start;
+  font-size: var(--ds-font-size-200);
+}
+
+.checkout__checkbox {
+  inline-size: 18px;
+  block-size: 18px;
+  margin-top: 2px;
+}
+
+.checkout__checkbox-label a {
+  color: var(--ds-text-accent);
+}
+
 .checkout__label {
   font-size: var(--ds-font-size-200);
   font-weight: var(--ds-font-weight-semibold);
