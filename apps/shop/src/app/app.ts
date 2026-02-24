@@ -73,6 +73,13 @@ const PAGE_SEO_BY_PATH: Record<string, SeoPage> = {
     keywords:
       'Angular cleanup FAQ, Angular consulting pricing, Nx consulting, frontend governance',
   },
+  '/privacy': {
+    title: 'Privacy Policy | Angular Cleanup Shop',
+    description:
+      'Read how Angular Cleanup Shop processes and protects booking and checkout data in line with EU GDPR principles.',
+    keywords:
+      'privacy policy, GDPR, data protection, booking data, Angular Cleanup Shop',
+  },
   '/products': {
     title: 'Angular Cleanup Products | Outcomes by Domain',
     description:
@@ -131,8 +138,7 @@ const PRODUCT_OFFERS: ProductOffer[] = [
   {
     slug: 'boundary-polish',
     name: 'Boundary Polish',
-    shortDescription:
-      'Removes hidden coupling and restores ownership clarity.',
+    shortDescription: 'Removes hidden coupling and restores ownership clarity.',
     price: 2400,
   },
   {
@@ -226,7 +232,9 @@ export class App {
 
     this.router.events
       .pipe(
-        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd,
+        ),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((event) => this.applySeo(event.urlAfterRedirects));
@@ -247,17 +255,28 @@ export class App {
     this.meta.updateTag({ property: 'og:site_name', content: SITE_NAME });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
     this.meta.updateTag({ property: 'og:title', content: page.title });
-    this.meta.updateTag({ property: 'og:description', content: page.description });
+    this.meta.updateTag({
+      property: 'og:description',
+      content: page.description,
+    });
     this.meta.updateTag({ property: 'og:url', content: canonicalUrl });
     this.meta.updateTag({ property: 'og:image', content: socialImage });
 
-    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    });
     this.meta.updateTag({ name: 'twitter:title', content: page.title });
-    this.meta.updateTag({ name: 'twitter:description', content: page.description });
+    this.meta.updateTag({
+      name: 'twitter:description',
+      content: page.description,
+    });
     this.meta.updateTag({ name: 'twitter:image', content: socialImage });
 
     this.updateCanonicalLink(canonicalUrl);
-    this.upsertStructuredData(this.buildStructuredDataGraph(path, canonicalUrl));
+    this.upsertStructuredData(
+      this.buildStructuredDataGraph(path, canonicalUrl),
+    );
   }
 
   private normalizePath(url: string): string {
@@ -437,7 +456,8 @@ export class App {
         url: canonicalUrl,
         name: this.titleService.getTitle(),
         description:
-          this.meta.getTag('name="description"')?.content ?? SITE_DEFAULT_DESCRIPTION,
+          this.meta.getTag('name="description"')?.content ??
+          SITE_DEFAULT_DESCRIPTION,
         isPartOf: { '@id': websiteId },
         about: { '@id': professionalServiceId },
       },

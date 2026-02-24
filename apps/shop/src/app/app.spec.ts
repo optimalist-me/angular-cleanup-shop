@@ -27,7 +27,9 @@ describe('App', () => {
     document.head
       .querySelector<HTMLScriptElement>('#structured-data-graph')
       ?.remove();
-    document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.remove();
+    document.head
+      .querySelector<HTMLLinkElement>('link[rel="canonical"]')
+      ?.remove();
   });
 
   it('should render header and footer', async () => {
@@ -90,6 +92,33 @@ describe('App', () => {
     expect(canonical?.href).toBe('https://angularcleanup.shop/playbook');
   });
 
+  it('should apply indexable SEO metadata for privacy page', async () => {
+    const fixture = TestBed.createComponent(App);
+    const router = TestBed.inject(Router);
+    await fixture.whenStable();
+
+    await router.navigateByUrl('/privacy');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const robots = document.head.querySelector<HTMLMetaElement>(
+      'meta[name="robots"]',
+    );
+    const canonical = document.head.querySelector<HTMLLinkElement>(
+      'link[rel="canonical"]',
+    );
+    const description = document.head.querySelector<HTMLMetaElement>(
+      'meta[name="description"]',
+    );
+
+    expect(document.title).toContain('Privacy Policy');
+    expect(robots?.content).toBe(
+      'index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1',
+    );
+    expect(canonical?.href).toBe('https://angularcleanup.shop/privacy');
+    expect(description?.content).toContain('GDPR');
+  });
+
   it('should apply noindex metadata on conversion routes', async () => {
     const fixture = TestBed.createComponent(App);
     const router = TestBed.inject(Router);
@@ -101,7 +130,9 @@ describe('App', () => {
     const checkoutRobots = document.head.querySelector<HTMLMetaElement>(
       'meta[name="robots"]',
     );
-    expect(checkoutRobots?.content).toBe('noindex,nofollow,noarchive,nosnippet');
+    expect(checkoutRobots?.content).toBe(
+      'noindex,nofollow,noarchive,nosnippet',
+    );
 
     await router.navigateByUrl('/book/confirmed/booking-123');
     fixture.detectChanges();
@@ -109,7 +140,9 @@ describe('App', () => {
     const confirmedRobots = document.head.querySelector<HTMLMetaElement>(
       'meta[name="robots"]',
     );
-    expect(confirmedRobots?.content).toBe('noindex,nofollow,noarchive,nosnippet');
+    expect(confirmedRobots?.content).toBe(
+      'noindex,nofollow,noarchive,nosnippet',
+    );
   });
 
   it('should apply product-specific metadata for known and unknown slugs', async () => {
@@ -177,7 +210,9 @@ describe('App', () => {
     await fixture.whenStable();
 
     const structuredData = readStructuredDataGraph();
-    expect(structuredData.some((node) => node['@type'] === 'Offer')).toBeTruthy();
+    expect(
+      structuredData.some((node) => node['@type'] === 'Offer'),
+    ).toBeTruthy();
     expect(
       structuredData.some((node) => node['@type'] === 'BreadcrumbList'),
     ).toBeTruthy();
@@ -191,6 +226,8 @@ function readStructuredDataGraph(): Array<Record<string, unknown>> {
   expect(script).toBeTruthy();
 
   const content = script?.textContent ?? '{}';
-  const parsed = JSON.parse(content) as { '@graph'?: Array<Record<string, unknown>> };
+  const parsed = JSON.parse(content) as {
+    '@graph'?: Array<Record<string, unknown>>;
+  };
   return parsed['@graph'] ?? [];
 }

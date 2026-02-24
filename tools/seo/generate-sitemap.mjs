@@ -13,6 +13,7 @@ const ROUTE_META = {
   '/playbook': { changefreq: 'monthly', priority: '0.8' },
   '/architecture': { changefreq: 'monthly', priority: '0.8' },
   '/faq': { changefreq: 'monthly', priority: '0.8' },
+  '/privacy': { changefreq: 'monthly', priority: '0.7' },
   '/book': { changefreq: 'monthly', priority: '0.7' },
 };
 
@@ -94,10 +95,12 @@ function getRouteMeta(route) {
     return { changefreq: 'monthly', priority: '0.8' };
   }
 
-  return ROUTE_META[route] ?? {
-    changefreq: DEFAULT_CHANGEFREQ,
-    priority: DEFAULT_PRIORITY,
-  };
+  return (
+    ROUTE_META[route] ?? {
+      changefreq: DEFAULT_CHANGEFREQ,
+      priority: DEFAULT_PRIORITY,
+    }
+  );
 }
 
 function buildSitemapXml(routes) {
@@ -146,7 +149,9 @@ async function main() {
   const sitemapXml = buildSitemapXml(dedupedRoutes);
 
   await writeFile(outputPath, sitemapXml, 'utf8');
-  console.log(`Generated sitemap with ${dedupedRoutes.length} routes at ${outputPath}`);
+  console.log(
+    `Generated sitemap with ${dedupedRoutes.length} routes at ${outputPath}`,
+  );
 }
 
 main().catch((error) => {

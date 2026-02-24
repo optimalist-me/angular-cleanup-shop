@@ -2,6 +2,7 @@ import * as BookingDatastore from '@angular-cleanup-shop/infrastructure-booking-
 import * as EmailService from '@angular-cleanup-shop/infrastructure-booking-email';
 import { BookingRequest } from '@cleanup/models-booking';
 import {
+  enforceBookingRetentionPolicy,
   processBooking,
   getBookingDetails,
   getUserBookings,
@@ -12,6 +13,7 @@ jest.mock('@angular-cleanup-shop/infrastructure-booking-datastore', () => ({
   markBookingCompleted: jest.fn(),
   getBooking: jest.fn(),
   getBookingsByEmail: jest.fn(),
+  deleteBookingsOlderThan: jest.fn(),
 }));
 
 jest.mock('@angular-cleanup-shop/infrastructure-booking-email', () => ({
@@ -28,6 +30,8 @@ const baseRequest: BookingRequest = {
   painArea: 'boundaries',
   notes: 'Please send details',
   preferredDates: ['2026-03-11'],
+  privacyPolicyAccepted: true,
+  privacyPolicyVersion: '2026-02-23',
 };
 
 describe('booking service', () => {
@@ -57,6 +61,26 @@ describe('booking service', () => {
     expect(result.message).toBe('Invalid team size');
   });
 
+  it('rejects missing privacy acceptance', async () => {
+    const result = await processBooking({
+      ...baseRequest,
+      privacyPolicyAccepted: false,
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.message).toBe('Privacy policy acceptance is required');
+  });
+
+  it('rejects stale privacy policy versions', async () => {
+    const result = await processBooking({
+      ...baseRequest,
+      privacyPolicyVersion: '2025-01-01',
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.message).toBe('Unsupported privacy policy version');
+  });
+
   it('processes booking and sends confirmation email', async () => {
     (BookingDatastore.saveBooking as jest.Mock).mockResolvedValue({
       id: 'booking-123',
@@ -72,6 +96,12 @@ describe('booking service', () => {
 
     expect(result.success).toBe(true);
     expect(result.bookingId).toBe('booking-123');
+    expect(BookingDatastore.saveBooking).toHaveBeenCalledWith(
+      expect.objectContaining({
+        privacyPolicyVersion: '2026-02-23',
+        privacyPolicyAcceptedAt: expect.any(String),
+      }),
+    );
     expect(BookingDatastore.markBookingCompleted).toHaveBeenCalledWith(
       'booking-123',
     );
@@ -108,6 +138,20 @@ describe('booking service', () => {
     expect(BookingDatastore.getBooking).toHaveBeenCalledWith('booking-1');
     expect(BookingDatastore.getBookingsByEmail).toHaveBeenCalledWith(
       'avery@example.com',
+    );
+  });
+
+  it('enforces retention by deleting bookings older than cutoff', async () => {
+    (BookingDatastore.deleteBookingsOlderThan as jest.Mock).mockResolvedValue(
+      2,
+    );
+    const now = new Date('2026-02-23T00:00:00.000Z');
+
+    const deleted = await enforceBookingRetentionPolicy(now);
+
+    expect(deleted).toBe(2);
+    expect(BookingDatastore.deleteBookingsOlderThan).toHaveBeenCalledWith(
+      '2025-02-23T00:00:00.000Z',
     );
   });
 });

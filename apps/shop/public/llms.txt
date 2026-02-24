@@ -17,6 +17,7 @@ Angular Cleanup Shop provides maintenance-first Angular and Nx cleanup services 
 - https://angularcleanup.shop/playbook
 - https://angularcleanup.shop/architecture
 - https://angularcleanup.shop/faq
+- https://angularcleanup.shop/privacy
 - https://angularcleanup.shop/products
 - https://angularcleanup.shop/book
 

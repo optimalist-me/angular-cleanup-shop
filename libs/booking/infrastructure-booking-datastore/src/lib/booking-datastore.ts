@@ -18,9 +18,19 @@ export interface StoredBooking {
   painArea: BookingPainArea;
   notes?: string;
   preferredDates?: string[];
+  privacyPolicyVersion?: string;
+  privacyPolicyAcceptedAt?: string;
   createdAt: string;
   completedAt?: string;
 }
+
+type SavedBookingInput = Omit<
+  StoredBooking,
+  'id' | 'createdAt' | 'completedAt'
+> &
+  Required<
+    Pick<StoredBooking, 'privacyPolicyVersion' | 'privacyPolicyAcceptedAt'>
+  >;
 
 type BookingRow = {
   id: string;
@@ -33,6 +43,8 @@ type BookingRow = {
   pain_area: string;
   notes: string | null;
   preferred_dates: string | null;
+  privacy_policy_version: string | null;
+  privacy_policy_accepted_at: string | null;
   cart_items: string;
   cart_subtotal: number;
   cart_item_count: number;
@@ -88,6 +100,10 @@ function mapRow(row: BookingRow): StoredBooking {
     painArea: normalizePainArea(row.pain_area),
     notes: row.notes ?? undefined,
     preferredDates: parsePreferredDates(row.preferred_dates),
+    privacyPolicyVersion: normalizeOptionalString(row.privacy_policy_version),
+    privacyPolicyAcceptedAt: normalizeOptionalString(
+      row.privacy_policy_accepted_at,
+    ),
     createdAt: row.created_at,
     completedAt: row.completed_at ?? undefined,
   };
@@ -97,10 +113,10 @@ function mapRow(row: BookingRow): StoredBooking {
  * Saves a booking to the data store.
  */
 export async function saveBooking(
-  booking: Omit<StoredBooking, 'id' | 'createdAt' | 'completedAt'>,
+  booking: SavedBookingInput,
 ): Promise<StoredBooking> {
   const db = getDatabase();
-  const id = `booking-${Date.now()}`;
+  const id = `booking-${Date.now()}-${Math.floor(Math.random() * 1_000_000)}`;
   const createdAt = new Date().toISOString();
 
   await db.run(
@@ -116,11 +132,13 @@ export async function saveBooking(
       pain_area,
       notes,
       preferred_dates,
+      privacy_policy_version,
+      privacy_policy_accepted_at,
       cart_items,
       cart_subtotal,
       cart_item_count,
       created_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `,
     id,
     booking.email,
@@ -132,6 +150,8 @@ export async function saveBooking(
     booking.painArea,
     booking.notes ?? null,
     booking.preferredDates ? JSON.stringify(booking.preferredDates) : null,
+    booking.privacyPolicyVersion,
+    booking.privacyPolicyAcceptedAt,
     '[]',
     0,
     0,
@@ -200,6 +220,24 @@ export async function markBookingCompleted(
   return getBooking(id);
 }
 
+export async function deleteBookingsOlderThan(
+  cutoffIso: string,
+): Promise<number> {
+  const db = getDatabase();
+  const countRow = await db.get<{ total: number }>(
+    `SELECT COUNT(*) as total FROM ${TABLE_NAME} WHERE created_at < ?`,
+    cutoffIso,
+  );
+
+  const total = countRow?.total ?? 0;
+  if (total === 0) {
+    return 0;
+  }
+
+  await db.run(`DELETE FROM ${TABLE_NAME} WHERE created_at < ?`, cutoffIso);
+  return total;
+}
+
 function parsePreferredDates(raw: string | null): string[] | undefined {
   if (!raw) {
     return undefined;
@@ -232,4 +270,13 @@ function normalizePainArea(value: string): BookingPainArea {
   return allowed.includes(value as BookingPainArea)
     ? (value as BookingPainArea)
     : 'boundaries';
+}
+
+function normalizeOptionalString(value: string | null): string | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : undefined;
 }

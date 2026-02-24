@@ -19,7 +19,10 @@ import { Router, RouterLink } from '@angular/router';
 import { catchError, of, startWith, take } from 'rxjs';
 import { BookingsRepository } from '@cleanup/data-access-booking';
 import { CartRepository } from '@cleanup/data-access-cart';
-import { type BookingRequest } from '@cleanup/models-booking';
+import {
+  PRIVACY_POLICY_VERSION,
+  type BookingRequest,
+} from '@cleanup/models-booking';
 import { SharedDesignSurface } from '@cleanup/shared-ui-design-surface';
 import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 import { CartLineItem } from '@cleanup/ui-cart-line-item';
@@ -83,6 +86,10 @@ export class CheckoutCheckout {
     notes: new FormControl('', {
       nonNullable: true,
       validators: [Validators.maxLength(500)],
+    }),
+    privacyPolicyAccepted: new FormControl(false, {
+      nonNullable: true,
+      validators: [Validators.requiredTrue],
     }),
   });
 
@@ -251,6 +258,11 @@ export class CheckoutCheckout {
     if (!usesNxValue) {
       return null;
     }
+    const privacyPolicyAccepted =
+      this.detailsForm.controls.privacyPolicyAccepted.value;
+    if (!privacyPolicyAccepted) {
+      return null;
+    }
 
     const preferredDates = this.scheduleForm.controls.preferredDates.controls
       .map((control) => control.value.trim())
@@ -269,6 +281,8 @@ export class CheckoutCheckout {
       usesNx: usesNxValue === 'yes',
       notes: this.detailsForm.controls.notes.value.trim(),
       preferredDates,
+      privacyPolicyAccepted,
+      privacyPolicyVersion: PRIVACY_POLICY_VERSION,
     };
   }
 }

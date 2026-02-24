@@ -26,6 +26,8 @@ describe('BookingsApi', () => {
     painArea: 'boundaries',
     notes: 'Interested in a fit check.',
     preferredDates: ['2026-03-12'],
+    privacyPolicyAccepted: true,
+    privacyPolicyVersion: '2026-02-23',
   };
   const createResponse: CreateBookingResponse = {
     success: true,
@@ -45,6 +47,8 @@ describe('BookingsApi', () => {
       painArea: 'boundaries',
       notes: 'Interested in a fit check.',
       preferredDates: ['2026-03-12'],
+      privacyPolicyVersion: '2026-02-23',
+      privacyPolicyAcceptedAt: '2026-03-01T00:00:00.000Z',
       createdAt: '2026-02-12T12:00:00Z',
     },
   };

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { BookingsRepository } from '@cleanup/data-access-booking';
+import { PRIVACY_POLICY_VERSION } from '@cleanup/models-booking';
 import { BookingBooking } from './booking';
 
 describe('BookingBooking', () => {
@@ -28,6 +29,8 @@ describe('BookingBooking', () => {
       painArea: 'boundaries' as const,
       notes: 'Need guidance',
       preferredDates: ['2026-03-11'],
+      privacyPolicyVersion: '2026-02-23',
+      privacyPolicyAcceptedAt: '2026-03-01T00:00:00.000Z',
       createdAt: '2026-03-01T00:00:00.000Z',
     },
   };
@@ -116,6 +119,15 @@ describe('BookingBooking', () => {
 
     expect(component.step()).toBe('schedule');
     expect(component.submissionError()).toBeNull();
+  });
+
+  it('renders privacy link in details form', async () => {
+    await setup();
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+    const link = element.querySelector('a[href="/privacy"]');
+    expect(link?.textContent).toContain('privacy policy');
   });
 
   it('supports back navigation helper', async () => {
@@ -238,6 +250,8 @@ describe('BookingBooking', () => {
     expect(bookingsRepositoryStub.createBooking).toHaveBeenCalledWith(
       expect.objectContaining({
         usesNx: false,
+        privacyPolicyAccepted: true,
+        privacyPolicyVersion: PRIVACY_POLICY_VERSION,
       }),
     );
     expect(navigateSpy).toHaveBeenCalledWith([
@@ -263,6 +277,12 @@ describe('BookingBooking', () => {
     ).toBeNull();
 
     component.detailsForm.controls.usesNx.setValue('yes');
+    component.detailsForm.controls.privacyPolicyAccepted.setValue(false);
+    expect(
+      (component as object as { buildRequest: () => unknown }).buildRequest(),
+    ).toBeNull();
+
+    component.detailsForm.controls.privacyPolicyAccepted.setValue(true);
     component.scheduleForm.controls.preferredDates.push(
       new FormControl('2026-03-21', { nonNullable: true }),
     );
@@ -348,5 +368,6 @@ function fillValidDetails(
     angularVersion: '21',
     usesNx: options?.usesNx ?? 'yes',
     notes: 'Need guidance',
+    privacyPolicyAccepted: true,
   });
 }
