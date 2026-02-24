@@ -145,6 +145,28 @@ describe('App', () => {
     );
   });
 
+  it('should scroll to top on navigation', async () => {
+    const scrollSpy = vi
+      .spyOn(window, 'scrollTo')
+      .mockImplementation(() => undefined);
+    const fixture = TestBed.createComponent(App);
+    const router = TestBed.inject(Router);
+    await fixture.whenStable();
+    scrollSpy.mockClear();
+
+    await router.navigateByUrl('/faq');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(scrollSpy).toHaveBeenCalled();
+    expect(scrollSpy).toHaveBeenLastCalledWith({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    scrollSpy.mockRestore();
+  });
+
   it('should apply product-specific metadata for known and unknown slugs', async () => {
     const fixture = TestBed.createComponent(App);
     const router = TestBed.inject(Router);
