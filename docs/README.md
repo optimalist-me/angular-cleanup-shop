@@ -28,3 +28,6 @@ Framework upgrades are **optional**, explicitly scoped, and never a prerequisite
 - [Checklists](checklists/README.md)
 - [Examples](examples/README.md)
 - [Templates](templates/README.md)
+- [Architecture Decisions](adr/)
+- [Debt Register](debt/README.md)
+- [Measurement](measurement/)

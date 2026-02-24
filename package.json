@@ -4,7 +4,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "seo:generate-sitemap": "node tools/seo/generate-sitemap.mjs"
+    "seo:generate-sitemap": "node tools/seo/generate-sitemap.mjs",
+    "compliance:no-trackers": "node tools/compliance/check-no-trackers.mjs"
   },
   "devDependencies": {
     "@angular-devkit/core": "~21.1.0",

@@ -57,6 +57,12 @@
         "command": "yarn seo:generate-sitemap"
       }
     },
+    "compliance-no-trackers": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "yarn compliance:no-trackers"
+      }
+    },
     "serve": {
       "continuous": true,
       "executor": "@angular/build:dev-server",

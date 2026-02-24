@@ -319,5 +319,22 @@ No inflated promises.
 
 ---
 
+## 15. Measurement Policy
+
+For the example application in this repository, the launch posture is:
+
+- no non-essential analytics
+- no third-party marketing pixels
+- no behavioral profiling
+- no analytics or marketing cookies
+
+Measurement is limited to first-party operational booking KPIs.
+
+Non-essential analytics is only reconsidered if first-party KPIs cannot answer a
+concrete business question for two consecutive review cycles. Any future rollout
+must include consent collection and prior blocking before activation.
+
+---
+
 **Angular Cleanup Shop**  
 _Fractional Structural Frontend Governance — One Calm Day per Week._
