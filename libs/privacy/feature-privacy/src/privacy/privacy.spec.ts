@@ -31,6 +31,12 @@ describe('PrivacyPrivacy', () => {
     expect(element.textContent).toContain('support@angularcleanup.shop');
     expect(element.textContent).toContain('bookings@angularcleanup.shop');
     expect(element.textContent).toContain('maximum of twelve (12) months');
+    expect(element.textContent).toContain(
+      'do not use marketing or analytics cookies',
+    );
+    expect(element.textContent).toContain(
+      'first-party operational booking metrics only',
+    );
   });
 
   it('exports /privacy feature route', async () => {
