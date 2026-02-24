@@ -237,10 +237,7 @@ export class App {
         ),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe((event) => {
-        this.applySeo(event.urlAfterRedirects);
-        this.scrollToTop();
-      });
+      .subscribe((event) => this.applySeo(event.urlAfterRedirects));
   }
 
   private applySeo(url: string): void {
@@ -280,20 +277,6 @@ export class App {
     this.upsertStructuredData(
       this.buildStructuredDataGraph(path, canonicalUrl),
     );
-  }
-
-  private scrollToTop(): void {
-    const windowRef = this.document.defaultView;
-    if (!windowRef) {
-      return;
-    }
-
-    const prefersReducedMotion =
-      windowRef.matchMedia?.('(prefers-reduced-motion: reduce)').matches ===
-      true;
-    const behavior: ScrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
-
-    windowRef.scrollTo({ top: 0, left: 0, behavior });
   }
 
   private normalizePath(url: string): string {
