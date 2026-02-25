@@ -36,6 +36,8 @@ AI agents must **optimize for clarity and maintainability**, not feature velocit
 ## Local Execution Constraint
 
 - Do NOT run any `nx` command from the agent in this repository.
+- Do NOT bypass Nx targets by running underlying tools directly (for example `yarn exec jest`, `yarn exec tsc`, `jest`, `tsc`, `eslint`, `vitest`, or `ng` for lint/test/build flows).
+- For lint/test/build requests, provide the exact `nx` command(s) for the user to run locally and let the user execute them.
 - When `nx` output is required, provide the exact `nx` command for the user to run locally.
 - Wait for the user to share command output before continuing with `nx`-dependent steps.
 

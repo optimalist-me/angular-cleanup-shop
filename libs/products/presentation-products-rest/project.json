@@ -1,0 +1,20 @@
+{
+  "name": "presentation-products-rest",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/products/presentation-products-rest/src",
+  "projectType": "library",
+  "tags": ["type:presentation", "scope:products"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/products/presentation-products-rest",
+        "tsConfig": "libs/products/presentation-products-rest/tsconfig.lib.json",
+        "packageJson": "libs/products/presentation-products-rest/package.json",
+        "main": "libs/products/presentation-products-rest/src/index.ts",
+        "assets": ["libs/products/presentation-products-rest/*.md"]
+      }
+    }
+  }
+}

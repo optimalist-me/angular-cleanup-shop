@@ -38,6 +38,9 @@
       "@cleanup/data-access-products": [
         "libs/products/data-access-products/src/index.ts"
       ],
+      "@cleanup/models-products": [
+        "libs/products/models-products/src/index.ts"
+      ],
       "@cleanup/ui-product-card": [
         "libs/products/ui-product-card/src/index.ts"
       ],
@@ -69,11 +72,20 @@
       "@angular-cleanup-shop/infrastructure-booking-datastore": [
         "libs/booking/infrastructure-booking-datastore/src/index.ts"
       ],
+      "@angular-cleanup-shop/infrastructure-products-datastore": [
+        "libs/products/infrastructure-products-datastore/src/index.ts"
+      ],
       "@angular-cleanup-shop/application-booking-service": [
         "libs/booking/application-booking-service/src/index.ts"
       ],
+      "@angular-cleanup-shop/application-products-service": [
+        "libs/products/application-products-service/src/index.ts"
+      ],
       "@angular-cleanup-shop/presentation-booking-rest": [
         "libs/booking/presentation-booking-rest/src/index.ts"
+      ],
+      "@angular-cleanup-shop/presentation-products-rest": [
+        "libs/products/presentation-products-rest/src/index.ts"
       ],
       "@angular-cleanup-shop/infrastructure-booking-email": [
         "libs/booking/infrastructure-booking-email/src/index.ts"
