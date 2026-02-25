@@ -19,6 +19,7 @@ module.exports = {
       optimization: false,
       outputHashing: 'none',
       generatePackageJson: true,
+      runtimeDependencies: ['tslib'],
       sourceMap: true,
     }),
   ],
