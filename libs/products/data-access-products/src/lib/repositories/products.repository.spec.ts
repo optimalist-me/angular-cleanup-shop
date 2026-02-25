@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { of, Subject } from 'rxjs';
-import { Product } from '../models/product.model';
+import { Product } from '@cleanup/models-products';
 import { ProductsApi } from '../api/products.api';
 import { ProductsRepository } from './products.repository';
 

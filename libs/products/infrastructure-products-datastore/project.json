@@ -1,0 +1,20 @@
+{
+  "name": "infrastructure-products-datastore",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/products/infrastructure-products-datastore/src",
+  "projectType": "library",
+  "tags": ["type:infrastructure", "scope:products"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/products/infrastructure-products-datastore",
+        "tsConfig": "libs/products/infrastructure-products-datastore/tsconfig.lib.json",
+        "packageJson": "libs/products/infrastructure-products-datastore/package.json",
+        "main": "libs/products/infrastructure-products-datastore/src/index.ts",
+        "assets": ["libs/products/infrastructure-products-datastore/*.md"]
+      }
+    }
+  }
+}

@@ -9,7 +9,9 @@ import * as path from 'path';
 import { pathToFileURL } from 'node:url';
 import { enforceBookingRetentionPolicy } from '@angular-cleanup-shop/application-booking-service';
 import { createBookingRouter } from '@angular-cleanup-shop/presentation-booking-rest';
-import { setDatabase } from '@angular-cleanup-shop/infrastructure-booking-datastore';
+import { setDatabase as setBookingDatabase } from '@angular-cleanup-shop/infrastructure-booking-datastore';
+import { setDatabase as setProductsDatabase } from '@angular-cleanup-shop/infrastructure-products-datastore';
+import { createProductsRouter } from '@angular-cleanup-shop/presentation-products-rest';
 import { initializeDatabase } from './db/sqlite';
 
 type NodeRequestHandlerFunction = (
@@ -49,6 +51,7 @@ app.get('/api', (req, res) => {
 
 // Booking routes
 app.use('/api/bookings', createBookingRouter());
+app.use('/api/products', createProductsRouter());
 
 async function loadShopSsrHandler(): Promise<NodeRequestHandlerFunction | null> {
   if (!existsSync(shopServerBundlePath)) {
@@ -109,7 +112,8 @@ const port = process.env.PORT || 3333;
 
 initializeDatabase()
   .then(async (db) => {
-    setDatabase(db);
+    setBookingDatabase(db);
+    setProductsDatabase(db);
 
     const runRetentionPolicy = async (source: string) => {
       try {
@@ -139,6 +143,6 @@ initializeDatabase()
     server.on('error', console.error);
   })
   .catch((error) => {
-    console.error('[API] Failed to initialize booking database', error);
+    console.error('[API] Failed to initialize database', error);
     process.exit(1);
   });

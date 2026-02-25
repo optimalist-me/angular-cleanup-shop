@@ -3,7 +3,7 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Product } from '../models/product.model';
+import { GetProductResponse, Product } from '@cleanup/models-products';
 import { ProductsApi } from './products.api';
 
 describe('ProductsApi', () => {
@@ -59,7 +59,7 @@ describe('ProductsApi', () => {
       expect(result).toEqual(products);
     });
 
-    const request = httpMock.expectOne('/data/products.json');
+    const request = httpMock.expectOne('/api/products');
     expect(request.request.method).toBe('GET');
     request.flush(products);
   });
@@ -69,16 +69,25 @@ describe('ProductsApi', () => {
       expect(result).toEqual(products[1]);
     });
 
-    const request = httpMock.expectOne('/data/products.json');
-    request.flush(products);
+    const request = httpMock.expectOne('/api/products/state-simplifier');
+    request.flush({
+      success: true,
+      product: products[1],
+    } satisfies GetProductResponse);
   });
 
-  it('should return null for an unknown slug', () => {
+  it('should return null for an unknown slug with 404', () => {
     api.getBySlug('missing').subscribe((result) => {
       expect(result).toBeNull();
     });
 
-    const request = httpMock.expectOne('/data/products.json');
-    request.flush(products);
+    const request = httpMock.expectOne('/api/products/missing');
+    request.flush(
+      {
+        success: false,
+        message: 'Product not found',
+      } satisfies GetProductResponse,
+      { status: 404, statusText: 'Not Found' },
+    );
   });
 });

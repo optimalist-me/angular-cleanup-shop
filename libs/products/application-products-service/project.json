@@ -1,0 +1,20 @@
+{
+  "name": "application-products-service",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/products/application-products-service/src",
+  "projectType": "library",
+  "tags": ["type:application", "scope:products"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/products/application-products-service",
+        "tsConfig": "libs/products/application-products-service/tsconfig.lib.json",
+        "packageJson": "libs/products/application-products-service/package.json",
+        "main": "libs/products/application-products-service/src/index.ts",
+        "assets": ["libs/products/application-products-service/*.md"]
+      }
+    }
+  }
+}
