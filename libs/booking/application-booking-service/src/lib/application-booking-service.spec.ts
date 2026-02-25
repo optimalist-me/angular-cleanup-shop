@@ -105,6 +105,13 @@ describe('booking service', () => {
     expect(BookingDatastore.markBookingCompleted).toHaveBeenCalledWith(
       'booking-123',
     );
+    expect(EmailService.sendBookingConfirmationEmail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        bookingId: 'booking-123',
+        angularVersion: baseRequest.angularVersion,
+        usesNx: baseRequest.usesNx,
+      }),
+    );
   });
 
   it('does not mark booking completed when email fails', async () => {

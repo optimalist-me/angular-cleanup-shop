@@ -8,6 +8,8 @@ export interface BookingEmailData {
   email: string;
   company: string;
   teamSize: number;
+  angularVersion: string;
+  usesNx: boolean;
   notes?: string;
   preferredDates?: string[];
 }
@@ -137,6 +139,14 @@ export function generateBookingConfirmationHtml(
               <td class="details-label">Team Size:</td>
               <td class="details-value">${data.teamSize} team members</td>
             </tr>
+            <tr>
+              <td class="details-label">Angular Version:</td>
+              <td class="details-value">${escapeHtml(data.angularVersion)}</td>
+            </tr>
+            <tr>
+              <td class="details-label">Using Nx:</td>
+              <td class="details-value">${data.usesNx ? 'Yes' : 'No'}</td>
+            </tr>
             ${data.preferredDates && data.preferredDates.length > 0 ? `<tr><td class="details-label">Preferred Dates:</td><td class="details-value">${data.preferredDates.map((date) => escapeHtml(date)).join(', ')}</td></tr>` : ''}
             ${data.notes ? `<tr><td class="details-label">Notes:</td><td class="details-value">${escapeHtml(data.notes)}</td></tr>` : ''}
           </table>
@@ -149,7 +159,7 @@ export function generateBookingConfirmationHtml(
             We've received your request and will review it shortly. You can expect to hear from us within 24 hours.<br><br>
             If you have any questions, please reply to this email or contact our team.<br><br>
             Best regards,<br>
-            The Cleanup Shop Team
+            The Angular Cleanup Shop Team
           </div>
         </div>
         <div class="footer">
@@ -181,6 +191,8 @@ Name: ${data.name}
 Email: ${data.email}
 Company: ${data.company}
 Team Size: ${data.teamSize} team members
+Angular Version: ${data.angularVersion}
+Using Nx: ${data.usesNx ? 'Yes' : 'No'}
 ${data.preferredDates && data.preferredDates.length > 0 ? `Preferred Dates: ${data.preferredDates.join(', ')}` : ''}
 ${data.notes ? `Notes: ${data.notes}` : ''}
 
@@ -189,7 +201,7 @@ We've received your request and will review it shortly. You can expect to hear f
 If you have any questions, please reply to this email or contact our team.
 
 Best regards,
-The Cleanup Shop Team
+The Angular Cleanup Shop Team
 
 ---
 This is an automated email. Please do not reply directly to this message.
