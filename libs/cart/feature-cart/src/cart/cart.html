@@ -17,6 +17,17 @@
           Review the cleanups you are about to schedule.
         </shared-design-text>
       </p>
+      @if (hasItems()) {
+      <div class="cart__intro-actions">
+        <shared-design-button
+          class="cart__empty-action"
+          tone="danger"
+          size="sm"
+          label="Empty cart"
+          (pressed)="emptyCart()"
+        />
+      </div>
+      }
     </header>
 
     @if (hasItems()) {

@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CartRepository } from '@cleanup/data-access-cart';
+import { SharedDesignButton } from '@cleanup/shared-ui-design-button';
 import { SharedDesignSurface } from '@cleanup/shared-ui-design-surface';
 import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 import { CartLineItem } from '@cleanup/ui-cart-line-item';
@@ -17,6 +18,7 @@ import { CartSummary } from '@cleanup/ui-cart-summary';
     CartLineItem,
     CartSummary,
     RouterLink,
+    SharedDesignButton,
     SharedDesignSurface,
     SharedDesignText,
   ],
@@ -39,6 +41,10 @@ export class CartCart {
 
   removeItem(id: string): void {
     this.repository.removeItem(id);
+  }
+
+  emptyCart(): void {
+    this.repository.clear();
   }
 
   checkout(): void {

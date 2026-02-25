@@ -1,8 +1,11 @@
 <section
+  #sectionRoot
   class="section"
   [class.section--center]="align() === 'center'"
   [class.section--muted]="tone() === 'muted'"
   [class.section--compact]="size() === 'compact'"
+  [class.section--reveal-pending]="isRevealPending()"
+  [class.section--reveal-revealed]="isRevealRevealed()"
 >
   <div class="section__inner">
     @if (eyebrow()) {

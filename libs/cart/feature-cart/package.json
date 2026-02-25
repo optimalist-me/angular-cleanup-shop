@@ -8,7 +8,8 @@
     "@cleanup/ui-cart-line-item": "0.0.1",
     "@cleanup/ui-cart-summary": "0.0.1",
     "@cleanup/shared-ui-design-surface": "^0.0.1",
-    "@cleanup/shared-ui-design-text": "^0.0.1"
+    "@cleanup/shared-ui-design-text": "^0.0.1",
+    "@cleanup/shared-ui-design-button": "0.0.1"
   },
   "sideEffects": false
 }

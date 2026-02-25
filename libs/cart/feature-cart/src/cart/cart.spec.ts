@@ -15,6 +15,7 @@ describe('CartCart', () => {
     subtotal: ReturnType<typeof computed<number>>;
     updateQuantity: ReturnType<typeof vi.fn>;
     removeItem: ReturnType<typeof vi.fn>;
+    clear: ReturnType<typeof vi.fn>;
   };
 
   beforeEach(async () => {
@@ -32,6 +33,7 @@ describe('CartCart', () => {
       ),
       updateQuantity: vi.fn(),
       removeItem: vi.fn(),
+      clear: vi.fn(),
     };
 
     await TestBed.configureTestingModule({
@@ -107,6 +109,28 @@ describe('CartCart', () => {
       4,
     );
     expect(repositoryStub.removeItem).toHaveBeenCalledWith('boundary-polish');
+  });
+
+  it('should empty cart when empty action is pressed', () => {
+    itemsSignal.set([
+      {
+        id: 'boundary-polish',
+        slug: 'boundary-polish',
+        name: 'Boundary Polish',
+        price: 2400,
+        imageSrc: '/images/products/boundary-polish.png',
+        imageAlt: 'Boundary Polish image',
+        quantity: 1,
+      },
+    ]);
+    fixture.detectChanges();
+
+    const emptyAction = fixture.debugElement.query(
+      By.css('.cart__empty-action'),
+    );
+    emptyAction.triggerEventHandler('pressed', new MouseEvent('click'));
+
+    expect(repositoryStub.clear).toHaveBeenCalled();
   });
 
   it('should allow checkout to be triggered', () => {

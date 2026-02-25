@@ -62,17 +62,23 @@
     @if (hasProducts()) {
     <div class="products__grid">
       @for (product of productCards(); track product.slug) {
-      <products-card
-        [name]="product.name"
-        [imageSrc]="product.imageSrc"
-        [imageAlt]="product.imageAlt"
-        [shortDescription]="product.shortDescription"
-        [outcome]="product.outcome"
-        [pattern]="product.pattern"
-        [tag]="product.tagLabel"
-        [ctaHref]="product.href"
-        ctaLabel="View details"
-      />
+      <div
+        class="products__grid-item"
+        animate.enter="products__card-enter"
+        animate.leave="products__card-leave"
+      >
+        <products-card
+          [name]="product.name"
+          [imageSrc]="product.imageSrc"
+          [imageAlt]="product.imageAlt"
+          [shortDescription]="product.shortDescription"
+          [outcome]="product.outcome"
+          [pattern]="product.pattern"
+          [tag]="product.tagLabel"
+          [ctaHref]="product.href"
+          ctaLabel="View details"
+        />
+      </div>
       }
     </div>
     } @else {

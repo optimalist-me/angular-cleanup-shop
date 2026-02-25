@@ -151,3 +151,18 @@
     }
   </div>
 </section>
+
+@if (cartToastMessage(); as message) {
+<div
+  class="detail__toast"
+  role="status"
+  aria-live="polite"
+  aria-atomic="true"
+  animate.enter="detail__toast-enter"
+  animate.leave="detail__toast-leave"
+>
+  <shared-design-text tone="inverse" size="sm" weight="medium">
+    {{ message }}
+  </shared-design-text>
+</div>
+}

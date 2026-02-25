@@ -7,7 +7,8 @@
     "@cleanup/shared-ui-design-surface": "^0.0.1",
     "@cleanup/shared-ui-design-text": "^0.0.1",
     "@cleanup/ui-marketing-hero": "0.0.1",
-    "@cleanup/ui-marketing-section": "0.0.1"
+    "@cleanup/ui-marketing-section": "0.0.1",
+    "@angular/common": "~21.1.0"
   },
   "sideEffects": false
 }

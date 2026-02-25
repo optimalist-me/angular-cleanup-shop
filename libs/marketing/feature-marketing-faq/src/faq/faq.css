@@ -15,6 +15,9 @@
 
 .faq__card {
   height: 100%;
+  transition:
+    transform var(--ds-duration-fast) var(--ds-easing-standard),
+    box-shadow var(--ds-duration-fast) var(--ds-easing-standard);
 }
 
 .faq__card-title,
@@ -45,7 +48,8 @@
   background: var(--ds-action-secondary-bg);
   transition:
     background-color var(--ds-duration-fast) var(--ds-easing-standard),
-    border-color var(--ds-duration-fast) var(--ds-easing-standard);
+    border-color var(--ds-duration-fast) var(--ds-easing-standard),
+    transform var(--ds-duration-fast) var(--ds-easing-standard);
 }
 
 .faq__link--primary {
@@ -57,12 +61,20 @@
 .faq__link:focus-visible {
   background: var(--ds-action-secondary-hover);
   border-color: var(--ds-field-border-focus);
+  transform: translateY(-1px);
 }
 
 .faq__link--primary:hover,
 .faq__link--primary:focus-visible {
   background: var(--ds-action-primary-hover);
   border-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .faq__card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--ds-shadow-1);
+  }
 }
 
 @media (max-width: 900px) {

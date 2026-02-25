@@ -33,6 +33,14 @@ AI agents must **optimize for clarity and maintainability**, not feature velocit
 
 ---
 
+## Local Execution Constraint
+
+- Do NOT run any `nx` command from the agent in this repository.
+- When `nx` output is required, provide the exact `nx` command for the user to run locally.
+- Wait for the user to share command output before continuing with `nx`-dependent steps.
+
+---
+
 ## Core Expertise Declaration
 
 You are an expert in:
