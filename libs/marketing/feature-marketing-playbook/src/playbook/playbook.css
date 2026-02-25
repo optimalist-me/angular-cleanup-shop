@@ -23,6 +23,9 @@
   height: 100%;
   display: grid;
   gap: var(--ds-space-2);
+  transition:
+    transform var(--ds-duration-fast) var(--ds-easing-standard),
+    box-shadow var(--ds-duration-fast) var(--ds-easing-standard);
 }
 
 .playbook__card h3 {
@@ -75,7 +78,8 @@
   background: var(--ds-action-secondary-bg);
   transition:
     background-color var(--ds-duration-fast) var(--ds-easing-standard),
-    border-color var(--ds-duration-fast) var(--ds-easing-standard);
+    border-color var(--ds-duration-fast) var(--ds-easing-standard),
+    transform var(--ds-duration-fast) var(--ds-easing-standard);
 }
 
 .playbook__link--primary {
@@ -87,12 +91,20 @@
 .playbook__link:focus-visible {
   background: var(--ds-action-secondary-hover);
   border-color: var(--ds-field-border-focus);
+  transform: translateY(-1px);
 }
 
 .playbook__link--primary:hover,
 .playbook__link--primary:focus-visible {
   background: var(--ds-action-primary-hover);
   border-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .playbook__card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--ds-shadow-1);
+  }
 }
 
 .playbook__note {

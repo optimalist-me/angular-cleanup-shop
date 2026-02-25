@@ -33,6 +33,10 @@
   margin: 0;
 }
 
+.cart__intro-actions {
+  margin-top: var(--ds-space-1);
+}
+
 .cart__layout {
   display: grid;
   gap: var(--ds-space-6);

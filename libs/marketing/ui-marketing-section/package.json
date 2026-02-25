@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/core": "~21.1.0",
-    "@cleanup/shared-ui-design-text": "^0.0.1"
+    "@cleanup/shared-ui-design-text": "^0.0.1",
+    "@angular/common": "~21.1.0"
   },
   "sideEffects": false
 }

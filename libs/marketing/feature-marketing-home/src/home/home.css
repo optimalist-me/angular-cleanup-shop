@@ -26,6 +26,9 @@
 
 .home__card {
   height: 100%;
+  transition:
+    transform var(--ds-duration-fast) var(--ds-easing-standard),
+    box-shadow var(--ds-duration-fast) var(--ds-easing-standard);
 }
 
 .home__card-title,
@@ -91,6 +94,17 @@
 
 .home__trust-item {
   height: 100%;
+  transition:
+    transform var(--ds-duration-fast) var(--ds-easing-standard),
+    box-shadow var(--ds-duration-fast) var(--ds-easing-standard);
+}
+
+.home__trust-badge {
+  display: block;
+  width: min(220px, 100%);
+  height: auto;
+  object-fit: contain;
+  margin-top: var(--ds-space-1);
 }
 
 .home__actions {
@@ -116,7 +130,8 @@
   background: var(--ds-action-secondary-bg);
   transition:
     background-color var(--ds-duration-fast) var(--ds-easing-standard),
-    border-color var(--ds-duration-fast) var(--ds-easing-standard);
+    border-color var(--ds-duration-fast) var(--ds-easing-standard),
+    transform var(--ds-duration-fast) var(--ds-easing-standard);
 }
 
 .home__link--primary {
@@ -128,12 +143,21 @@
 .home__link:focus-visible {
   background: var(--ds-action-secondary-hover);
   border-color: var(--ds-field-border-focus);
+  transform: translateY(-1px);
 }
 
 .home__link--primary:hover,
 .home__link--primary:focus-visible {
   background: var(--ds-action-primary-hover);
   border-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home__card:hover,
+  .home__trust-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--ds-shadow-1);
+  }
 }
 
 @media (max-width: 900px) {
