@@ -21,6 +21,8 @@ const baseBooking: BookingEmailData = {
   email: 'riley@example.com',
   company: 'Cleanup Shop',
   teamSize: 4,
+  angularVersion: '21',
+  usesNx: true,
   notes: 'Send details',
 };
 
@@ -80,10 +82,22 @@ describe('infrastructure booking email', () => {
   it('renders confirmation templates with booking data', () => {
     const html = generateBookingConfirmationHtml(baseBooking);
     const text = generateBookingConfirmationText(baseBooking);
+    const noNxText = generateBookingConfirmationText({
+      ...baseBooking,
+      usesNx: false,
+    });
 
     expect(html).toContain(baseBooking.bookingId);
     expect(html).toContain(baseBooking.name);
+    expect(html).toContain(baseBooking.angularVersion);
+    expect(html).toContain('Using Nx:');
+    expect(html).toContain('Yes');
+    expect(html).toContain('The Angular Cleanup Shop Team');
     expect(text).toContain(baseBooking.email);
     expect(text).toContain(baseBooking.company);
+    expect(text).toContain(`Angular Version: ${baseBooking.angularVersion}`);
+    expect(text).toContain('Using Nx: Yes');
+    expect(noNxText).toContain('Using Nx: No');
+    expect(text).toContain('The Angular Cleanup Shop Team');
   });
 });

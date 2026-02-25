@@ -63,6 +63,8 @@ export async function processBooking(
       name: bookingRequest.name,
       company: bookingRequest.company,
       teamSize: bookingRequest.teamSize,
+      angularVersion: bookingRequest.angularVersion,
+      usesNx: bookingRequest.usesNx,
       notes: bookingRequest.notes,
       preferredDates: bookingRequest.preferredDates,
     });
