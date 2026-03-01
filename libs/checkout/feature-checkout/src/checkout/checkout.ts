@@ -17,24 +17,14 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { catchError, of, startWith, take } from 'rxjs';
-// TODO(S2-1): Remove after checkout owns booking submission boundary.
-/* eslint-disable-next-line @nx/enforce-module-boundaries */
-import { BookingsRepository } from '@cleanup/data-access-booking';
-// TODO(S2-2): Remove after checkout owns cart access boundary.
-/* eslint-disable-next-line @nx/enforce-module-boundaries */
-import { CartRepository } from '@cleanup/data-access-cart';
-// TODO(S2-1): Remove after checkout owns booking submission boundary.
-/* eslint-disable-next-line @nx/enforce-module-boundaries */
 import {
-  PRIVACY_POLICY_VERSION,
-  type BookingRequest,
-} from '@cleanup/models-booking';
+  CheckoutBookingRepository,
+  CheckoutCartRepository,
+} from '@cleanup/data-access-checkout';
+import { type SubmitCheckoutRequest } from '@cleanup/models-checkout';
 import { SharedDesignSurface } from '@cleanup/shared-ui-design-surface';
 import { SharedDesignText } from '@cleanup/shared-ui-design-text';
-// TODO(S2-3): Remove after checkout owns cart line-item UI boundary.
-/* eslint-disable-next-line @nx/enforce-module-boundaries */
-import { CartLineItem } from '@cleanup/ui-cart-line-item';
-import { CheckoutSummary } from '@cleanup/ui-checkout';
+import { CheckoutLineItem, CheckoutSummary } from '@cleanup/ui-checkout';
 
 type CheckoutStep = 'review' | 'details' | 'schedule';
 
@@ -44,7 +34,7 @@ type CheckoutStep = 'review' | 'details' | 'schedule';
     CommonModule,
     ReactiveFormsModule,
     RouterLink,
-    CartLineItem,
+    CheckoutLineItem,
     CheckoutSummary,
     SharedDesignSurface,
     SharedDesignText,
@@ -54,8 +44,8 @@ type CheckoutStep = 'review' | 'details' | 'schedule';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckoutCheckout {
-  private readonly cartRepository = inject(CartRepository);
-  private readonly bookingsRepository = inject(BookingsRepository);
+  private readonly cartRepository = inject(CheckoutCartRepository);
+  private readonly bookingsRepository = inject(CheckoutBookingRepository);
   private readonly router = inject(Router);
 
   readonly step = signal<CheckoutStep>('review');
@@ -214,7 +204,7 @@ export class CheckoutCheckout {
     this.submissionError.set(null);
 
     this.bookingsRepository
-      .createBooking(payload)
+      .submit(payload)
       .pipe(
         take(1),
         catchError(() => {
@@ -256,7 +246,7 @@ export class CheckoutCheckout {
     return Boolean(control.touched && control.invalid);
   }
 
-  private buildRequest(): BookingRequest | null {
+  private buildRequest(): SubmitCheckoutRequest | null {
     const teamSize = this.detailsForm.controls.teamSize.value;
     if (teamSize === null) {
       return null;
@@ -290,7 +280,6 @@ export class CheckoutCheckout {
       notes: this.detailsForm.controls.notes.value.trim(),
       preferredDates,
       privacyPolicyAccepted,
-      privacyPolicyVersion: PRIVACY_POLICY_VERSION,
     };
   }
 }

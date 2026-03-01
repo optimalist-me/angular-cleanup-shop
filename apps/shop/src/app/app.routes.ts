@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { provideCheckoutRouteAdapters } from './checkout-route.providers';
 
 export const appRoutes: Route[] = [
   {
@@ -55,6 +56,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'checkout',
+    providers: [provideCheckoutRouteAdapters()],
     loadChildren: () =>
       import('@cleanup/feature-checkout').then((m) => m.checkoutRoutes),
   },
