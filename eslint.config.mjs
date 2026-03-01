@@ -150,14 +150,14 @@ export default [
         {
           patterns: [
             {
-              group: ['**/src/**'],
+              regex: '^(?!\\.{1,2}/)(?:.*\\/)?src(?:\\/|$)',
               message:
-                'Do not import from another library\'s internal /src path. Import from the library\'s public API (index.ts) or an explicit secondary entry point instead.',
+                'Do not import from another library\'s internal /src path via a non-relative import. Import from the library\'s public API (index.ts) or an explicit secondary entry point instead.',
             },
             {
-              group: ['**/lib/**'],
+              regex: '^(?!\\.{1,2}/)(?:.*\\/)?lib(?:\\/|$)',
               message:
-                'Do not import from another library\'s internal /lib path. Import from the library\'s public API (index.ts) or an explicit secondary entry point instead.',
+                'Do not import from another library\'s internal /lib path via a non-relative import. Import from the library\'s public API (index.ts) or an explicit secondary entry point instead.',
             },
           ],
         },
