@@ -19,6 +19,9 @@ Its goals are:
 - improve readability and maintainability
 - lower cognitive load
 - make Angular codebases feel calm and predictable
+- preserve explicit domain ownership
+- prevent shared libraries from becoming coupling hubs
+- reduce cross-domain change surface
 
 All contributions must **serve these goals**.
 
@@ -53,6 +56,23 @@ If a change primarily:
 
 ---
 
+## 3.1 Architectural Stance (DDD-Inspired Modulith)
+
+This repository follows a **pragmatic, DDD-inspired frontend modulith approach**.
+
+This does **not** mean full Domain-Driven Design adoption by default.
+
+It means:
+- each domain is treated as a bounded context
+- dependencies are one-directional
+- public APIs between domains are explicit and minimal
+- shared code is intentional and ownership-defined
+
+Micro frontends are **not** the default solution.
+Strong internal boundaries inside a modulith come first.
+
+---
+
 ## 4. Contribution Scope
 
 ### ✅ Allowed Contributions
@@ -62,6 +82,8 @@ If a change primarily:
 - Simplifying state and data flows
 - Removing dead code
 - Improving naming and structure
+- Clarifying domain boundaries and public APIs
+- Reducing shared surface area where ownership is unclear
 - Adding or refining documentation
 - Improving tests *when directly related to cleaned code*
 - Small, reversible improvements
@@ -72,6 +94,8 @@ If a change primarily:
 
 - Feature development
 - Architectural rewrites
+- Introducing micro frontends without explicit architectural decision
+- Moving code to shared without clear domain ownership
 - Introducing new frameworks or libraries
 - Global state introduction without explicit approval
 - Premature optimization
@@ -91,6 +115,9 @@ Preferred approach:
 1. Identify one source of complexity
 2. Reduce it
 3. Stop
+
+Never expand scope to “improve the architecture globally.”
+Architecture evolves through contained, local improvements.
 
 Multiple small PRs are preferred over one large change.
 
@@ -177,21 +204,30 @@ AI-generated changes must:
 - avoid speculative refactors
 - explain reasoning in PR descriptions
 - prefer smallest possible diff
+- respect bounded contexts and domain ownership
+- avoid cross-domain imports except via explicit public APIs
+- use Nx MCP for workspace introspection when applicable
+- use Angular CLI-driven MCP flows when generating Angular artifacts
 
 AI agents must **never**:
 - refactor large areas at once
 - introduce new architectural patterns
 - override existing conventions
+- propose premature micro frontend splits
+- introduce new shared abstractions without ownership analysis
 
 ---
 
-## 12. When in Doubt
+## 12. Structural Drift Warning
 
-When unsure whether a change fits:
+If a contribution:
+- increases cross-domain imports
+- expands shared libraries without ownership clarity
+- increases PR surface area
 
-> **Make it smaller. Or don’t do it.**
+It likely increases structural friction.
 
-Stability and calm are the priority.
+Stop and reassess.
 
 ---
 

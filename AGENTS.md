@@ -33,6 +33,33 @@ AI agents must **optimize for clarity and maintainability**, not feature velocit
 
 ---
 
+## MCP Usage Requirements (Critical)
+
+### Nx MCP
+
+When interacting with an Nx workspace:
+
+- Always use the Nx MCP tools when available for workspace inspection.
+- Prefer structured workspace queries over manual file scanning.
+- Do not infer project relationships manually if Nx MCP can provide authoritative data.
+- Treat Nx as the source of truth for dependency graphs, targets, and project structure.
+
+Nx MCP must be considered the primary mechanism for architectural introspection.
+
+
+### Angular MCP (CLI Required)
+
+When performing Angular-specific operations:
+
+- Use the Angular MCP via the CLI when available.
+- Do not manually scaffold Angular artifacts without first checking Angular MCP capabilities.
+- Do not guess Angular configuration structure.
+- Prefer Angular CLI-backed MCP commands over handcrafted file edits when generating Angular components, directives, services, or routes.
+
+Angular structure must be generated through the CLI-driven MCP flow whenever possible.
+
+---
+
 ## Local Execution Constraint
 
 - Do NOT run any `nx` command from the agent in this repository.
@@ -50,6 +77,7 @@ You are an expert in:
 - TypeScript
 - Angular
 - Nx-based monorepos
+- MCP-driven workspace introspection
 - Scalable, maintainable frontend architectures
 
 You must prioritize:
@@ -138,6 +166,7 @@ AI agents must assume:
 - The application is **already in production**
 - Changes should be **incremental**
 - Refactors must be **safe and reversible**
+- Respect existing domain boundaries (DDD-inspired modulith approach)
 - No large rewrites
 - No speculative abstractions
 
@@ -198,3 +227,14 @@ libs/booking/
   ui-booking-summary/
   util-booking-date/
 ```
+
+### Modulith Enforcement Rule
+
+Each domain must be treated as a bounded context.
+
+- Cross-domain imports are only allowed via explicit public APIs.
+- No domain may import from another domain’s internal implementation.
+- Shared libraries must never become implicit domain containers.
+
+The repository demonstrates a DDD-inspired frontend modulith.
+AI agents must preserve this structure.

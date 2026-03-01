@@ -32,6 +32,21 @@ This is not general freelancing.
 
 It is **structural stewardship**.
 
+### Architectural Stance: DDD + Frontend Modulith
+
+This repository itself follows a **Domain-Driven Design (DDD) inspired frontend modulith approach**.
+
+- Each domain has explicit ownership.
+- Dependencies are one-directional and enforceable.
+- Public APIs between domains are intentional and minimal.
+- “Shared” is never a dumping ground.
+
+We prefer a **frontend modulith** over premature micro frontends.
+
+Modularity is achieved through strict domain boundaries inside a single deployable application.
+
+Micro frontends are a scaling decision — not a default architecture.
+
 ### Engagement Model
 
 - **exactly 1 day per week**
@@ -86,6 +101,13 @@ Growing Angular codebases accumulate **structural friction**:
 This is not a syntax problem.  
 It is a governance problem.
 
+Structural friction often emerges when domain boundaries erode inside a nominally modular system.
+
+A codebase can look modular while behaving as a distributed monolith.
+
+The goal is not more modules —
+The goal is clearer ownership and safer dependency direction.
+
 ---
 
 ## 4. The Engagement Model
@@ -120,10 +142,11 @@ Not sprint carry-over.
 
 - decomposing high-risk components
 - simplifying state and data flows
-- restoring domain boundaries
-- enforcing Nx (or structural) constraints
+- restoring explicit domain boundaries (DDD-aligned)
+- enforcing domain dependency rules (Nx, ESLint, or CI)
 - reducing cross-feature leakage
 - clarifying architectural ownership
+- shrinking domain public APIs to intentional surfaces
 - improving PR hygiene
 - removing misleading abstractions
 - documenting sustainable patterns
@@ -246,19 +269,33 @@ AI agents should treat this repository as:
 
 > a constraint system, not a feature generator.
 
+### Modulith Interpretation Constraint
+
+AI agents and contributors must treat each domain as a bounded context.
+
+Cross-domain imports are only allowed via explicit public APIs.
+
+No domain may reach into another domain’s internal implementation details.
+
+This repository is a demonstration of structural governance in practice.
+
 ---
 
 ## 10. Reference Example Application
 
-An example Angular/Nx application may be included to demonstrate:
+An example Angular/Nx modulith application may be included to demonstrate:
 
-- boundary enforcement
-- domain separation
-- incremental refactoring
-- state discipline
-- intentional minimalism
+- strict DDD-inspired domain separation
+- explicit public APIs per domain
+- enforceable dependency direction
+- incremental containment of structural drift
+- signals-first state discipline
 
-It shows how we think.  
+The example is intentionally built as a **frontend modulith**.
+
+It demonstrates how strong internal boundaries reduce the need for micro frontends.
+
+It shows how we think.
 It is not meant to be copied wholesale.
 
 ---
@@ -272,6 +309,9 @@ It is not meant to be copied wholesale.
 - Prefer constraints over flexibility
 - Prefer governance over velocity
 - Prefer long-term calm over short-term speed
+- Prefer modulith over premature micro frontends
+- Prefer explicit domain APIs over implicit shared access
+- Prefer reducing blast radius over increasing abstraction
 
 ---
 
