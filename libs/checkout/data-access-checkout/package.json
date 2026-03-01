@@ -1,0 +1,10 @@
+{
+  "name": "@cleanup/data-access-checkout",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/core": "^21.1.0",
+    "@cleanup/models-checkout": "0.0.1",
+    "rxjs": "~7.8.0"
+  },
+  "sideEffects": false
+}

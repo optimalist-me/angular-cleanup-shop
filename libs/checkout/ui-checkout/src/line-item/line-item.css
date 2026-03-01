@@ -1,0 +1,111 @@
+:host {
+  display: block;
+}
+
+.line-item {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) auto;
+  gap: var(--ds-space-4);
+  align-items: center;
+  padding: var(--ds-space-4);
+  border-radius: var(--ds-surface-radius);
+  border: var(--ds-border-width-default) solid var(--ds-border-subtle);
+  background: var(--ds-surface-card);
+  color: var(--ds-text-primary);
+  font-family: var(--ds-font-family-base);
+}
+
+.line-item__media {
+  border-radius: var(--ds-radius-md);
+  overflow: hidden;
+  background: var(--ds-surface-subtle);
+  aspect-ratio: 3 / 2;
+}
+
+.line-item__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.line-item__body {
+  display: grid;
+  gap: var(--ds-space-3);
+}
+
+.line-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-3);
+}
+
+.line-item__title {
+  margin: 0;
+}
+
+.line-item__price {
+  margin: 0;
+}
+
+.line-item__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-4);
+  flex-wrap: wrap;
+}
+
+.line-item__stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  min-height: var(--ds-button-height-sm);
+  padding: 0 var(--ds-space-3);
+  border-radius: var(--ds-radius-pill);
+  background: var(--ds-surface-subtle);
+}
+
+.line-item__step {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--ds-radius-pill);
+  border: var(--ds-border-width-default) solid var(--ds-action-secondary-border);
+  background: var(--ds-action-secondary-bg);
+  color: var(--ds-action-secondary-fg);
+  font-weight: var(--ds-font-weight-semibold);
+  cursor: pointer;
+}
+
+.line-item__step:hover,
+.line-item__step:focus-visible {
+  background: var(--ds-action-secondary-hover);
+  border-color: var(--ds-field-border-focus);
+}
+
+.line-item__qty {
+  min-width: 18px;
+  text-align: center;
+}
+
+.line-item__remove {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.line-item__total {
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .line-item {
+    grid-template-columns: 80px minmax(0, 1fr);
+  }
+
+  .line-item__total {
+    grid-column: 1 / -1;
+    justify-self: end;
+  }
+}

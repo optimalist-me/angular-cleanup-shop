@@ -2,14 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
-import { CartRepository } from '@cleanup/data-access-cart';
-import { ProductsRepository } from '@cleanup/data-access-products';
+import {
+  ProductsCartRepository,
+  ProductsRepository,
+} from '@cleanup/data-access-products';
 import { ProductDetail } from './detail';
 
 describe('ProductDetail', () => {
   let component: ProductDetail;
   let fixture: ComponentFixture<ProductDetail>;
-  let addItemSpy: ReturnType<typeof vi.fn>;
+  let addProductToCartSpy: ReturnType<typeof vi.fn>;
 
   const setup = async (
     slug: string,
@@ -28,7 +30,7 @@ describe('ProductDetail', () => {
       imageAlt: string;
     }>,
   ) => {
-    addItemSpy = vi.fn();
+    addProductToCartSpy = vi.fn();
     await TestBed.configureTestingModule({
       imports: [ProductDetail],
       providers: [
@@ -41,8 +43,8 @@ describe('ProductDetail', () => {
           useValue: { all: signal(products) },
         },
         {
-          provide: CartRepository,
-          useValue: { addItem: addItemSpy },
+          provide: ProductsCartRepository,
+          useValue: { addProductToCart: addProductToCartSpy },
         },
       ],
     }).compileComponents();
@@ -89,15 +91,13 @@ describe('ProductDetail', () => {
     );
 
     component.addToCart();
-    expect(addItemSpy).toHaveBeenCalledWith({
-      id: 'boundary-polish',
-      slug: 'boundary-polish',
-      name: 'Boundary Polish',
-      price: 2400,
-      imageSrc: '/images/products/boundary-polish.png',
-      imageAlt: 'Illustration of the Boundary Polish cleaning product.',
-      quantity: 1,
-    });
+    expect(addProductToCartSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        slug: 'boundary-polish',
+        name: 'Boundary Polish',
+        price: 2400,
+      }),
+    );
 
     fixture.detectChanges();
     expect(element.querySelector('.detail__toast')?.textContent).toContain(
@@ -135,7 +135,7 @@ describe('ProductDetail', () => {
     component.addToCart();
     fixture.detectChanges();
 
-    expect(addItemSpy).not.toHaveBeenCalled();
+    expect(addProductToCartSpy).not.toHaveBeenCalled();
     const element = fixture.nativeElement as HTMLElement;
     expect(element.querySelector('.detail__toast')).toBeNull();
   });

@@ -123,12 +123,16 @@ export default [
               onlyDependOnLibsWithTags: ['domain:marketing', 'domain:shared'],
             },
             {
-              sourceTag: 'domain:services',
-              onlyDependOnLibsWithTags: ['domain:services', 'domain:shared'],
+              sourceTag: 'domain:checkout',
+              onlyDependOnLibsWithTags: ['domain:checkout', 'domain:shared'],
             },
             {
-              sourceTag: 'domain:catalog',
-              onlyDependOnLibsWithTags: ['domain:catalog', 'domain:shared'],
+              sourceTag: 'domain:products',
+              onlyDependOnLibsWithTags: ['domain:products', 'domain:shared'],
+            },
+            {
+              sourceTag: 'domain:privacy',
+              onlyDependOnLibsWithTags: ['domain:privacy', 'domain:shared'],
             },
             {
               sourceTag: 'domain:cart',

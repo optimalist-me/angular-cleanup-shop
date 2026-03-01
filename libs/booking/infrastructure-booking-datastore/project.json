@@ -3,7 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/booking/infrastructure-booking-datastore/src",
   "projectType": "library",
-  "tags": ["type:infrastructure", "scope:booking"],
+  "tags": ["type:infrastructure", "scope:booking", "domain:booking"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",

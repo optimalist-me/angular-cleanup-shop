@@ -3,15 +3,17 @@ import { computed, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { provideRouter, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { BookingsRepository } from '@cleanup/data-access-booking';
-import { CartItem, CartRepository } from '@cleanup/data-access-cart';
-import { PRIVACY_POLICY_VERSION } from '@cleanup/models-booking';
+import {
+  CheckoutBookingRepository,
+  CheckoutCartRepository,
+} from '@cleanup/data-access-checkout';
+import { CheckoutCartItem } from '@cleanup/models-checkout';
 import { CheckoutCheckout } from './checkout';
 
 describe('CheckoutCheckout', () => {
   let component: CheckoutCheckout;
   let fixture: ComponentFixture<CheckoutCheckout>;
-  let cartItems: ReturnType<typeof signal<CartItem[]>>;
+  let cartItems: ReturnType<typeof signal<CheckoutCartItem[]>>;
   let cartRepositoryStub: {
     items: typeof cartItems;
     itemCount: ReturnType<typeof computed<number>>;
@@ -21,10 +23,10 @@ describe('CheckoutCheckout', () => {
     clear: ReturnType<typeof vi.fn>;
   };
   let bookingsRepositoryStub: {
-    createBooking: ReturnType<typeof vi.fn>;
+    submit: ReturnType<typeof vi.fn>;
   };
 
-  const boundaryPolish: CartItem = {
+  const boundaryPolish: CheckoutCartItem = {
     id: 'boundary-polish',
     slug: 'boundary-polish',
     name: 'Boundary Polish',
@@ -35,7 +37,7 @@ describe('CheckoutCheckout', () => {
   };
 
   beforeEach(async () => {
-    cartItems = signal<CartItem[]>([]);
+    cartItems = signal<CheckoutCartItem[]>([]);
     cartRepositoryStub = {
       items: cartItems,
       itemCount: computed(() =>
@@ -52,7 +54,7 @@ describe('CheckoutCheckout', () => {
       clear: vi.fn(),
     };
     bookingsRepositoryStub = {
-      createBooking: vi.fn(() =>
+      submit: vi.fn(() =>
         of({ success: true, bookingId: 'booking-123', message: 'Created' }),
       ),
     };
@@ -61,8 +63,11 @@ describe('CheckoutCheckout', () => {
       imports: [CheckoutCheckout],
       providers: [
         provideRouter([]),
-        { provide: CartRepository, useValue: cartRepositoryStub },
-        { provide: BookingsRepository, useValue: bookingsRepositoryStub },
+        { provide: CheckoutCartRepository, useValue: cartRepositoryStub },
+        {
+          provide: CheckoutBookingRepository,
+          useValue: bookingsRepositoryStub,
+        },
       ],
     }).compileComponents();
 
@@ -198,7 +203,7 @@ describe('CheckoutCheckout', () => {
     expect(component.scheduleForm.controls.preferredDates.at(0).touched).toBe(
       true,
     );
-    expect(bookingsRepositoryStub.createBooking).not.toHaveBeenCalled();
+    expect(bookingsRepositoryStub.submit).not.toHaveBeenCalled();
   });
 
   it('handles null payload returned by buildRequest', () => {
@@ -215,14 +220,14 @@ describe('CheckoutCheckout', () => {
     expect(component.submissionError()).toBe(
       'Missing required checkout details.',
     );
-    expect(bookingsRepositoryStub.createBooking).not.toHaveBeenCalled();
+    expect(bookingsRepositoryStub.submit).not.toHaveBeenCalled();
   });
 
   it('surfaces API errors from submit', () => {
     cartItems.set([boundaryPolish]);
     fillValidDetails(component);
     component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
-    bookingsRepositoryStub.createBooking.mockReturnValue(
+    bookingsRepositoryStub.submit.mockReturnValue(
       throwError(() => new Error('network')),
     );
 
@@ -239,7 +244,7 @@ describe('CheckoutCheckout', () => {
     cartItems.set([boundaryPolish]);
     fillValidDetails(component);
     component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
-    bookingsRepositoryStub.createBooking.mockReturnValue(
+    bookingsRepositoryStub.submit.mockReturnValue(
       of({ success: false, message: 'Server rejected booking' }),
     );
 
@@ -259,11 +264,10 @@ describe('CheckoutCheckout', () => {
 
     component.submit();
 
-    expect(bookingsRepositoryStub.createBooking).toHaveBeenCalledWith(
+    expect(bookingsRepositoryStub.submit).toHaveBeenCalledWith(
       expect.objectContaining({
         usesNx: false,
         privacyPolicyAccepted: true,
-        privacyPolicyVersion: PRIVACY_POLICY_VERSION,
       }),
     );
     expect(cartRepositoryStub.clear).toHaveBeenCalled();
