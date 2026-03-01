@@ -16,7 +16,7 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           filter: tree:0
           fetch-depth: 0
@@ -30,20 +30,45 @@ jobs:
       # - run: yarn dlx nx start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
 
       # Cache node_modules
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: 'yarn'
 
       - run: yarn install --immutable
+      - uses: nrwl/nx-set-shas@v4
+
+      - name: Detect affected e2e projects
+        id: affected_e2e
+        shell: bash
+        run: |
+          set -euo pipefail
+          AFFECTED_E2E_PROJECTS="$(yarn nx show projects --affected --withTarget=e2e --json)"
+          echo "affected_e2e_projects=$AFFECTED_E2E_PROJECTS" >> "$GITHUB_OUTPUT"
+
+          if [ "$(echo "$AFFECTED_E2E_PROJECTS" | jq 'length')" -gt 0 ]; then
+            echo "has_e2e=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_e2e=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if echo "$AFFECTED_E2E_PROJECTS" | jq -e 'index("shop-e2e")' > /dev/null; then
+            echo "shop_e2e_affected=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "shop_e2e_affected=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - run: yarn playwright install --with-deps
+        if: ${{ steps.affected_e2e.outputs.has_e2e == 'true' && steps.affected_e2e.outputs.shop_e2e_affected == 'true' }}
 
       # Prepend any command with "nx record --" to record its logs to Nx Cloud
       # - run: yarn nx record -- echo Hello World
       - run: yarn nx record -- bash .github/scripts/check-design-token-css.sh
       - run: yarn nx record -- yarn nx run shop:compliance-no-trackers
       # When you enable task distribution, run the e2e-ci task instead of e2e
-      - run: yarn nx run-many -t lint test build e2e
+      - run: yarn nx affected -t lint test build
+      - run: yarn nx affected -t e2e
+        if: ${{ steps.affected_e2e.outputs.has_e2e == 'true' }}
       # Nx Cloud recommends fixes for failures to help you get CI green faster. Learn more: https://nx.dev/ci/features/self-healing-ci
       - run: yarn nx fix-ci
         if: always()

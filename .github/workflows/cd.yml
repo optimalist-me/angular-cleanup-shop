@@ -1,0 +1,111 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      HETZNER_SSH_HOST: ${{ secrets.HETZNER_SSH_HOST }}
+      HETZNER_SSH_USER: ${{ secrets.HETZNER_SSH_USER }}
+      HETZNER_DEPLOY_PATH: ${{ secrets.HETZNER_DEPLOY_PATH }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          filter: tree:0
+          fetch-depth: 0
+
+      - run: corepack enable
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'yarn'
+
+      - run: yarn install --immutable
+
+      - uses: nrwl/nx-set-shas@v4
+
+      - name: Detect affected apps for deployment
+        id: affected_apps
+        shell: bash
+        run: |
+          set -euo pipefail
+          AFFECTED_APPS="$(yarn nx show projects --affected --type app --json)"
+          echo "affected_apps=$AFFECTED_APPS" >> "$GITHUB_OUTPUT"
+
+          if echo "$AFFECTED_APPS" | jq -e 'index("shop")' > /dev/null; then
+            echo "shop_affected=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "shop_affected=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if echo "$AFFECTED_APPS" | jq -e 'index("api")' > /dev/null; then
+            echo "api_affected=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "api_affected=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if echo "$AFFECTED_APPS" | jq -e 'index("shop") or index("api")' > /dev/null; then
+            echo "deploy_required=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "deploy_required=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip deployment when no deployable app is affected
+        if: ${{ steps.affected_apps.outputs.deploy_required != 'true' }}
+        run: echo "No affected deployable apps (shop/api). Skipping deployment."
+
+      - name: Build deployable apps
+        if: ${{ steps.affected_apps.outputs.deploy_required == 'true' }}
+        run: yarn nx run-many -t build -p shop,api
+
+      - name: Generate API lockfile for remote immutable install
+        if: ${{ steps.affected_apps.outputs.deploy_required == 'true' }}
+        run: yarn nx run api:prune-lockfile
+
+      - name: Configure SSH
+        if: ${{ steps.affected_apps.outputs.deploy_required == 'true' }}
+        env:
+          HETZNER_SSH_PRIVATE_KEY: ${{ secrets.HETZNER_SSH_PRIVATE_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$HETZNER_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$HETZNER_SSH_HOST" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy dist/apps with rsync
+        if: ${{ steps.affected_apps.outputs.deploy_required == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          rsync -avz --delete --stats --progress \
+            --filter='P **/node_modules/' \
+            --filter='P **/.yarn/' \
+            --filter='P shared/data/' \
+            --filter='P shared/data/cleanup-shop.db' \
+            dist/apps/ "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}:${HETZNER_DEPLOY_PATH}/"
+
+      - name: Install API dependencies remotely
+        if: ${{ steps.affected_apps.outputs.api_affected == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ssh "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}" "cd \"${HETZNER_DEPLOY_PATH}/api\" && yarn install --immutable"
+
+      - name: Restart PM2 service
+        if: ${{ steps.affected_apps.outputs.api_affected == 'true' || steps.affected_apps.outputs.shop_affected == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ssh "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}" "pm2 restart angular-cleanup-shop"
