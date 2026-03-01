@@ -32,7 +32,10 @@ describe('CheckoutBookingRepository', () => {
     };
 
     TestBed.configureTestingModule({
-      providers: [{ provide: CHECKOUT_BOOKING_PORT, useValue: port }],
+      providers: [
+        CheckoutBookingRepository,
+        { provide: CHECKOUT_BOOKING_PORT, useValue: port },
+      ],
     });
 
     const repository = TestBed.inject(CheckoutBookingRepository);

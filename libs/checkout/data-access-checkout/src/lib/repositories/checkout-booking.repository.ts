@@ -9,9 +9,7 @@ import {
 } from '@cleanup/models-checkout';
 import { type Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CheckoutBookingRepository {
   private readonly port = inject<CheckoutBookingPort>(CHECKOUT_BOOKING_PORT);
 

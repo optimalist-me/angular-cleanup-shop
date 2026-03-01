@@ -2,6 +2,7 @@ import { Provider } from '@angular/core';
 import { CartRepository } from '@cleanup/data-access-cart';
 import {
   PRODUCTS_CART_PORT,
+  ProductsCartRepository,
   type ProductsCartPort,
 } from '@cleanup/data-access-products';
 import { type Product } from '@cleanup/models-products';
@@ -24,6 +25,7 @@ function createProductsCartPort(cartRepository: CartRepository): ProductsCartPor
 
 export function provideProductsRouteAdapters(): Provider[] {
   return [
+    ProductsCartRepository,
     {
       provide: PRODUCTS_CART_PORT,
       useFactory: createProductsCartPort,

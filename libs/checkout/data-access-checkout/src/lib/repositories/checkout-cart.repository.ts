@@ -1,9 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { CHECKOUT_CART_PORT, CheckoutCartPort } from '../ports/checkout-cart.port';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CheckoutCartRepository {
   private readonly port = inject<CheckoutCartPort>(CHECKOUT_CART_PORT);
 

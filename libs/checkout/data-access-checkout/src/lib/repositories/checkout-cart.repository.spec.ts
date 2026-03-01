@@ -32,7 +32,10 @@ describe('CheckoutCartRepository', () => {
     };
 
     TestBed.configureTestingModule({
-      providers: [{ provide: CHECKOUT_CART_PORT, useValue: port }],
+      providers: [
+        CheckoutCartRepository,
+        { provide: CHECKOUT_CART_PORT, useValue: port },
+      ],
     });
 
     const repository = TestBed.inject(CheckoutCartRepository);

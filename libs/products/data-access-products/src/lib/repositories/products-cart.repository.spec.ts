@@ -25,7 +25,10 @@ describe('ProductsCartRepository', () => {
     };
 
     TestBed.configureTestingModule({
-      providers: [{ provide: PRODUCTS_CART_PORT, useValue: port }],
+      providers: [
+        ProductsCartRepository,
+        { provide: PRODUCTS_CART_PORT, useValue: port },
+      ],
     });
 
     const repository = TestBed.inject(ProductsCartRepository);

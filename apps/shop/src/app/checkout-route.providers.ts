@@ -2,7 +2,9 @@ import { Provider } from '@angular/core';
 import {
   CHECKOUT_BOOKING_PORT,
   CHECKOUT_CART_PORT,
+  CheckoutBookingRepository,
   CheckoutBookingPort,
+  CheckoutCartRepository,
   CheckoutCartPort,
 } from '@cleanup/data-access-checkout';
 import { BookingsRepository } from '@cleanup/data-access-booking';
@@ -38,6 +40,8 @@ function createCheckoutCartPort(
 
 export function provideCheckoutRouteAdapters(): Provider[] {
   return [
+    CheckoutBookingRepository,
+    CheckoutCartRepository,
     {
       provide: CHECKOUT_BOOKING_PORT,
       useFactory: createCheckoutBookingPort,
