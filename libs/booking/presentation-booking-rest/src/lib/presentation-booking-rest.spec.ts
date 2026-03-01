@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { type ILayer } from 'express-serve-static-core';
 import { createBookingRouter } from './booking-controller';
 import * as BookingService from '@angular-cleanup-shop/application-booking-service';
 
@@ -25,11 +26,7 @@ function findHandler(method: 'get' | 'post', path: string): Handler {
   const layer = router.stack.find(
     (entry) =>
       entry.route?.path === path &&
-      entry.route?.stack?.some(
-        // TODO(S4-1): Replace `any` with precise Express route handler stack type.
-        /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-        (h: any) => h.method === method,
-      ),
+      entry.route?.stack?.some((h: ILayer) => h.method === method),
   );
 
   if (!layer) {

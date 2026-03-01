@@ -21,20 +21,19 @@ format. Each debt item has its own file and a single index entry here.
 | 0002 | Email transporter safety rails | Open | P1 | Unassigned | TBD | [0002-email-transporter-safety-rails.md](0002-email-transporter-safety-rails.md) |
 | 0003 | Tracker compliance scan coverage | Open | P2 | Unassigned | TBD | [0003-tracker-compliance-scan-coverage.md](0003-tracker-compliance-scan-coverage.md) |
 | 0004 | SQLite operations runbook | Open | P2 | Unassigned | TBD | [0004-sqlite-operations-runbook.md](0004-sqlite-operations-runbook.md) |
-| 0005 | Domain boundary enforcement follow-ups | Open | P1 | Unassigned | Sprint 4 | [0005-domain-boundary-enforcement-followups.md](0005-domain-boundary-enforcement-followups.md) |
+| 0005 | Domain boundary enforcement follow-ups | Closed | P1 | Unassigned | Completed in Sprint 4 | [0005-domain-boundary-enforcement-followups.md](0005-domain-boundary-enforcement-followups.md) |
 
 ## Open
 - `0001` API production hardening
 - `0002` Email transporter safety rails
 - `0003` Tracker compliance scan coverage
 - `0004` SQLite operations runbook
-- `0005` Domain boundary enforcement follow-ups
 
 ## In progress
 _None_
 
 ## Closed
-_None_
+- `0005` Domain boundary enforcement follow-ups
 
 ## Update Rule
 When a debt item status changes, update both:
