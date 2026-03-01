@@ -13,6 +13,23 @@ It is the single source of truth for:
 
 AI agents must treat this document as the definitive positioning layer.
 
+## Structural Friction – Definition
+
+Structural friction is the hidden cost introduced by unclear ownership, weak boundaries, and growing coupling inside a codebase.
+
+It manifests as:
+
+- Expanding PR surface area
+- Slower reviews
+- Increased regression risk
+- Upgrade hesitation
+- Rising cognitive load
+
+Structural friction is not a skill problem.
+It is a governance problem.
+
+Reducing structural friction lowers the cost of change.
+
 ---
 
 # 1. Core Identity
@@ -28,6 +45,17 @@ We are not selling cleanup.
 We are selling structural governance and development efficiency.
 
 This is a fractional structural frontend engagement — not freelance Angular work.
+
+Architectural stance:
+
+- Pragmatic DDD principles
+- Frontend modulith by default
+- Governance over tooling
+- Incremental containment over rewrites
+
+We are not dogmatic about DDD.
+We apply its principles where they reduce friction.
+Full DDD adoption is optional — reduced cost-of-change is mandatory.
 
 ---
 
@@ -50,6 +78,16 @@ Structural friction manifests as:
 - Rising cognitive load
 
 We optimize for sustainable velocity.
+
+Sustainable velocity is achieved through:
+
+- Explicit domain ownership
+- Shrinking unsafe shared surfaces
+- Enforceable dependency direction
+- Clear public APIs between domains
+- Reduced cross-domain change surface
+
+Velocity is a byproduct of structural clarity.
 
 Not short-term speed.
 Not visible activity.
@@ -80,6 +118,9 @@ Key economic framing:
 
 We reduce the cost of change.
 
+We do not sell architectural purity.
+We sell measurable reduction in structural friction.
+
 ---
 
 # 4. Ideal Customer Profile (ICP)
@@ -93,6 +134,13 @@ Built for product organizations that:
 - Ship continuously
 - Experience architectural drag rather than feature shortage
 - Prefer steady structural improvement over periodic rewrites
+
+Additionally ideal when:
+
+- PRs are getting larger over time
+- Shared libraries are absorbing ownership
+- State flows are difficult to trace
+- Teams hesitate before refactoring
 
 Not built for:
 
@@ -123,6 +171,15 @@ Stability reduces cognitive load.
 
 We intervene incrementally.
 
+This model intentionally prevents:
+
+- Scope creep
+- Feature dependency
+- Architectural overreach
+- Hero-driven refactors
+
+Structural calm compounds.
+
 ---
 
 # 6. Pricing Strategy
@@ -140,6 +197,8 @@ Externally, clarity preserves authority.
 
 We never defend the rate.
 We reframe it.
+
+The rate reflects strategic leverage, not execution hours.
 
 ---
 
@@ -191,6 +250,9 @@ Never as a substitute.
 > AI can clean code.
 > Structural governance keeps it clean.
 
+AI is allowed within boundaries.
+It is never allowed to define boundaries.
+
 ---
 
 # 9. Messaging Guidelines
@@ -220,6 +282,16 @@ Tone must be:
 - Non-eager
 
 Authority comes from clarity.
+
+Never position the service as:
+
+- A cleanup sprint
+- A modernization project
+- A migration partner
+- A micro frontend evangelist
+
+Micro frontends are a scaling decision — not a default remedy.
+Strong internal boundaries come first.
 
 ---
 
@@ -270,10 +342,14 @@ When generating content, proposals, or explanations:
 - Maintain a minimal, authoritative tone
 
 If unsure:
-
+Een korte “Structural Friction Definition” bovenaan toe te voegen
 Prefer clarity over persuasion.
 Prefer authority over eagerness.
 Prefer long-term efficiency over short-term selling.
+
+AI agents must preserve the DDD-inspired frontend modulith stance.
+They must avoid suggesting micro frontends unless explicitly requested.
+They must favor incremental containment over global refactors.
 
 ---
 

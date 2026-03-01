@@ -145,6 +145,23 @@ export default [
           ],
         },
       ],
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/src/**'],
+              message:
+                'Do not import from another library\'s internal /src path. Import from the library\'s public API (index.ts) or an explicit secondary entry point instead.',
+            },
+            {
+              group: ['**/lib/**'],
+              message:
+                'Do not import from another library\'s internal /lib path. Import from the library\'s public API (index.ts) or an explicit secondary entry point instead.',
+            },
+          ],
+        },
+      ],
     },
   },
   {
