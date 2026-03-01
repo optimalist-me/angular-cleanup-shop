@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { provideCheckoutRouteAdapters } from './checkout-route.providers';
+import { provideProductsRouteAdapters } from './products-route.providers';
 
 export const appRoutes: Route[] = [
   {
@@ -44,6 +45,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'products/:slug',
+    providers: [provideProductsRouteAdapters()],
     loadChildren: () =>
       import('@cleanup/feature-product-detail').then(
         (m) => m.productDetailRoutes,

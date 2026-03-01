@@ -10,10 +10,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { map } from 'rxjs';
-// TODO(S3-1): Remove after product-detail no longer depends on cart data access.
-/* eslint-disable-next-line @nx/enforce-module-boundaries */
-import { CartRepository } from '@cleanup/data-access-cart';
-import { ProductsRepository } from '@cleanup/data-access-products';
+import {
+  ProductsCartRepository,
+  ProductsRepository,
+} from '@cleanup/data-access-products';
 import { SharedDesignButton } from '@cleanup/shared-ui-design-button';
 import { SharedDesignSurface } from '@cleanup/shared-ui-design-surface';
 import { SharedDesignText } from '@cleanup/shared-ui-design-text';
@@ -36,7 +36,7 @@ import { ProductTag } from '@cleanup/ui-product-tag';
 })
 export class ProductDetail {
   private readonly route = inject(ActivatedRoute);
-  private readonly cartRepository = inject(CartRepository);
+  private readonly productsCartRepository = inject(ProductsCartRepository);
   private readonly destroyRef = inject(DestroyRef);
   private readonly repository = inject(ProductsRepository);
   private toastTimeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -80,15 +80,7 @@ export class ProductDetail {
       return;
     }
 
-    this.cartRepository.addItem({
-      id: product.slug,
-      slug: product.slug,
-      name: product.name,
-      price: product.price,
-      imageSrc: product.imageSrc,
-      imageAlt: product.imageAlt,
-      quantity: 1,
-    });
+    this.productsCartRepository.addProductToCart(product);
 
     this.showAddToCartToast(product.name);
   }
