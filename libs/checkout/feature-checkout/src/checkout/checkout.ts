@@ -17,14 +17,22 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { catchError, of, startWith, take } from 'rxjs';
+// TODO(S2-1): Remove after checkout owns booking submission boundary.
+/* eslint-disable-next-line @nx/enforce-module-boundaries */
 import { BookingsRepository } from '@cleanup/data-access-booking';
+// TODO(S2-2): Remove after checkout owns cart access boundary.
+/* eslint-disable-next-line @nx/enforce-module-boundaries */
 import { CartRepository } from '@cleanup/data-access-cart';
+// TODO(S2-1): Remove after checkout owns booking submission boundary.
+/* eslint-disable-next-line @nx/enforce-module-boundaries */
 import {
   PRIVACY_POLICY_VERSION,
   type BookingRequest,
 } from '@cleanup/models-booking';
 import { SharedDesignSurface } from '@cleanup/shared-ui-design-surface';
 import { SharedDesignText } from '@cleanup/shared-ui-design-text';
+// TODO(S2-3): Remove after checkout owns cart line-item UI boundary.
+/* eslint-disable-next-line @nx/enforce-module-boundaries */
 import { CartLineItem } from '@cleanup/ui-cart-line-item';
 import { CheckoutSummary } from '@cleanup/ui-checkout';
 

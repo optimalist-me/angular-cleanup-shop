@@ -10,6 +10,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { map } from 'rxjs';
+// TODO(S3-1): Remove after product-detail no longer depends on cart data access.
+/* eslint-disable-next-line @nx/enforce-module-boundaries */
 import { CartRepository } from '@cleanup/data-access-cart';
 import { ProductsRepository } from '@cleanup/data-access-products';
 import { SharedDesignButton } from '@cleanup/shared-ui-design-button';

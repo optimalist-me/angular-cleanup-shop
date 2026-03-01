@@ -3,8 +3,14 @@ import { computed, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { provideRouter, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
+// TODO(S2-1): Remove after checkout owns booking submission boundary.
+/* eslint-disable-next-line @nx/enforce-module-boundaries */
 import { BookingsRepository } from '@cleanup/data-access-booking';
+// TODO(S2-2): Remove after checkout owns cart access boundary.
+/* eslint-disable-next-line @nx/enforce-module-boundaries */
 import { CartItem, CartRepository } from '@cleanup/data-access-cart';
+// TODO(S2-1): Remove after checkout owns booking submission boundary.
+/* eslint-disable-next-line @nx/enforce-module-boundaries */
 import { PRIVACY_POLICY_VERSION } from '@cleanup/models-booking';
 import { CheckoutCheckout } from './checkout';
 

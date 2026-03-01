@@ -23,7 +23,13 @@ function createResponse() {
 function findHandler(method: 'get' | 'post', path: string): Handler {
   const router = createBookingRouter();
   const layer = router.stack.find(
-    (entry) => entry.route?.path === path && entry.route?.stack?.some((h: any) => h.method === method)
+    (entry) =>
+      entry.route?.path === path &&
+      entry.route?.stack?.some(
+        // TODO(S4-1): Replace `any` with precise Express route handler stack type.
+        /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+        (h: any) => h.method === method,
+      ),
   );
 
   if (!layer) {

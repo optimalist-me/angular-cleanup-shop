@@ -3,7 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/products/presentation-products-rest/src",
   "projectType": "library",
-  "tags": ["type:presentation", "scope:products"],
+  "tags": ["type:presentation", "scope:products", "domain:products"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
