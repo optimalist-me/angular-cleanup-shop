@@ -69,7 +69,7 @@ jobs:
         run: yarn nx run-many -t build -p shop,api
 
       - name: Generate API lockfile for remote immutable install
-        if: ${{ steps.affected_apps.outputs.deploy_required == 'true' }}
+        if: ${{ steps.affected_apps.outputs.api_affected == 'true' }}
         run: yarn nx run api:prune-lockfile
 
       - name: Configure SSH
