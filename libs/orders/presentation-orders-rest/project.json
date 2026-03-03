@@ -1,0 +1,20 @@
+{
+  "name": "presentation-orders-rest",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/orders/presentation-orders-rest/src",
+  "projectType": "library",
+  "tags": ["type:presentation", "scope:orders", "domain:orders"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/orders/presentation-orders-rest",
+        "tsConfig": "libs/orders/presentation-orders-rest/tsconfig.lib.json",
+        "packageJson": "libs/orders/presentation-orders-rest/package.json",
+        "main": "libs/orders/presentation-orders-rest/src/index.ts",
+        "assets": ["libs/orders/presentation-orders-rest/*.md"]
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@ import * as sqlite3 from 'sqlite3';
 import { open, Database } from 'sqlite';
 import { initializeBookingSchema } from './schemas/booking';
 import { initializeProductsSchema } from './schemas/products';
+import { initializeOrdersSchema } from './schemas/orders';
 
 let database: Database | null = null;
 
@@ -30,6 +31,7 @@ export async function initializeDatabase(): Promise<Database> {
 
   await initializeBookingSchema(database);
   await initializeProductsSchema(database);
+  await initializeOrdersSchema(database);
 
   return database;
 }

@@ -57,6 +57,10 @@
       ],
       "@cleanup/ui-cart-summary": ["libs/cart/ui-cart-summary/src/index.ts"],
       "@cleanup/feature-cart": ["libs/cart/feature-cart/src/index.ts"],
+      "@cleanup/models-orders": ["libs/orders/models-orders/src/index.ts"],
+      "@cleanup/data-access-orders": [
+        "libs/orders/data-access-orders/src/index.ts"
+      ],
       "@cleanup/models-checkout": [
         "libs/checkout/models-checkout/src/index.ts"
       ],
@@ -92,6 +96,15 @@
       ],
       "@angular-cleanup-shop/presentation-products-rest": [
         "libs/products/presentation-products-rest/src/index.ts"
+      ],
+      "@angular-cleanup-shop/infrastructure-orders-datastore": [
+        "libs/orders/infrastructure-orders-datastore/src/index.ts"
+      ],
+      "@angular-cleanup-shop/application-orders-service": [
+        "libs/orders/application-orders-service/src/index.ts"
+      ],
+      "@angular-cleanup-shop/presentation-orders-rest": [
+        "libs/orders/presentation-orders-rest/src/index.ts"
       ],
       "@angular-cleanup-shop/infrastructure-booking-email": [
         "libs/booking/infrastructure-booking-email/src/index.ts"

@@ -18,6 +18,16 @@
           {
             "glob": "**/*",
             "input": "apps/shop/public"
+          },
+          {
+            "glob": "cleanup-logo.png",
+            "input": "libs/shared/assets/images",
+            "output": "/images"
+          },
+          {
+            "glob": "*",
+            "input": "libs/shared/assets/icons",
+            "output": "/"
           }
         ],
         "styles": ["apps/shop/src/styles.css"],

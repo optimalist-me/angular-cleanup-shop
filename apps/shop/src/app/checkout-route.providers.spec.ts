@@ -1,72 +1,93 @@
 import { signal, type Signal } from '@angular/core';
 import { firstValueFrom, of } from 'rxjs';
-import { BookingsRepository } from '@cleanup/data-access-booking';
 import { CartRepository } from '@cleanup/data-access-cart';
+import { OrdersRepository } from '@cleanup/data-access-orders';
 import {
-  CHECKOUT_BOOKING_PORT,
   CHECKOUT_CART_PORT,
-  CheckoutBookingRepository,
+  CHECKOUT_ORDER_PORT,
   CheckoutCartRepository,
-  type CheckoutBookingPort,
+  CheckoutOrderRepository,
+  MAIN_DOMAIN_URL,
   type CheckoutCartPort,
+  type CheckoutOrderPort,
 } from '@cleanup/data-access-checkout';
-import { PRIVACY_POLICY_VERSION } from '@cleanup/models-booking';
-import { SubmitCheckoutRequest } from '@cleanup/models-checkout';
+import { type SubmitCheckoutRequest } from '@cleanup/models-checkout';
 import { provideCheckoutRouteAdapters } from './checkout-route.providers';
 
 describe('provideCheckoutRouteAdapters', () => {
   it('should register checkout repositories and adapter providers', () => {
     const providers = provideCheckoutRouteAdapters();
 
-    expect(providers[0]).toBe(CheckoutBookingRepository);
+    expect(providers[0]).toBe(CheckoutOrderRepository);
     expect(providers[1]).toBe(CheckoutCartRepository);
 
-    const bookingProvider = findProviderWithFactory<CheckoutBookingPort>(
+    const orderProvider = findProviderWithFactory<CheckoutOrderPort>(
       providers,
-      CHECKOUT_BOOKING_PORT,
+      CHECKOUT_ORDER_PORT,
     );
     const cartProvider = findProviderWithFactory<CheckoutCartPort>(
       providers,
       CHECKOUT_CART_PORT,
     );
 
-    expect(bookingProvider.deps).toEqual([BookingsRepository]);
+    expect(orderProvider.deps).toEqual([OrdersRepository]);
     expect(cartProvider.deps).toEqual([CartRepository]);
   });
 
-  it('should append privacy policy version when submitting booking requests', async () => {
+  it('should map order create response into checkout response shape', async () => {
     const providers = provideCheckoutRouteAdapters();
-    const bookingProvider = findProviderWithFactory<CheckoutBookingPort>(
+    const orderProvider = findProviderWithFactory<CheckoutOrderPort>(
       providers,
-      CHECKOUT_BOOKING_PORT,
+      CHECKOUT_ORDER_PORT,
     );
 
-    const bookingsRepository = {
-      createBooking: vi.fn(() =>
-        of({ success: true, bookingId: 'booking-1', message: 'ok' }),
+    const ordersRepository = {
+      createOrder: vi.fn(() =>
+        of({
+          success: true,
+          order: {
+            id: 'order-1',
+          },
+        }),
       ),
-    } as unknown as BookingsRepository;
+      getOrderById: vi.fn(() =>
+        of({
+          success: true,
+          order: {
+            id: 'order-1',
+            items: [],
+            subtotal: 0,
+            tax: 0,
+            total: 0,
+            context: 'storefront',
+            createdAt: '2026-03-03T10:00:00.000Z',
+          },
+        }),
+      ),
+    } as unknown as OrdersRepository;
 
-    const bookingPort = bookingProvider.useFactory(bookingsRepository);
+    const orderPort = orderProvider.useFactory(ordersRepository);
 
     const request: SubmitCheckoutRequest = {
-      name: 'Maya Stone',
-      email: 'maya@example.com',
-      company: 'Cleanup Labs',
-      teamSize: 8,
-      angularVersion: '21',
-      usesNx: true,
-      notes: 'Need governance support',
-      preferredDates: ['2026-03-10'],
-      privacyPolicyAccepted: true,
+      items: [],
+      subtotal: 0,
+      tax: 0,
+      total: 0,
+      context: 'storefront',
     };
 
-    await firstValueFrom(bookingPort.submit(request));
+    const submitResult = await firstValueFrom(orderPort.submit(request));
+    const getResult = await firstValueFrom(orderPort.getById('order-1'));
 
-    expect(bookingsRepository.createBooking).toHaveBeenCalledWith({
-      ...request,
-      privacyPolicyVersion: PRIVACY_POLICY_VERSION,
+    expect(submitResult).toEqual({
+      success: true,
+      orderId: 'order-1',
+      message: undefined,
+      error: undefined,
     });
+    expect(getResult.success).toBe(true);
+    expect(ordersRepository.createOrder).toHaveBeenCalledWith(request);
+    expect(ordersRepository.getOrderById).toHaveBeenCalledWith('order-1');
   });
 
   it('should proxy cart state and commands through checkout cart port', () => {
@@ -112,6 +133,19 @@ describe('provideCheckoutRouteAdapters', () => {
     expect(cartRepository.updateQuantity).toHaveBeenCalledWith('item-1', 3);
     expect(cartRepository.removeItem).toHaveBeenCalledWith('item-2');
     expect(cartRepository.clear).toHaveBeenCalled();
+  });
+
+  it('should provide a main domain url token value', () => {
+    const providers = provideCheckoutRouteAdapters();
+    const mainDomainProvider = providers.find(
+      (entry) =>
+        typeof entry === 'object' &&
+        entry !== null &&
+        'provide' in entry &&
+        (entry as { provide: unknown }).provide === MAIN_DOMAIN_URL,
+    ) as { useValue: string } | undefined;
+
+    expect(mainDomainProvider?.useValue).toBe('https://angularcleanup.shop');
   });
 });
 

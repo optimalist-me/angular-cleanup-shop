@@ -124,7 +124,11 @@ export default [
             },
             {
               sourceTag: 'domain:checkout',
-              onlyDependOnLibsWithTags: ['domain:checkout', 'domain:shared'],
+              onlyDependOnLibsWithTags: [
+                'domain:checkout',
+                'domain:orders',
+                'domain:shared',
+              ],
             },
             {
               sourceTag: 'domain:products',
@@ -143,6 +147,10 @@ export default [
               onlyDependOnLibsWithTags: ['domain:booking', 'domain:shared'],
             },
             {
+              sourceTag: 'domain:orders',
+              onlyDependOnLibsWithTags: ['domain:orders', 'domain:shared'],
+            },
+            {
               sourceTag: 'domain:shared',
               onlyDependOnLibsWithTags: ['domain:shared'],
             },
@@ -156,12 +164,12 @@ export default [
             {
               regex: '^(?!\\.{1,2}/)(?:.*\\/)?src(?:\\/|$)',
               message:
-                'Do not import from another library\'s internal /src path via a non-relative import. Import from the library\'s public API (index.ts) or an explicit secondary entry point instead.',
+                "Do not import from another library's internal /src path via a non-relative import. Import from the library's public API (index.ts) or an explicit secondary entry point instead.",
             },
             {
               regex: '^(?!\\.{1,2}/)(?:.*\\/)?lib(?:\\/|$)',
               message:
-                'Do not import from another library\'s internal /lib path via a non-relative import. Import from the library\'s public API (index.ts) or an explicit secondary entry point instead.',
+                "Do not import from another library's internal /lib path via a non-relative import. Import from the library's public API (index.ts) or an explicit secondary entry point instead.",
             },
           ],
         },

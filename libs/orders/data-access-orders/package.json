@@ -1,0 +1,11 @@
+{
+  "name": "@cleanup/data-access-orders",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@cleanup/models-orders": "0.0.1",
+    "rxjs": "~7.8.0"
+  },
+  "sideEffects": false
+}
