@@ -19,10 +19,10 @@ describe('SharedHeader', () => {
       imports: [SharedHeader],
       providers: [
         provideRouter([
-          { path: 'products', component: DummyRouteComponent },
-          { path: 'playbook', component: DummyRouteComponent },
-          { path: 'architecture', component: DummyRouteComponent },
-          { path: 'faq', component: DummyRouteComponent },
+          { path: 'for-managers', component: DummyRouteComponent },
+          { path: 'for-technical-leads', component: DummyRouteComponent },
+          { path: 'how-it-works', component: DummyRouteComponent },
+          { path: 'ai-governance', component: DummyRouteComponent },
           { path: 'book/confirmed', component: DummyRouteComponent },
         ]),
       ],
@@ -66,20 +66,12 @@ describe('SharedHeader', () => {
     expect(header?.classList.contains('header--open')).toBe(false);
   });
 
-  it('should render navigation links', () => {
+  it('should render governance navigation links', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('Playbook');
-    expect(compiled.textContent).toContain('Architecture');
-  });
-
-  it('should show cart count badge when items exist', () => {
-    fixture.componentRef.setInput('cartCount', 2);
-    fixture.detectChanges();
-
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.header__cart-count')?.textContent).toContain(
-      '2',
-    );
+    expect(compiled.textContent).toContain('For Managers');
+    expect(compiled.textContent).toContain('For Technical Leads');
+    expect(compiled.textContent).toContain('Engagement Model');
+    expect(compiled.textContent).toContain('AI Governance');
   });
 
   it('should close the menu when a link is clicked', () => {
@@ -88,15 +80,15 @@ describe('SharedHeader', () => {
     const toggle = compiled.querySelector(
       '.header__toggle',
     ) as HTMLButtonElement;
-    const playbookLink = compiled.querySelector(
-      'a[routerLink="/playbook"]',
+    const managersLink = compiled.querySelector(
+      'a[routerLink="/for-managers"]',
     ) as HTMLAnchorElement;
 
     toggle.click();
     fixture.detectChanges();
     expect(header?.classList.contains('header--open')).toBe(true);
 
-    playbookLink.click();
+    managersLink.click();
     fixture.detectChanges();
     expect(header?.classList.contains('header--open')).toBe(false);
   });
@@ -105,9 +97,7 @@ describe('SharedHeader', () => {
     const events$ = new Subject<NavigationEnd>();
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      providers: [
-        { provide: Router, useValue: { events: events$ } },
-      ],
+      providers: [{ provide: Router, useValue: { events: events$ } }],
     });
 
     const navigationHeader = TestBed.runInInjectionContext(

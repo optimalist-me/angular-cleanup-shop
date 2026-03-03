@@ -1,33 +1,33 @@
-# Angular Cleanup Shop
+# Angular Governance Program
 
 Canonical: https://angularcleanup.shop
 Sitemap: https://angularcleanup.shop/sitemap.xml
 Robots: https://angularcleanup.shop/robots.txt
 
 ## Service
-Angular Cleanup Shop provides maintenance-first Angular and Nx cleanup services focused on structural clarity, safe incremental refactoring, and lower long-term change cost.
+Angular Governance Program provides a governance-first Angular and Nx stabilization program focused on measurable cost-of-change reduction, safer upgrades, and clearer ownership.
 
 ## Primary Audience
-- Engineering teams maintaining mature Angular applications
-- Teams using Nx monorepos with boundary/ownership drift
-- Teams with rising regression risk and slower reviews
+- Engineering managers and directors responsible for delivery predictability
+- Technical leads responsible for architectural governance in Angular/Nx codebases
 
 ## Key Public Pages
 - https://angularcleanup.shop/
-- https://angularcleanup.shop/playbook
-- https://angularcleanup.shop/architecture
-- https://angularcleanup.shop/faq
-- https://angularcleanup.shop/privacy
-- https://angularcleanup.shop/products
+- https://angularcleanup.shop/for-managers
+- https://angularcleanup.shop/for-technical-leads
+- https://angularcleanup.shop/how-it-works
+- https://angularcleanup.shop/ai-governance
 - https://angularcleanup.shop/book
+- https://angularcleanup.shop/privacy
 
 ## Conversion
-Book a fit check: https://angularcleanup.shop/book
+Request an executive introduction call: https://angularcleanup.shop/book
 
 ## Constraints
-- No rewrite projects
+- No rewrites
 - No feature-team ownership
 - Incremental, reversible, production-safe changes
+- AI supports governance, not replacement
 
 ## Machine-Friendly Detail
 See: https://angularcleanup.shop/llms-full.txt

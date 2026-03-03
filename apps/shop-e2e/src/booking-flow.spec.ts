@@ -5,11 +5,13 @@ test('header CTA navigates to booking', async ({ page }) => {
 
   await page
     .getByRole('banner')
-    .getByRole('link', { name: 'Request a 20-min fit check' })
+    .getByRole('link', { name: 'Request executive introduction call' })
     .click();
 
   await expect(page).toHaveURL(/\/book$/u);
   await expect(
-    page.getByRole('heading', { name: 'Request a 20-min fit check' }),
+    page.getByRole('heading', {
+      name: 'Request an executive introduction call',
+    }),
   ).toBeVisible();
 });

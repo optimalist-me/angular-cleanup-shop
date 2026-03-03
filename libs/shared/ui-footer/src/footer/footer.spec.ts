@@ -17,9 +17,9 @@ describe('SharedFooter', () => {
     await fixture.whenStable();
   });
 
-  it('should render the pricing statement', () => {
+  it('should render governance positioning text', () => {
     expect(component).toBeTruthy();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('€800 / day');
+    expect(compiled.textContent).toContain('Governance-first stabilization');
   });
 });

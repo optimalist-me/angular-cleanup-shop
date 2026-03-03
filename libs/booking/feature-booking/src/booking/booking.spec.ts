@@ -90,7 +90,7 @@ describe('BookingBooking', () => {
     expect(component.isConfirmation()).toBe(false);
     const element = fixture.nativeElement as HTMLElement;
     expect(element.querySelector('.booking__title')?.textContent).toContain(
-      'Request a 20-min fit check',
+      'Request an executive introduction call',
     );
   });
 

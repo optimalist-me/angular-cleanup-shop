@@ -1,29 +1,29 @@
-import { readFile, writeFile } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const SITE_URL = 'https://angularcleanup.shop';
-const NOINDEX_ROUTES = new Set(['/cart', '/checkout', '/book/confirmed']);
-const DEFAULT_CHANGEFREQ = 'monthly';
-const DEFAULT_PRIORITY = '0.6';
-
+const INDEXABLE_ROUTES = [
+  '/',
+  '/for-managers',
+  '/for-technical-leads',
+  '/how-it-works',
+  '/ai-governance',
+  '/privacy',
+  '/book',
+];
 const ROUTE_META = {
   '/': { changefreq: 'weekly', priority: '1.0' },
-  '/products': { changefreq: 'weekly', priority: '0.9' },
-  '/playbook': { changefreq: 'monthly', priority: '0.8' },
-  '/architecture': { changefreq: 'monthly', priority: '0.8' },
-  '/faq': { changefreq: 'monthly', priority: '0.8' },
+  '/for-managers': { changefreq: 'weekly', priority: '0.9' },
+  '/for-technical-leads': { changefreq: 'weekly', priority: '0.9' },
+  '/how-it-works': { changefreq: 'monthly', priority: '0.8' },
+  '/ai-governance': { changefreq: 'monthly', priority: '0.8' },
   '/privacy': { changefreq: 'monthly', priority: '0.7' },
-  '/book': { changefreq: 'monthly', priority: '0.7' },
+  '/book': { changefreq: 'monthly', priority: '0.8' },
 };
 
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
 const workspaceRoot = path.resolve(currentDirectory, '..', '..');
-const routesPath = path.join(workspaceRoot, 'apps/shop/src/app/app.routes.ts');
-const productsPath = path.join(
-  workspaceRoot,
-  'apps/shop/public/data/products.json',
-);
 const outputPath = path.join(workspaceRoot, 'apps/shop/public/sitemap.xml');
 
 const asIsoDate = new Date().toISOString().slice(0, 10);
@@ -37,75 +37,9 @@ function escapeXml(value) {
     .replaceAll("'", '&apos;');
 }
 
-function normalizePath(routePath) {
-  if (!routePath || routePath === '/') {
-    return '/';
-  }
-
-  return routePath.startsWith('/') ? routePath : `/${routePath}`;
-}
-
-function extractIndexableStaticRoutes(routesSource) {
-  const routeMatcher = /path:\s*'([^']*)'/g;
-  const orderedRoutes = [];
-  const seen = new Set();
-
-  for (const match of routesSource.matchAll(routeMatcher)) {
-    const rawPath = match[1];
-    const normalizedPath = normalizePath(rawPath);
-
-    if (normalizedPath.includes(':')) {
-      continue;
-    }
-
-    if (normalizedPath.startsWith('/book/confirmed')) {
-      continue;
-    }
-
-    if (NOINDEX_ROUTES.has(normalizedPath)) {
-      continue;
-    }
-
-    if (seen.has(normalizedPath)) {
-      continue;
-    }
-
-    seen.add(normalizedPath);
-    orderedRoutes.push(normalizedPath);
-  }
-
-  return orderedRoutes;
-}
-
-function extractProductDetailRoutes(productsSource) {
-  const products = JSON.parse(productsSource);
-
-  if (!Array.isArray(products)) {
-    throw new Error('Expected products.json to contain an array.');
-  }
-
-  return products
-    .map((product) => product?.slug)
-    .filter((slug) => typeof slug === 'string' && slug.length > 0)
-    .map((slug) => `/products/${slug}`);
-}
-
-function getRouteMeta(route) {
-  if (route.startsWith('/products/')) {
-    return { changefreq: 'monthly', priority: '0.8' };
-  }
-
-  return (
-    ROUTE_META[route] ?? {
-      changefreq: DEFAULT_CHANGEFREQ,
-      priority: DEFAULT_PRIORITY,
-    }
-  );
-}
-
 function buildSitemapXml(routes) {
   const urls = routes.map((route) => {
-    const { changefreq, priority } = getRouteMeta(route);
+    const { changefreq, priority } = ROUTE_META[route];
     const loc = `${SITE_URL}${route}`;
 
     return [
@@ -129,28 +63,10 @@ function buildSitemapXml(routes) {
 }
 
 async function main() {
-  const [routesSource, productsSource] = await Promise.all([
-    readFile(routesPath, 'utf8'),
-    readFile(productsPath, 'utf8'),
-  ]);
-
-  const staticRoutes = extractIndexableStaticRoutes(routesSource);
-  const productRoutes = extractProductDetailRoutes(productsSource);
-  const routes = [...staticRoutes];
-  const productsIndex = routes.indexOf('/products');
-
-  if (productsIndex >= 0) {
-    routes.splice(productsIndex + 1, 0, ...productRoutes);
-  } else {
-    routes.push(...productRoutes);
-  }
-
-  const dedupedRoutes = [...new Set(routes)];
-  const sitemapXml = buildSitemapXml(dedupedRoutes);
-
+  const sitemapXml = buildSitemapXml(INDEXABLE_ROUTES);
   await writeFile(outputPath, sitemapXml, 'utf8');
   console.log(
-    `Generated sitemap with ${dedupedRoutes.length} routes at ${outputPath}`,
+    `Generated sitemap with ${INDEXABLE_ROUTES.length} routes at ${outputPath}`,
   );
 }
 

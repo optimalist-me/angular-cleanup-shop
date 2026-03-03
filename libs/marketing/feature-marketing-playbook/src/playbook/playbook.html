@@ -1,97 +1,34 @@
 <div class="playbook">
   <marketing-section
-    eyebrow="Playbook"
-    title="A calm, governance-first approach to structural cleanup."
-    subtitle="We reduce structural friction, keep risk low, and make every future change cheaper without rewrites or sprint disruption."
+    eyebrow="Engagement Model"
+    title="Engagement Model"
+    subtitle="A structured governance program designed to reduce cost of change in Angular and Nx codebases — without rewriting your application."
   >
-    <ul class="playbook__list">
-      <li>We optimize for cost-of-change, not short-term velocity.</li>
-      <li>Every change is incremental, reversible, and production-safe.</li>
-      <li>
-        Ownership and boundaries come first. Tooling is support. Governance is
-        the system.
-      </li>
-    </ul>
     <div class="playbook__note">
       <shared-design-text size="md" weight="semibold">
-        What we don’t do
+        Why Engagement Matters
       </shared-design-text>
       <shared-design-text tone="muted" size="md">
-        We don’t take feature tickets. We reduce structural friction so your
-        team can ship features faster with less risk.
+        Architectural drift rarely happens overnight. It accumulates through
+        feature pressure, team changes, and time constraints.
       </shared-design-text>
-    </div>
-    <div class="playbook__actions">
-      <a class="playbook__link playbook__link--primary" routerLink="/book">
-        <shared-design-text tone="inverse" size="md" weight="semibold">
-          Request a 20-min fit check
-        </shared-design-text>
-      </a>
-      <a class="playbook__link" routerLink="/architecture">
-        <shared-design-text tone="accent" size="md" weight="semibold">
-          See the architecture
-        </shared-design-text>
-      </a>
+      <shared-design-text tone="muted" size="md">
+        Governance must be introduced deliberately. Not as a one-off refactor.
+        Not as a permanent dependency. As a structured stabilization cadence.
+      </shared-design-text>
+      <ul class="playbook__list">
+        <li>Initially more intensive.</li>
+        <li>Then stable and predictable.</li>
+        <li>Never an endless cleanup loop.</li>
+      </ul>
     </div>
   </marketing-section>
 
   <marketing-section
-    eyebrow="Overview"
-    title="Modern Angular practices, applied incrementally."
-    subtitle="We focus on how your system behaves: smaller change surfaces, clear ownership, and predictable side effects."
+    eyebrow="Phase 1"
+    title="Phase 1 — Baseline & Governance Setup"
+    subtitle="This phase establishes structural clarity and defines what better looks like in measurable terms."
     tone="muted"
-  >
-    <div class="playbook__grid">
-      <shared-design-surface
-        class="playbook__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Core principles</h3>
-        <ul class="playbook__list">
-          <li>Explicit domain boundaries and ownership.</li>
-          <li>Signals-first state and computed derivations.</li>
-          <li>
-            Small, reviewable PRs that stay within a single domain when
-            possible.
-          </li>
-        </ul>
-      </shared-design-surface>
-      <shared-design-surface
-        class="playbook__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Modern Angular means</h3>
-        <ul class="playbook__list">
-          <li>Typed reactive forms and explicit side effects.</li>
-          <li>
-            RxJS hygiene: fewer scattered subscriptions, clearer async flows.
-          </li>
-          <li>Pragmatic testing and predictable change detection.</li>
-        </ul>
-      </shared-design-surface>
-      <shared-design-surface
-        class="playbook__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Upgrade stance</h3>
-        <p>
-          Cleanup works within your current version. Upgrades are optional and
-          scoped separately. Structural clarity makes them safer later.
-        </p>
-      </shared-design-surface>
-    </div>
-  </marketing-section>
-
-  <marketing-section
-    eyebrow="First-day triage"
-    title="Understand risk, stop decay, and set the baseline."
-    subtitle="Day one focuses on the highest-risk areas and the constraints of your current Angular version."
   >
     <div class="playbook__split">
       <shared-design-surface
@@ -100,11 +37,16 @@
         padding="md"
         radius="lg"
       >
-        <h3>Version assessment</h3>
+        <h3>What happens</h3>
         <ul class="playbook__list">
-          <li>Current Angular version and supported practices.</li>
-          <li>Upgrade feasibility and risk without assuming upgrades.</li>
-          <li>Constraints that impact cleanup sequencing.</li>
+          <li>Architectural boundary analysis</li>
+          <li>Dependency mapping</li>
+          <li>PR pattern review</li>
+          <li>Upgrade risk assessment</li>
+          <li>Ownership clarity mapping</li>
+          <li>Definition of measurable governance metrics</li>
+          <li>Initial decision log framework</li>
+          <li>AI-assisted drift scanning (if applicable)</li>
         </ul>
       </shared-design-surface>
       <shared-design-surface
@@ -113,203 +55,119 @@
         padding="md"
         radius="lg"
       >
-        <h3>Stabilize first</h3>
+        <h3>What you get</h3>
         <ul class="playbook__list">
-          <li>
-            Identify entropy hotspots: PR sprawl, coupling hubs, and regression
-            risk.
-          </li>
-          <li>
-            Agree on boundaries, ownership, and the ‘public surfaces’ between
-            domains.
-          </li>
-          <li>
-            Define a safe sequencing plan: smallest high-leverage interventions
-            first.
-          </li>
+          <li>Architectural Health Snapshot</li>
+          <li>Prioritized stabilization roadmap</li>
+          <li>Governance cadence definition</li>
+          <li>Baseline metrics for cost-of-change indicators</li>
         </ul>
-      </shared-design-surface>
-    </div>
-  </marketing-section>
-
-  <marketing-section
-    eyebrow="Cleaning checklists"
-    title="Repeatable workflows for predictable cleanup."
-    subtitle="We rely on checklists to keep refactors boring, safe, and easy to review."
-    tone="muted"
-  >
-    <div class="playbook__grid">
-      <shared-design-surface
-        class="playbook__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Component scope</h3>
-        <ul class="playbook__list">
-          <li>Single responsibility and clear inputs/outputs.</li>
-          <li>Template complexity kept low.</li>
-          <li>
-            Side effects live at the boundary, not scattered across components.
-          </li>
-        </ul>
-      </shared-design-surface>
-      <shared-design-surface
-        class="playbook__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>State ownership</h3>
-        <ul class="playbook__list">
-          <li>
-            Local signals by default; promote only when multiple consumers
-            exist.
-          </li>
-          <li>Commands for side effects; computed for derived state.</li>
-        </ul>
-      </shared-design-surface>
-      <shared-design-surface
-        class="playbook__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>RxJS hygiene</h3>
-        <ul class="playbook__list">
-          <li>Subscribe once (feature boundary), not everywhere.</li>
-          <li>Flattened operator chains and named pipeline steps.</li>
-        </ul>
-      </shared-design-surface>
-      <shared-design-surface
-        class="playbook__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Shared libraries</h3>
-        <ul class="playbook__list">
-          <li>Shared is not a dumping ground.</li>
-          <li>Extract only with clear ownership and a minimal public API.</li>
-        </ul>
-      </shared-design-surface>
-    </div>
-  </marketing-section>
-
-  <marketing-section
-    eyebrow="Metrics and guardrails"
-    title="Measure what matters, enforce the boundaries."
-    subtitle="Lightweight metrics and guardrails keep improvements consistent, and prevent drift from returning."
-  >
-    <div class="playbook__split">
-      <shared-design-surface
-        class="playbook__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Recommended metrics</h3>
-        <ul class="playbook__list">
-          <li>
-            PR size stays reviewable (small change surface; fewer cross-domain
-            touches).
-          </li>
-          <li>No circular dependencies between domains.</li>
-          <li>
-            Hotspots tracked: scattered subscriptions, large
-            components/services, flaky tests.
-          </li>
-        </ul>
-      </shared-design-surface>
-      <shared-design-surface
-        class="playbook__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Guardrails</h3>
-        <ul class="playbook__list">
-          <li>
-            Module boundary enforcement (Nx, ESLint rules, and CI checks —
-            depending on your stack).
-          </li>
-          <li>
-            Gradual constraint tightening: block new violations, reduce legacy
-            ones incrementally.
-          </li>
-          <li>
-            AI-assisted refactors are allowed only with governance: no secrets,
-            no blind autopilot.
-          </li>
-        </ul>
-      </shared-design-surface>
-    </div>
-  </marketing-section>
-
-  <marketing-section
-    eyebrow="Engagement model"
-    title="Delivered in sessions, not sprints."
-    subtitle="A consistent cadence that fits around production work and avoids big-bang rewrites."
-    tone="muted"
-  >
-    <div class="playbook__grid">
-      <shared-design-surface
-        class="playbook__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Cleanup audit</h3>
-        <p>One-day assessment with findings and a focused action plan.</p>
-      </shared-design-surface>
-      <shared-design-surface
-        class="playbook__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Cleanup sessions</h3>
-        <p>
-          2–4 focused sessions spread over time to reduce risk and review drag —
-          no big-bang refactors.
-        </p>
-      </shared-design-surface>
-      <shared-design-surface
-        class="playbook__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Continuous hygiene</h3>
-        <p>
-          One fixed day per week to keep the repository calm, predictable, and
-          upgrade-ready.
-        </p>
       </shared-design-surface>
     </div>
     <div class="playbook__note">
-      <span>
-        <shared-design-text size="md" weight="semibold">
-          Angular upgrades are scoped separately.
-        </shared-design-text>
-      </span>
       <shared-design-text tone="muted" size="md">
-        Cleanup focuses on structure first so upgrades are safer later.
+        Engagement typically starts from €X (fixed scope), depending on
+        codebase size and team structure.
       </shared-design-text>
     </div>
   </marketing-section>
 
   <marketing-section
-    eyebrow="Next step"
-    title="See if this model fits your team."
-    subtitle="Request a 20‑min fit check. Calm, focused, and strictly about structural fit — no sales pressure."
+    eyebrow="Phase 2"
+    title="Phase 2 — Structured Governance Cadence"
+    subtitle="A weekly architectural governance cadence focused on preventing drift and steadily reducing structural entropy."
+  >
+    <div class="playbook__split">
+      <shared-design-surface
+        class="playbook__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3>Cadence includes</h3>
+        <ul class="playbook__list">
+          <li>Boundary enforcement reviews</li>
+          <li>Cross-domain change monitoring</li>
+          <li>PR scope discipline</li>
+          <li>Decision log facilitation</li>
+          <li>Architectural health tracking</li>
+          <li>AI-assisted governance support</li>
+          <li>Advisory support to internal tech leads</li>
+        </ul>
+      </shared-design-surface>
+      <shared-design-surface
+        class="playbook__card"
+        tone="default"
+        padding="md"
+        radius="lg"
+      >
+        <h3>Operating principle</h3>
+        <p>We strengthen internal ownership.</p>
+        <p>We do not replace your architects or team leads.</p>
+      </shared-design-surface>
+    </div>
+    <div class="playbook__note">
+      <shared-design-text tone="muted" size="md">
+        Governance cadence engagements typically start from €X per month,
+        depending on scope and complexity.
+      </shared-design-text>
+    </div>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="Phase 3"
+    title="Phase 3 — Light Advisory (Optional)"
+    subtitle="Once structural stability improves, cadence intensity can decrease. Engagement can transition to monthly or quarterly advisory support."
+    tone="muted"
+  >
+    <ul class="playbook__list">
+      <li>No dependency model.</li>
+      <li>De-escalation is built in.</li>
+      <li>Governance maturity is the objective.</li>
+    </ul>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="Manager framing"
+    title="What You’re Actually Buying"
+    subtitle="Governance is measurable. We define before-and-after indicators and track them over time."
+  >
+    <ul class="playbook__list">
+      <li>Reduced cost of change</li>
+      <li>Safer framework upgrades</li>
+      <li>Smaller, more predictable pull requests</li>
+      <li>Clearer ownership boundaries</li>
+      <li>Fewer architectural escalations</li>
+      <li>Measurable governance discipline</li>
+    </ul>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="AI stance"
+    title="AI Supports Governance — It Doesn’t Replace It"
+    subtitle="AI can support governance through practical analysis workflows. Final architectural decisions remain human."
+    tone="muted"
+  >
+    <ul class="playbook__list">
+      <li>Boundary violation detection</li>
+      <li>PR complexity analysis</li>
+      <li>Ownership suggestions</li>
+      <li>Decision log summarization</li>
+      <li>Drift signal detection</li>
+    </ul>
+  </marketing-section>
+
+  <marketing-section
+    eyebrow="Executive Introduction"
+    title="Executive Introduction Call"
+    subtitle="A short executive introduction call allows us to understand your codebase context and determine whether a structured governance engagement is appropriate."
     align="center"
     size="compact"
   >
     <div class="playbook__actions playbook__actions--center">
       <a class="playbook__link playbook__link--primary" routerLink="/book">
         <shared-design-text tone="inverse" size="md" weight="semibold">
-          Request a 20-min fit check
+          Request Executive Introduction
         </shared-design-text>
       </a>
     </div>
