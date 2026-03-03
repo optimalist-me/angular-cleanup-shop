@@ -1,7 +1,7 @@
 # Architecture Decision Records (ADRs)
 
 This folder documents accepted and evolving architectural decisions for the
-Angular Cleanup Shop repository.
+Angular Governance Program repository.
 
 Status lifecycle:
 - Proposed: candidate decision under review

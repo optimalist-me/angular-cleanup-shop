@@ -1,6 +1,4 @@
 import { Route } from '@angular/router';
-import { provideCheckoutRouteAdapters } from './checkout-route.providers';
-import { provideProductsRouteAdapters } from './products-route.providers';
 
 export const appRoutes: Route[] = [
   {
@@ -11,25 +9,45 @@ export const appRoutes: Route[] = [
       ),
   },
   {
-    path: 'playbook',
+    path: 'for-managers',
     loadChildren: () =>
-      import('@cleanup/feature-marketing-playbook').then(
-        (m) => m.marketingPlaybookRoutes,
-      ),
+      import('@cleanup/feature-marketing-faq').then((m) => m.marketingFaqRoutes),
   },
   {
-    path: 'architecture',
+    path: 'for-technical-leads',
     loadChildren: () =>
       import('@cleanup/feature-marketing-architecture').then(
         (m) => m.marketingArchitectureRoutes,
       ),
   },
   {
-    path: 'faq',
+    path: 'how-it-works',
     loadChildren: () =>
-      import('@cleanup/feature-marketing-faq').then(
-        (m) => m.marketingFaqRoutes,
+      import('@cleanup/feature-marketing-playbook').then(
+        (m) => m.marketingPlaybookRoutes,
       ),
+  },
+  {
+    path: 'ai-governance',
+    loadChildren: () =>
+      import('@cleanup/feature-marketing-architecture').then(
+        (m) => m.marketingArchitectureRoutes,
+      ),
+  },
+  {
+    path: 'playbook',
+    redirectTo: '/how-it-works',
+    pathMatch: 'full',
+  },
+  {
+    path: 'architecture',
+    redirectTo: '/for-technical-leads',
+    pathMatch: 'full',
+  },
+  {
+    path: 'faq',
+    redirectTo: '/for-managers',
+    pathMatch: 'full',
   },
   {
     path: 'privacy',
@@ -37,30 +55,23 @@ export const appRoutes: Route[] = [
       import('@cleanup/feature-privacy').then((m) => m.privacyRoutes),
   },
   {
-    path: 'products',
-    loadChildren: () =>
-      import('@cleanup/feature-products-list').then(
-        (m) => m.productsListRoutes,
-      ),
+    path: 'products/:slug',
+    redirectTo: '/',
   },
   {
-    path: 'products/:slug',
-    providers: [provideProductsRouteAdapters()],
-    loadChildren: () =>
-      import('@cleanup/feature-product-detail').then(
-        (m) => m.productDetailRoutes,
-      ),
+    path: 'products',
+    redirectTo: '/',
+    pathMatch: 'full',
   },
   {
     path: 'cart',
-    loadChildren: () =>
-      import('@cleanup/feature-cart').then((m) => m.cartRoutes),
+    redirectTo: '/',
+    pathMatch: 'full',
   },
   {
     path: 'checkout',
-    providers: [provideCheckoutRouteAdapters()],
-    loadChildren: () =>
-      import('@cleanup/feature-checkout').then((m) => m.checkoutRoutes),
+    redirectTo: '/',
+    pathMatch: 'full',
   },
   {
     path: 'book/confirmed/:bookingId',

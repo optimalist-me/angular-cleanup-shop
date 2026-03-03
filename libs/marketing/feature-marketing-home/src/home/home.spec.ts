@@ -17,10 +17,11 @@ describe('MarketingHome', () => {
     await fixture.whenStable();
   });
 
-  it('should render the featured products section', () => {
+  it('should render manager and technical lead audience paths', () => {
     expect(component).toBeTruthy();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('Featured products');
+    expect(compiled.textContent).toContain('For managers');
+    expect(compiled.textContent).toContain('For technical leads');
   });
 
   it('should render the Nx Certified Expert badge in the trust section', () => {

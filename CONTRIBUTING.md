@@ -1,6 +1,6 @@
-# CONTRIBUTING.md – Angular Cleanup Shop
+# CONTRIBUTING.md – Angular Governance Program
 
-Thank you for contributing to the **Angular Cleanup Shop** repositories.
+Thank you for contributing to the **Angular Governance Program** repositories.
 
 This document defines **how humans and AI agents collaborate** safely and predictably
 when working on Angular codebases under the *cleaning* model.
@@ -12,7 +12,7 @@ It is a **guardrail document**.
 
 ## 1. Purpose of This Repository
 
-This repository exists to support the **Angular Cleanup Shop**.
+This repository exists to support the **Angular Governance Program**.
 
 Its goals are:
 - reduce technical debt
@@ -243,5 +243,5 @@ it is probably the wrong change.
 
 ---
 
-**Angular Cleanup Shop**  
+**Angular Governance Program**  
 _Progress through restraint._

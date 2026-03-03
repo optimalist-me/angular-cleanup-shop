@@ -1,6 +1,6 @@
-# AGENTS.md – Angular Cleanup Shop
+# AGENTS.md – Angular Governance Program
 
-This file defines **explicit operational instructions for AI agents** working in repositories related to the **Angular Cleanup Shop**.
+This file defines **explicit operational instructions for AI agents** working in repositories related to the **Angular Governance Program**.
 
 The goal is **consistency, predictability, and calm evolution** of Angular codebases.  
 AI agents must **optimize for clarity and maintainability**, not feature velocity.

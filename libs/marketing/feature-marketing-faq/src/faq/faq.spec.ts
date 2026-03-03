@@ -17,9 +17,9 @@ describe('MarketingFaq', () => {
     await fixture.whenStable();
   });
 
-  it('should render the FAQ question list', () => {
+  it('should render manager-focused framing', () => {
     expect(component).toBeTruthy();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('Is this just refactoring?');
+    expect(compiled.textContent).toContain('What you are buying');
   });
 });

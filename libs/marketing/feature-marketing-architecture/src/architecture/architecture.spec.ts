@@ -17,9 +17,9 @@ describe('MarketingArchitecture', () => {
     await fixture.whenStable();
   });
 
-  it('should render the architecture headline', () => {
+  it('should render the technical lead headline', () => {
     expect(component).toBeTruthy();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('Architecture');
+    expect(compiled.textContent).toContain('For technical leads');
   });
 });

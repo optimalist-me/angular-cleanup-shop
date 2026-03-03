@@ -12,7 +12,7 @@
         ngSrc="/images/cleanup-logo.png"
         width="94"
         height="92"
-        alt="Angular Cleanup Shop logo"
+        alt="Angular Governance Program logo"
         priority
       />
       <span class="header__brand-copy">
@@ -22,14 +22,14 @@
           size="xl"
           weight="semibold"
         >
-          Angular Cleanup Shop
+          Angular Governance Program
         </shared-design-text>
         <shared-design-text
           class="header__brand-subtitle"
           tone="muted"
           size="sm"
         >
-          Less friction. More efficient development.
+          Governance-first stabilization for Angular and Nx.
         </shared-design-text>
       </span>
     </a>
@@ -45,60 +45,45 @@
     <nav class="header__nav" id="header-nav">
       <a
         class="header__link"
-        routerLink="/products"
+        routerLink="/for-managers"
         routerLinkActive="header__link--active"
         (click)="closeMenu()"
       >
-        Products
+        For Managers
       </a>
       <a
         class="header__link"
-        routerLink="/playbook"
+        routerLink="/for-technical-leads"
         routerLinkActive="header__link--active"
         (click)="closeMenu()"
       >
-        Playbook
+        For Technical Leads
       </a>
       <a
         class="header__link"
-        routerLink="/architecture"
+        routerLink="/how-it-works"
         routerLinkActive="header__link--active"
         (click)="closeMenu()"
       >
-        Architecture
+        Engagement Model
       </a>
       <a
         class="header__link"
-        routerLink="/faq"
+        routerLink="/ai-governance"
         routerLinkActive="header__link--active"
         (click)="closeMenu()"
       >
-        FAQ
+        AI Governance
       </a>
     </nav>
     <div class="header__actions">
-      <a
-        class="header__link header__link--icon"
-        routerLink="/cart"
-        routerLinkActive="header__link--active"
-        aria-label="Cart"
-        (click)="closeMenu()"
-      >
-        <ng-icon name="heroShoppingCart" size="18"></ng-icon>
-        <shared-design-text size="sm" weight="medium">Cart</shared-design-text>
-        @if (hasCartItems()) {
-        <span class="header__cart-count" aria-label="Cart items">
-          {{ cartCount() }}
-        </span>
-        }
-      </a>
       <a
         class="header__cta"
         routerLink="/book"
         routerLinkActive="header__link--active"
         (click)="closeMenu()"
       >
-        Request a 20-min fit check
+        Request executive introduction call
       </a>
     </div>
   </div>

@@ -1,48 +1,30 @@
 <div class="architecture">
   <marketing-section
-    eyebrow="Architecture"
-    title="Clear boundaries. Predictable dependencies. Calm Angular systems."
-    subtitle="This page explains how we structure domains, enforce dependencies, and keep change safe as the system grows — without rewrites."
+    eyebrow="For technical leads"
+    title="Concrete governance mechanics for Angular and Nx."
+    subtitle="We strengthen your architecture and delivery flow. We do not replace your team."
   >
-    <ul class="architecture__list">
-      <li>
-        Governance beats tooling: rules help, but discipline prevents drift.
-      </li>
-      <li>
-        Boundaries are explicit, enforceable, and boring — that’s the point.
-      </li>
-      <li>Smaller change surfaces reduce review drag and regression risk.</li>
-    </ul>
-    <div class="architecture__note">
-      <shared-design-text size="md" weight="semibold">
-        What we don’t do
-      </shared-design-text>
-      <shared-design-text tone="muted" size="md">
-        We don’t redesign systems for aesthetics or chase framework trends. We
-        clarify boundaries so your team can move faster with less risk.
-      </shared-design-text>
-    </div>
     <div class="architecture__actions">
       <a
         class="architecture__link architecture__link--primary"
-        routerLink="/playbook"
+        routerLink="/how-it-works"
       >
         <shared-design-text tone="inverse" size="md" weight="semibold">
-          Read the playbook
+          See governance cadence
         </shared-design-text>
       </a>
-      <a class="architecture__link" routerLink="/products">
+      <a class="architecture__link" routerLink="/ai-governance">
         <shared-design-text tone="accent" size="md" weight="semibold">
-          Browse products
+          AI for governance
         </shared-design-text>
       </a>
     </div>
   </marketing-section>
 
   <marketing-section
-    eyebrow="Domain map"
-    title="Feature, data-access, ui, util — one-way by design."
-    subtitle="Dependency direction stays predictable: feature orchestrates, data-access owns IO, ui stays presentational, util stays pure. The goal is fewer cross-domain PRs."
+    eyebrow="Boundary enforcement"
+    title="Keep domain ownership explicit and enforceable."
+    subtitle="Rules are only useful when they are observable in CI and review workflows."
     tone="muted"
   >
     <div class="architecture__grid">
@@ -52,21 +34,8 @@
         padding="md"
         radius="lg"
       >
-        <h3>feature</h3>
-        <p>
-          Screens, routes, and orchestration. Owns composition and ‘commands’
-          for side effects.
-        </p>
-        <span class="architecture__pill">
-          <shared-design-text
-            tone="accent"
-            size="sm"
-            weight="medium"
-            [uppercase]="true"
-          >
-            feature -> data-access -> util
-          </shared-design-text>
-        </span>
+        <h3>Dependency direction</h3>
+        <p>Feature -> data-access -> util. No reverse coupling.</p>
       </shared-design-surface>
       <shared-design-surface
         class="architecture__card"
@@ -74,18 +43,8 @@
         padding="md"
         radius="lg"
       >
-        <h3>data-access</h3>
-        <p>API clients, DTO mapping, query and caching.</p>
-        <span class="architecture__pill">
-          <shared-design-text
-            tone="accent"
-            size="sm"
-            weight="medium"
-            [uppercase]="true"
-          >
-            no ui imports
-          </shared-design-text>
-        </span>
+        <h3>Public APIs only</h3>
+        <p>No cross-domain imports into internals.</p>
       </shared-design-surface>
       <shared-design-surface
         class="architecture__card"
@@ -93,45 +52,16 @@
         padding="md"
         radius="lg"
       >
-        <h3>ui</h3>
-        <p>Presentational components with inputs/outputs only.</p>
-        <span class="architecture__pill">
-          <shared-design-text
-            tone="accent"
-            size="sm"
-            weight="medium"
-            [uppercase]="true"
-          >
-            ui -> util
-          </shared-design-text>
-        </span>
-      </shared-design-surface>
-      <shared-design-surface
-        class="architecture__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>util</h3>
-        <p>Pure helpers and formatting logic. No Angular runtime.</p>
-        <span class="architecture__pill">
-          <shared-design-text
-            tone="accent"
-            size="sm"
-            weight="medium"
-            [uppercase]="true"
-          >
-            pure functions
-          </shared-design-text>
-        </span>
+        <h3>Violation triage</h3>
+        <p>Block new violations, burn down legacy deliberately.</p>
       </shared-design-surface>
     </div>
   </marketing-section>
 
   <marketing-section
-    eyebrow="API layering"
-    title="UI talks to one stable contract."
-    subtitle="Frontend depends on data-access contracts only, so backend evolution doesn’t leak into features and UI."
+    eyebrow="CI and review"
+    title="Governance in everyday engineering flow."
+    subtitle="The goal is fewer surprises, smaller PR blast radius, and clearer approvals."
   >
     <div class="architecture__split">
       <shared-design-surface
@@ -140,11 +70,11 @@
         padding="md"
         radius="lg"
       >
-        <h3>Frontend rule</h3>
+        <h3>Core checks</h3>
         <ul class="architecture__list">
-          <li>UI uses data-access APIs only.</li>
-          <li>No server entities or internal microservice types.</li>
-          <li>DTOs (or schemas) define the boundary.</li>
+          <li>Boundary rule checks in CI.</li>
+          <li>Cross-domain touch count in PR review.</li>
+          <li>Circular dependency detection and triage.</li>
         </ul>
       </shared-design-surface>
       <shared-design-surface
@@ -153,129 +83,20 @@
         padding="md"
         radius="lg"
       >
-        <h3>Why it helps</h3>
+        <h3>Decision logging</h3>
         <ul class="architecture__list">
-          <li>Backend can evolve without UI rewrites.</li>
-          <li>Testing stays fast and focused.</li>
-          <li>Contracts remain stable over time.</li>
-        </ul>
-      </shared-design-surface>
-    </div>
-    <shared-design-surface
-      class="architecture__code"
-      tone="subtle"
-      padding="md"
-      radius="lg"
-    >
-      <p class="architecture__code-title">
-        <shared-design-text
-          tone="muted"
-          size="sm"
-          weight="medium"
-          [uppercase]="true"
-        >
-          Example flow
-        </shared-design-text>
-      </p>
-      <pre><code>UI -> data-access API -> backend contract</code></pre>
-    </shared-design-surface>
-  </marketing-section>
-
-  <marketing-section
-    eyebrow="Folder structure"
-    title="Domain-based libraries keep ownership obvious."
-    subtitle="A consistent layout prevents shared soup, keeps ownership obvious, and makes boundaries enforceable."
-    tone="muted"
-  >
-    <shared-design-surface
-      class="architecture__code"
-      tone="subtle"
-      padding="md"
-      radius="lg"
-    >
-      <pre><code>libs/
-  &lt;domain&gt;/
-    feature-*/
-    data-access-*/
-    ui-*/
-    util-*/</code></pre>
-    </shared-design-surface>
-    <div class="architecture__split">
-      <shared-design-surface
-        class="architecture__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>What it prevents</h3>
-        <ul class="architecture__list">
-          <li>Shared becoming a dumping ground.</li>
-          <li>Cross-domain imports ‘just this once’.</li>
-          <li>Hidden dependency chains and coupling hubs.</li>
-        </ul>
-      </shared-design-surface>
-      <shared-design-surface
-        class="architecture__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>What it enables</h3>
-        <ul class="architecture__list">
-          <li>Clear public APIs per domain (what others may depend on).</li>
-          <li>Incremental refactors with predictable blast radius.</li>
-          <li>Safer upgrades later because structure is calm today.</li>
+          <li>Capture why a boundary decision was made.</li>
+          <li>Link decisions to impacted domains and PRs.</li>
+          <li>Review decision drift on a weekly cadence.</li>
         </ul>
       </shared-design-surface>
     </div>
   </marketing-section>
 
   <marketing-section
-    eyebrow="Guardrails"
-    title="Boundaries enforced by tooling — sustained by governance."
-    subtitle="Nx, ESLint rules, and CI checks can enforce dependency direction. Governance prevents exceptions from becoming architecture."
-  >
-    <div class="architecture__split">
-      <shared-design-surface
-        class="architecture__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Tooling (examples)</h3>
-        <ul class="architecture__list">
-          <li>
-            Module boundary enforcement (Nx or ESLint, depending on your stack).
-          </li>
-          <li>CI checks for forbidden imports and circular dependencies.</li>
-          <li>
-            Gradual constraint tightening: block new violations, reduce legacy
-            ones.
-          </li>
-        </ul>
-      </shared-design-surface>
-      <shared-design-surface
-        class="architecture__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>AI is a tool — not a plan</h3>
-        <ul class="architecture__list">
-          <li>
-            AI can accelerate refactors, but only within clear boundaries.
-          </li>
-          <li>No secrets, credentials, or customer data in prompts.</li>
-          <li>Sequencing and ownership stay human-led.</li>
-        </ul>
-      </shared-design-surface>
-    </div>
-  </marketing-section>
-
-  <marketing-section
-    eyebrow="AI philosophy"
-    title="AI accelerates structure, governance defines it."
-    subtitle="We use AI to speed up refactors and analysis, but governance, sequencing, and ownership remain human-led."
+    eyebrow="AI governance"
+    title="AI supports governance workflows."
+    subtitle="AI helps surface risks quickly, while humans own architecture and sequencing."
     tone="muted"
   >
     <div class="architecture__split">
@@ -285,11 +106,13 @@
         padding="md"
         radius="lg"
       >
-        <h3>Where AI helps</h3>
+        <h3>Practical AI support</h3>
         <ul class="architecture__list">
-          <li>Detecting boundary violations and circular dependencies.</li>
-          <li>Suggesting safe, incremental refactors.</li>
-          <li>Generating tests and documentation scaffolding.</li>
+          <li>Drift detection from dependency and PR patterns.</li>
+          <li>Boundary-violation triage proposals.</li>
+          <li>Ownership suggestions from change history.</li>
+          <li>PR scope and blast-radius analysis.</li>
+          <li>Decision-log summarization drafts.</li>
         </ul>
       </shared-design-surface>
       <shared-design-surface
@@ -298,58 +121,20 @@
         padding="md"
         radius="lg"
       >
-        <h3>Where governance leads</h3>
+        <h3>Guardrails</h3>
         <ul class="architecture__list">
-          <li>Defining domain ownership and public APIs.</li>
-          <li>Sequencing changes to minimize blast radius.</li>
-          <li>Deciding what should not be abstracted or shared.</li>
+          <li>No credentials or customer data in prompts.</li>
+          <li>No autopilot merges for structural changes.</li>
+          <li>Boundary definitions remain human decisions.</li>
         </ul>
-      </shared-design-surface>
-    </div>
-  </marketing-section>
-
-  <marketing-section
-    eyebrow="Why it works"
-    title="Every boundary reduces risk and lowers the cost of change."
-    subtitle="Clean architecture is an efficiency multiplier — it lowers cost-of-change and keeps delivery calm."
-  >
-    <div class="architecture__grid">
-      <shared-design-surface
-        class="architecture__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Lower regression risk</h3>
-        <p>Smaller surfaces mean fewer accidental side effects.</p>
-      </shared-design-surface>
-      <shared-design-surface
-        class="architecture__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Clear ownership</h3>
-        <p>Teams can change code without hidden dependencies.</p>
-      </shared-design-surface>
-      <shared-design-surface
-        class="architecture__card"
-        tone="default"
-        padding="md"
-        radius="lg"
-      >
-        <h3>Less review drag</h3>
-        <p>
-          Smaller PRs and clearer ownership shorten reviews and reduce rework.
-        </p>
       </shared-design-surface>
     </div>
   </marketing-section>
 
   <marketing-section
     eyebrow="Next step"
-    title="See if this model fits your team."
-    subtitle="Request a 20-min fit check. Calm, focused, and strictly about structural fit — no sales pressure."
+    title="Align technical governance priorities."
+    subtitle="Use an executive introduction call to align constraints, target outcomes, and adoption path."
     align="center"
     size="compact"
   >
@@ -359,7 +144,7 @@
         routerLink="/book"
       >
         <shared-design-text tone="inverse" size="md" weight="semibold">
-          Request a 20-min fit check
+          Request executive introduction call
         </shared-design-text>
       </a>
     </div>

@@ -159,7 +159,7 @@ export function generateBookingConfirmationHtml(
             We've received your request and will review it shortly. You can expect to hear from us within 24 hours.<br><br>
             If you have any questions, please reply to this email or contact our team.<br><br>
             Best regards,<br>
-            The Angular Cleanup Shop Team
+            The Angular Governance Program Team
           </div>
         </div>
         <div class="footer">
@@ -201,7 +201,7 @@ We've received your request and will review it shortly. You can expect to hear f
 If you have any questions, please reply to this email or contact our team.
 
 Best regards,
-The Angular Cleanup Shop Team
+The Angular Governance Program Team
 
 ---
 This is an automated email. Please do not reply directly to this message.

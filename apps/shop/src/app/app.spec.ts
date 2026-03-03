@@ -66,15 +66,15 @@ describe('App', () => {
     const instance = fixture.componentInstance as unknown as {
       title: string;
     };
-    expect(instance.title).toBe('Angular Cleanup Shop');
+    expect(instance.title).toBe('Angular Governance Program');
   });
 
-  it('should apply indexable SEO metadata for marketing pages', async () => {
+  it('should apply indexable SEO metadata for governance pages', async () => {
     const fixture = TestBed.createComponent(App);
     const router = TestBed.inject(Router);
     await fixture.whenStable();
 
-    await router.navigateByUrl('/playbook');
+    await router.navigateByUrl('/how-it-works');
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -85,11 +85,11 @@ describe('App', () => {
       'link[rel="canonical"]',
     );
 
-    expect(document.title).toContain('Playbook');
+    expect(document.title).toContain('Engagement Model');
     expect(robots?.content).toBe(
       'index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1',
     );
-    expect(canonical?.href).toBe('https://angularcleanup.shop/playbook');
+    expect(canonical?.href).toBe('https://angularcleanup.shop/how-it-works');
   });
 
   it('should apply indexable SEO metadata for privacy page', async () => {
@@ -119,24 +119,15 @@ describe('App', () => {
     expect(description?.content).toContain('GDPR');
   });
 
-  it('should apply noindex metadata on conversion routes', async () => {
+  it('should apply noindex metadata on booking confirmation routes', async () => {
     const fixture = TestBed.createComponent(App);
     const router = TestBed.inject(Router);
     await fixture.whenStable();
 
-    await router.navigateByUrl('/checkout');
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const checkoutRobots = document.head.querySelector<HTMLMetaElement>(
-      'meta[name="robots"]',
-    );
-    expect(checkoutRobots?.content).toBe(
-      'noindex,nofollow,noarchive,nosnippet',
-    );
-
     await router.navigateByUrl('/book/confirmed/booking-123');
     fixture.detectChanges();
     await fixture.whenStable();
+
     const confirmedRobots = document.head.querySelector<HTMLMetaElement>(
       'meta[name="robots"]',
     );
@@ -145,34 +136,12 @@ describe('App', () => {
     );
   });
 
-  it('should apply product-specific metadata for known and unknown slugs', async () => {
+  it('should emit FAQPage structured data on managers route', async () => {
     const fixture = TestBed.createComponent(App);
     const router = TestBed.inject(Router);
     await fixture.whenStable();
 
-    await router.navigateByUrl('/products/boundary-polish');
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const knownDescription = document.head.querySelector<HTMLMetaElement>(
-      'meta[name="description"]',
-    );
-    expect(document.title).toContain('Boundary Polish');
-    expect(knownDescription?.content).toContain(
-      'Removes hidden coupling and restores ownership clarity.',
-    );
-
-    await router.navigateByUrl('/products/custom-cleanup-path');
-    fixture.detectChanges();
-    await fixture.whenStable();
-    expect(document.title).toContain('Custom Cleanup Path');
-  });
-
-  it('should emit FAQPage structured data on faq route', async () => {
-    const fixture = TestBed.createComponent(App);
-    const router = TestBed.inject(Router);
-    await fixture.whenStable();
-
-    await router.navigateByUrl('/faq');
+    await router.navigateByUrl('/for-managers');
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -182,39 +151,18 @@ describe('App', () => {
     ).toBeTruthy();
   });
 
-  it('should emit OfferCatalog and ItemList structured data on products route', async () => {
+  it('should emit Service structured data on technical leads route', async () => {
     const fixture = TestBed.createComponent(App);
     const router = TestBed.inject(Router);
     await fixture.whenStable();
 
-    await router.navigateByUrl('/products');
+    await router.navigateByUrl('/for-technical-leads');
     fixture.detectChanges();
     await fixture.whenStable();
 
     const structuredData = readStructuredDataGraph();
     expect(
-      structuredData.some((node) => node['@type'] === 'OfferCatalog'),
-    ).toBeTruthy();
-    expect(
-      structuredData.some((node) => node['@type'] === 'ItemList'),
-    ).toBeTruthy();
-  });
-
-  it('should emit product offer and breadcrumbs structured data on product detail route', async () => {
-    const fixture = TestBed.createComponent(App);
-    const router = TestBed.inject(Router);
-    await fixture.whenStable();
-
-    await router.navigateByUrl('/products/state-simplifier');
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    const structuredData = readStructuredDataGraph();
-    expect(
-      structuredData.some((node) => node['@type'] === 'Offer'),
-    ).toBeTruthy();
-    expect(
-      structuredData.some((node) => node['@type'] === 'BreadcrumbList'),
+      structuredData.some((node) => node['@type'] === 'Service'),
     ).toBeTruthy();
   });
 });

@@ -92,12 +92,12 @@ describe('infrastructure booking email', () => {
     expect(html).toContain(baseBooking.angularVersion);
     expect(html).toContain('Using Nx:');
     expect(html).toContain('Yes');
-    expect(html).toContain('The Angular Cleanup Shop Team');
+    expect(html).toContain('The Angular Governance Program Team');
     expect(text).toContain(baseBooking.email);
     expect(text).toContain(baseBooking.company);
     expect(text).toContain(`Angular Version: ${baseBooking.angularVersion}`);
     expect(text).toContain('Using Nx: Yes');
     expect(noNxText).toContain('Using Nx: No');
-    expect(text).toContain('The Angular Cleanup Shop Team');
+    expect(text).toContain('The Angular Governance Program Team');
   });
 });

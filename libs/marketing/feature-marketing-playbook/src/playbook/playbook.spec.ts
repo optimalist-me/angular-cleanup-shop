@@ -17,9 +17,9 @@ describe('MarketingPlaybook', () => {
     await fixture.whenStable();
   });
 
-  it('should render the playbook headline', () => {
+  it('should render the engagement model headline', () => {
     expect(component).toBeTruthy();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('Playbook');
+    expect(compiled.textContent).toContain('Engagement Model');
   });
 });

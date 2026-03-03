@@ -26,8 +26,8 @@ describe('PrivacyPrivacy', () => {
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
 
-    expect(element.textContent).toContain('Last updated: February 23, 2026');
-    expect(element.textContent).toContain('Angular Cleanup Shop');
+    expect(element.textContent).toContain('Last updated: March 3, 2026');
+    expect(element.textContent).toContain('Angular Governance Program');
     expect(element.textContent).toContain('support@angularcleanup.shop');
     expect(element.textContent).toContain('bookings@angularcleanup.shop');
     expect(element.textContent).toContain('maximum of twelve (12) months');
