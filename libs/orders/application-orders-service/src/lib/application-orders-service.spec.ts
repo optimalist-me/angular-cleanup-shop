@@ -83,4 +83,36 @@ describe('orders service', () => {
 
     expect(OrdersDatastore.getOrderById).toHaveBeenCalledWith('order-1');
   });
+
+  it('accepts a valid email address', async () => {
+    (OrdersDatastore.saveOrder as jest.Mock).mockResolvedValue({
+      id: 'order-2',
+      items: baseRequest.items,
+      subtotal: 2400,
+      tax: 0,
+      total: 2400,
+      context: 'storefront',
+      email: 'taylor.reed+ops@example.com',
+      createdAt: '2026-03-03T10:00:00.000Z',
+    });
+
+    const result = await processOrder({
+      ...baseRequest,
+      email: 'taylor.reed+ops@example.com',
+    });
+
+    expect(result.success).toBe(true);
+    expect(OrdersDatastore.saveOrder).toHaveBeenCalled();
+  });
+
+  it('rejects invalid email addresses', async () => {
+    const result = await processOrder({
+      ...baseRequest,
+      email: 'lead..ops@demo',
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.message).toBe('Email must be valid.');
+    expect(OrdersDatastore.saveOrder).not.toHaveBeenCalled();
+  });
 });

@@ -196,5 +196,127 @@ function isOptionalContactValueValid(value: string | undefined): boolean {
 }
 
 function isValidEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/u.test(value);
+  if (value.length === 0 || value.length > 120) {
+    return false;
+  }
+
+  const atIndex = value.indexOf('@');
+  if (atIndex <= 0 || atIndex !== value.lastIndexOf('@')) {
+    return false;
+  }
+
+  const localPart = value.slice(0, atIndex);
+  const domainPart = value.slice(atIndex + 1);
+
+  if (
+    !isValidEmailLocalPart(localPart) ||
+    !isValidEmailDomainPart(domainPart)
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+function isValidEmailLocalPart(localPart: string): boolean {
+  if (
+    localPart.length === 0 ||
+    localPart.startsWith('.') ||
+    localPart.endsWith('.')
+  ) {
+    return false;
+  }
+
+  let previousWasDot = false;
+  for (const char of localPart) {
+    if (char === '.') {
+      if (previousWasDot) {
+        return false;
+      }
+      previousWasDot = true;
+      continue;
+    }
+
+    previousWasDot = false;
+    if (!isAllowedEmailLocalCharacter(char)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function isValidEmailDomainPart(domainPart: string): boolean {
+  if (
+    domainPart.length < 3 ||
+    domainPart.endsWith('.') ||
+    !domainPart.includes('.')
+  ) {
+    return false;
+  }
+
+  const labels = domainPart.split('.');
+  for (const label of labels) {
+    if (
+      label.length === 0 ||
+      label.startsWith('-') ||
+      label.endsWith('-') ||
+      !isAlphaNumericHyphenOnly(label)
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function isAllowedEmailLocalCharacter(char: string): boolean {
+  const code = char.charCodeAt(0);
+  if (
+    (code >= 65 && code <= 90) ||
+    (code >= 97 && code <= 122) ||
+    (code >= 48 && code <= 57)
+  ) {
+    return true;
+  }
+
+  switch (char) {
+    case '!':
+    case '#':
+    case '$':
+    case '%':
+    case '&':
+    case '\'':
+    case '*':
+    case '+':
+    case '-':
+    case '/':
+    case '=':
+    case '?':
+    case '^':
+    case '_':
+    case '`':
+    case '{':
+    case '|':
+    case '}':
+    case '~':
+      return true;
+    default:
+      return false;
+  }
+}
+
+function isAlphaNumericHyphenOnly(value: string): boolean {
+  for (const char of value) {
+    const code = char.charCodeAt(0);
+    const isAlphaNumeric =
+      (code >= 65 && code <= 90) ||
+      (code >= 97 && code <= 122) ||
+      (code >= 48 && code <= 57);
+    if (!isAlphaNumeric && char !== '-') {
+      return false;
+    }
+  }
+
+  return true;
 }

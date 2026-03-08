@@ -12,7 +12,6 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { provideDemoStorefrontUrl } from '@cleanup/feature-marketing-architecture';
 import {
   createShopFooterConfig,
   createShopHeaderConfig,
@@ -30,7 +29,6 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'top' }),
     ),
     provideDesignTheming(),
-    provideDemoStorefrontUrl(DEMO_STOREFRONT_URL),
     provideSharedHeaderConfig(createShopHeaderConfig(DEMO_STOREFRONT_URL)),
     provideSharedFooterConfig(createShopFooterConfig(DEMO_STOREFRONT_URL)),
   ],
