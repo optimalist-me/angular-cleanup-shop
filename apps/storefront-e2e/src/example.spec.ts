@@ -99,7 +99,14 @@ test('cart to checkout creates order and shows success CTA', async ({
   await expect(
     page.getByText('This checkout is part of a technical storefront demo.'),
   ).toBeVisible();
-  await expect(
-    page.getByRole('link', { name: 'Explore the Governance Program' }),
-  ).toHaveAttribute('href', 'https://angularcleanup.shop');
+
+  const successPrimaryCta = page.locator(
+    '.success__actions .success__button--primary',
+  );
+  await expect(successPrimaryCta).toHaveAttribute(
+    'href',
+    'https://angularcleanup.shop',
+  );
+  await expect(successPrimaryCta).toHaveAttribute('target', '_blank');
+  await expect(successPrimaryCta).toHaveAttribute('rel', 'noopener noreferrer');
 });
