@@ -1,20 +1,22 @@
 import { InjectionToken } from '@angular/core';
 import {
+  type GetCheckoutOrderResponse,
   type SubmitCheckoutRequest,
   type SubmitCheckoutResponse,
 } from '@cleanup/models-checkout';
 import { type Observable } from 'rxjs';
 
-export interface CheckoutBookingPort {
+export interface CheckoutOrderPort {
   submit(request: SubmitCheckoutRequest): Observable<SubmitCheckoutResponse>;
+  getById(orderId: string): Observable<GetCheckoutOrderResponse>;
 }
 
-export const CHECKOUT_BOOKING_PORT = new InjectionToken<CheckoutBookingPort>(
-  'CHECKOUT_BOOKING_PORT',
+export const CHECKOUT_ORDER_PORT = new InjectionToken<CheckoutOrderPort>(
+  'CHECKOUT_ORDER_PORT',
   {
     factory: () => {
       throw new Error(
-        'CHECKOUT_BOOKING_PORT is not configured. Provide checkout adapters at the checkout route.',
+        'CHECKOUT_ORDER_PORT is not configured. Provide checkout adapters at the checkout route.',
       );
     },
   },

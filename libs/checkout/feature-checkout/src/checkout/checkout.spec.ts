@@ -1,13 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { computed, signal } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { provideRouter, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import {
-  CheckoutBookingRepository,
   CheckoutCartRepository,
+  CheckoutOrderRepository,
 } from '@cleanup/data-access-checkout';
-import { CheckoutCartItem } from '@cleanup/models-checkout';
+import { type CheckoutCartItem } from '@cleanup/models-checkout';
 import { CheckoutCheckout } from './checkout';
 
 describe('CheckoutCheckout', () => {
@@ -22,7 +21,7 @@ describe('CheckoutCheckout', () => {
     removeItem: ReturnType<typeof vi.fn>;
     clear: ReturnType<typeof vi.fn>;
   };
-  let bookingsRepositoryStub: {
+  let orderRepositoryStub: {
     submit: ReturnType<typeof vi.fn>;
   };
 
@@ -53,9 +52,12 @@ describe('CheckoutCheckout', () => {
       removeItem: vi.fn(),
       clear: vi.fn(),
     };
-    bookingsRepositoryStub = {
+    orderRepositoryStub = {
       submit: vi.fn(() =>
-        of({ success: true, bookingId: 'booking-123', message: 'Created' }),
+        of({
+          success: true,
+          orderId: 'order-123',
+        }),
       ),
     };
 
@@ -65,8 +67,8 @@ describe('CheckoutCheckout', () => {
         provideRouter([]),
         { provide: CheckoutCartRepository, useValue: cartRepositoryStub },
         {
-          provide: CheckoutBookingRepository,
-          useValue: bookingsRepositoryStub,
+          provide: CheckoutOrderRepository,
+          useValue: orderRepositoryStub,
         },
       ],
     }).compileComponents();
@@ -80,154 +82,101 @@ describe('CheckoutCheckout', () => {
     expect(component).toBeTruthy();
   });
 
-  it('shows no-items review message when cart has no items', () => {
-    fixture.detectChanges();
-    const element = fixture.nativeElement as HTMLElement;
-    expect(element.querySelector('.checkout__empty')?.textContent).toContain(
-      'No demo packages selected',
-    );
-  });
-
-  it('forwards item updates to cart repository', () => {
-    component.updateQuantity('boundary-polish', 4);
-    component.removeItem('boundary-polish');
-
-    expect(cartRepositoryStub.updateQuantity).toHaveBeenCalledWith(
-      'boundary-polish',
-      4,
-    );
-    expect(cartRepositoryStub.removeItem).toHaveBeenCalledWith(
-      'boundary-polish',
-    );
-  });
-
-  it('moves to details step even when there are no cart items', () => {
-    component.submissionError.set('previous');
-
+  it('moves between review and details steps', () => {
     component.toDetailsStep();
-
-    expect(component.step()).toBe('details');
-    expect(component.submissionError()).toBeNull();
-  });
-
-  it('moves to details step and clears submission error when items exist', () => {
-    cartItems.set([boundaryPolish]);
-    component.submissionError.set('previous');
-
-    component.toDetailsStep();
-
-    expect(component.step()).toBe('details');
-    expect(component.submissionError()).toBeNull();
-  });
-
-  it('renders privacy link in details form', () => {
-    component.toDetailsStep();
-    fixture.detectChanges();
-
-    const element = fixture.nativeElement as HTMLElement;
-    const link = element.querySelector('a[href="/privacy"]');
-    expect(link?.textContent).toContain('privacy policy');
-  });
-
-  it('stays on details when details form is invalid and marks controls touched', () => {
-    cartItems.set([boundaryPolish]);
-    component.toDetailsStep();
-
-    component.toScheduleStep();
-
-    expect(component.step()).toBe('details');
-    expect(component.detailsForm.controls.name.touched).toBe(true);
-    expect(component.detailsForm.controls.email.touched).toBe(true);
-  });
-
-  it('moves to schedule when details form is valid', () => {
-    cartItems.set([boundaryPolish]);
-    component.toDetailsStep();
-    fillValidDetails(component);
-    component.submissionError.set('old');
-
-    component.toScheduleStep();
-
-    expect(component.step()).toBe('schedule');
-    expect(component.submissionError()).toBeNull();
-  });
-
-  it('supports back navigation helpers', () => {
-    component.step.set('schedule');
-    component.backToDetails();
     expect(component.step()).toBe('details');
 
     component.backToReview();
     expect(component.step()).toBe('review');
   });
 
-  it('adds preferred dates up to 3 and stops after that', () => {
-    component.addPreferredDate();
-    component.addPreferredDate();
-    component.addPreferredDate();
+  it('proxies item updates to cart repository', () => {
+    component.updateQuantity('boundary-polish', 2);
+    component.removeItem('boundary-polish');
 
-    expect(component.preferredDateControls).toHaveLength(3);
-  });
-
-  it('handles removing preferred dates for both single and multi-date states', () => {
-    component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
-    component.removePreferredDate(0);
-    expect(component.preferredDateControls).toHaveLength(1);
-    expect(component.preferredDateControls[0].value).toBe('');
-
-    component.addPreferredDate();
-    component.preferredDateControls[0].setValue('2026-03-20');
-    component.preferredDateControls[1].setValue('2026-03-21');
-
-    component.removePreferredDate(1);
-
-    expect(component.preferredDateControls).toHaveLength(1);
-    expect(component.scheduleForm.controls.preferredDates.dirty).toBe(true);
-  });
-
-  it('reports control errors using helper methods', () => {
-    component.detailsForm.controls.name.markAsTouched();
-    component.detailsForm.controls.name.setValue('');
-    component.scheduleForm.controls.preferredDates.at(0).markAsTouched();
-    component.scheduleForm.controls.preferredDates.at(0).setValue('');
-
-    expect(component.hasDetailsControlError('name', 'required')).toBe(true);
-    expect(component.hasDetailsControlError('company', 'required')).toBe(false);
-    expect(component.hasPreferredDateError(0)).toBe(true);
-  });
-
-  it('marks forms as touched and skips API call when submit is not allowed', () => {
-    component.submit();
-
-    expect(component.detailsForm.controls.name.touched).toBe(true);
-    expect(component.scheduleForm.controls.preferredDates.at(0).touched).toBe(
-      true,
+    expect(cartRepositoryStub.updateQuantity).toHaveBeenCalledWith(
+      'boundary-polish',
+      2,
     );
-    expect(bookingsRepositoryStub.submit).not.toHaveBeenCalled();
+    expect(cartRepositoryStub.removeItem).toHaveBeenCalledWith(
+      'boundary-polish',
+    );
   });
 
-  it('handles null payload returned by buildRequest', () => {
-    cartItems.set([boundaryPolish]);
-    fillValidDetails(component);
-    component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
-    vi.spyOn(
-      component as unknown as { buildRequest: () => unknown },
-      'buildRequest',
-    ).mockReturnValue(null);
+  it('computes canSubmit from form status and submitting state', () => {
+    expect(component.canSubmit()).toBe(true);
+
+    component.submitting.set(true);
+    expect(component.canSubmit()).toBe(false);
+  });
+
+  it('shows an error when placing order with empty cart', () => {
+    component.toDetailsStep();
 
     component.submit();
 
     expect(component.submissionError()).toBe(
-      'Missing required checkout details.',
+      'Your cart is empty. Add an item to place an order.',
     );
-    expect(bookingsRepositoryStub.submit).not.toHaveBeenCalled();
+    expect(orderRepositoryStub.submit).not.toHaveBeenCalled();
+  });
+
+  it('marks invalid form controls as touched and skips submit', () => {
+    cartItems.set([boundaryPolish]);
+    component.toDetailsStep();
+    component.detailsForm.controls.email.setValue('invalid-email');
+
+    component.submit();
+
+    expect(component.detailsForm.controls.email.touched).toBe(true);
+    expect(orderRepositoryStub.submit).not.toHaveBeenCalled();
+  });
+
+  it('submits order and navigates to success route on success', () => {
+    cartItems.set([boundaryPolish]);
+    component.toDetailsStep();
+    component.detailsForm.controls.name.setValue('  Taylor Reed  ');
+    component.detailsForm.controls.email.setValue('taylor@example.com');
+    component.detailsForm.controls.company.setValue('  Cleanup Shop  ');
+    const router = TestBed.inject(Router);
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+    component.submit();
+
+    expect(orderRepositoryStub.submit).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: 'Taylor Reed',
+        email: 'taylor@example.com',
+        company: 'Cleanup Shop',
+        subtotal: 2400,
+        tax: 0,
+        total: 2400,
+      }),
+    );
+    expect(cartRepositoryStub.clear).toHaveBeenCalled();
+    expect(navigateSpy).toHaveBeenCalledWith([
+      '/checkout/success',
+      'order-123',
+    ]);
+  });
+
+  it('handles unsuccessful responses from submit', () => {
+    cartItems.set([boundaryPolish]);
+    component.toDetailsStep();
+    orderRepositoryStub.submit.mockReturnValue(
+      of({ success: false, message: 'Order rejected' }),
+    );
+
+    component.submit();
+
+    expect(component.submissionError()).toBe('Order rejected');
+    expect(cartRepositoryStub.clear).not.toHaveBeenCalled();
   });
 
   it('surfaces API errors from submit', () => {
     cartItems.set([boundaryPolish]);
-    fillValidDetails(component);
-    component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
-    bookingsRepositoryStub.submit.mockReturnValue(
+    component.toDetailsStep();
+    orderRepositoryStub.submit.mockReturnValue(
       throwError(() => new Error('network')),
     );
 
@@ -235,101 +184,7 @@ describe('CheckoutCheckout', () => {
 
     expect(component.submitting()).toBe(false);
     expect(component.submissionError()).toBe(
-      'We could not submit your request. Please try again.',
+      'We could not place your order. Please try again.',
     );
-    expect(cartRepositoryStub.clear).not.toHaveBeenCalled();
-  });
-
-  it('surfaces unsuccessful API responses', () => {
-    cartItems.set([boundaryPolish]);
-    fillValidDetails(component);
-    component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
-    bookingsRepositoryStub.submit.mockReturnValue(
-      of({ success: false, message: 'Server rejected booking' }),
-    );
-
-    component.submit();
-
-    expect(component.submitting()).toBe(false);
-    expect(component.submissionError()).toBe('Server rejected booking');
-    expect(cartRepositoryStub.clear).not.toHaveBeenCalled();
-  });
-
-  it('submits checkout and navigates to confirmation on success', () => {
-    cartItems.set([{ ...boundaryPolish, quantity: 2 }]);
-    fillValidDetails(component, { usesNx: 'no' });
-    component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
-    const router = TestBed.inject(Router);
-    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
-
-    component.submit();
-
-    expect(bookingsRepositoryStub.submit).toHaveBeenCalledWith(
-      expect.objectContaining({
-        usesNx: false,
-        privacyPolicyAccepted: true,
-      }),
-    );
-    expect(cartRepositoryStub.clear).toHaveBeenCalled();
-    expect(navigateSpy).toHaveBeenCalledWith([
-      '/book/confirmed',
-      'booking-123',
-    ]);
-  });
-
-  it('returns null from buildRequest for invalid edge cases', () => {
-    cartItems.set([boundaryPolish]);
-    fillValidDetails(component);
-    component.scheduleForm.controls.preferredDates.at(0).setValue('2026-03-20');
-
-    component.detailsForm.controls.teamSize.setValue(null);
-    expect(
-      (component as unknown as { buildRequest: () => unknown }).buildRequest(),
-    ).toBeNull();
-
-    component.detailsForm.controls.teamSize.setValue(8);
-    component.detailsForm.controls.usesNx.setValue('');
-    expect(
-      (component as unknown as { buildRequest: () => unknown }).buildRequest(),
-    ).toBeNull();
-
-    component.detailsForm.controls.usesNx.setValue('yes');
-    component.detailsForm.controls.privacyPolicyAccepted.setValue(false);
-    expect(
-      (component as unknown as { buildRequest: () => unknown }).buildRequest(),
-    ).toBeNull();
-
-    component.detailsForm.controls.privacyPolicyAccepted.setValue(true);
-    component.scheduleForm.controls.preferredDates.push(
-      new FormControl('2026-03-21', { nonNullable: true }),
-    );
-    component.scheduleForm.controls.preferredDates.push(
-      new FormControl('2026-03-22', { nonNullable: true }),
-    );
-    component.scheduleForm.controls.preferredDates.push(
-      new FormControl('2026-03-23', { nonNullable: true }),
-    );
-    component.preferredDateControls.forEach((control, index) => {
-      control.setValue(`2026-03-${String(index + 20).padStart(2, '0')}`);
-    });
-    expect(
-      (component as unknown as { buildRequest: () => unknown }).buildRequest(),
-    ).toBeNull();
   });
 });
-
-function fillValidDetails(
-  component: CheckoutCheckout,
-  options?: { usesNx?: 'yes' | 'no' },
-): void {
-  component.detailsForm.setValue({
-    name: 'Maya Stone',
-    email: 'maya@cleanup.shop',
-    company: 'Cleanup Labs',
-    teamSize: 8,
-    angularVersion: '21',
-    usesNx: options?.usesNx ?? 'yes',
-    notes: 'Need a calmer review flow.',
-    privacyPolicyAccepted: true,
-  });
-}

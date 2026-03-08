@@ -1,0 +1,163 @@
+<section class="success">
+  <div class="success__inner">
+    @if (loading()) {
+    <shared-design-surface
+      class="success__panel"
+      tone="default"
+      padding="lg"
+      radius="lg"
+    >
+      <h1 class="success__title">
+        <shared-design-text size="xl" weight="semibold">
+          Loading order details...
+        </shared-design-text>
+      </h1>
+    </shared-design-surface>
+    } @else if (error()) {
+    <shared-design-surface
+      class="success__panel"
+      tone="default"
+      padding="lg"
+      radius="lg"
+    >
+      <h1 class="success__title">
+        <shared-design-text size="xl" weight="semibold">
+          We could not load this order.
+        </shared-design-text>
+      </h1>
+      <p class="success__subtitle">
+        <shared-design-text tone="muted" size="lg"
+          >{{ error() }}</shared-design-text
+        >
+      </p>
+      <a
+        class="success__button success__button--primary"
+        routerLink="/checkout"
+      >
+        <shared-design-text tone="inverse" size="sm" weight="semibold">
+          Return to checkout
+        </shared-design-text>
+      </a>
+    </shared-design-surface>
+    } @else if (order(); as details) {
+    <shared-design-surface
+      class="success__panel"
+      tone="default"
+      padding="lg"
+      radius="lg"
+    >
+      <h1 class="success__title">
+        <shared-design-text size="xl" weight="semibold">
+          Order placed
+        </shared-design-text>
+      </h1>
+      <p class="success__subtitle">
+        <shared-design-text tone="muted" size="lg">
+          This checkout is part of a technical storefront demo.
+        </shared-design-text>
+      </p>
+
+      <shared-design-surface
+        class="success__summary"
+        tone="subtle"
+        padding="md"
+        radius="lg"
+      >
+        <p class="success__row">
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Order ID</shared-design-text
+            ></span
+          >
+          <strong
+            ><shared-design-text size="sm" weight="semibold"
+              >{{ details.id }}</shared-design-text
+            ></strong
+          >
+        </p>
+        <p class="success__row">
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Submitted</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ details.createdAt | date: 'medium' }}
+            </shared-design-text>
+          </strong>
+        </p>
+        <p class="success__row">
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Items</shared-design-text
+            ></span
+          >
+          <strong
+            ><shared-design-text size="sm" weight="semibold"
+              >{{ itemCount() }}</shared-design-text
+            ></strong
+          >
+        </p>
+        <p class="success__row">
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Subtotal</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ details.subtotal | currency: 'EUR':'symbol':'1.0-0' }}
+            </shared-design-text>
+          </strong>
+        </p>
+        <p class="success__row">
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Tax</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ details.tax | currency: 'EUR':'symbol':'1.0-0' }}
+            </shared-design-text>
+          </strong>
+        </p>
+        <p class="success__row">
+          <span
+            ><shared-design-text tone="muted" size="sm"
+              >Total</shared-design-text
+            ></span
+          >
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ details.total | currency: 'EUR':'symbol':'1.0-0' }}
+            </shared-design-text>
+          </strong>
+        </p>
+      </shared-design-surface>
+
+      <div class="success__actions">
+        <a
+          class="success__button success__button--primary"
+          [href]="mainDomainUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <shared-design-text tone="inverse" size="sm" weight="semibold">
+            Explore the Governance Program
+          </shared-design-text>
+        </a>
+        <a
+          class="success__button success__button--ghost"
+          routerLink="/products"
+        >
+          <shared-design-text size="sm" weight="semibold">
+            Continue browsing products
+          </shared-design-text>
+        </a>
+      </div>
+    </shared-design-surface>
+    }
+  </div>
+</section>

@@ -9,13 +9,12 @@
     <header class="checkout__intro">
       <h1 class="checkout__title">
         <shared-design-text size="xl" weight="semibold">
-          Checkout and Request Appointment
+          Checkout
         </shared-design-text>
       </h1>
       <p class="checkout__subtitle">
         <shared-design-text tone="muted" size="lg">
-          Confirm your selected cleanup packages and request a 20-minute fit
-          check.
+          Review your selected cleanup packages and place a demo order.
         </shared-design-text>
       </p>
     </header>
@@ -31,13 +30,7 @@
         class="checkout__step"
         [class.checkout__step--active]="step() === 'details'"
       >
-        2. Details
-      </li>
-      <li
-        class="checkout__step"
-        [class.checkout__step--active]="step() === 'schedule'"
-      >
-        3. Schedule & confirm
+        2. Contact and place order
       </li>
     </ol>
 
@@ -64,7 +57,7 @@
         >
           <p>
             <shared-design-text tone="muted" size="md">
-              No demo packages selected. You can still request a fit-check call.
+              Your cart is empty.
             </shared-design-text>
           </p>
           <a class="checkout__empty-link" routerLink="/products">
@@ -77,7 +70,11 @@
       </div>
 
       <aside class="checkout__summary">
-        <checkout-summary [itemCount]="itemCount()" [subtotal]="subtotal()" />
+        <checkout-summary
+          [itemCount]="itemCount()"
+          [subtotal]="subtotal()"
+          caption="Order summary"
+        />
         <button
           type="button"
           class="checkout__button checkout__button--primary"
@@ -87,206 +84,46 @@
         </button>
       </aside>
     </div>
-    } @else if (step() === 'details') {
+    } @else {
     <form class="checkout__form" [formGroup]="detailsForm">
       <fieldset class="checkout__fieldset">
         <legend class="checkout__legend">
           <shared-design-text size="xl" weight="semibold">
-            Contact and qualification details
+            Optional contact details
           </shared-design-text>
         </legend>
 
         <div class="checkout__field">
-          <label class="checkout__label" for="name">Your name</label>
+          <label class="checkout__label" for="name">Name (optional)</label>
           <input
             id="name"
             class="checkout__input"
             type="text"
             formControlName="name"
           />
-          @if (hasDetailsControlError('name', 'required')) {
-          <p class="checkout__error-text">Name is required.</p>
-          }
         </div>
 
         <div class="checkout__field">
-          <label class="checkout__label" for="email">Work email</label>
+          <label class="checkout__label" for="email">Email (optional)</label>
           <input
             id="email"
             class="checkout__input"
             type="email"
             formControlName="email"
           />
-          @if (hasDetailsControlError('email', 'required')) {
-          <p class="checkout__error-text">Email is required.</p>
-          } @else if (hasDetailsControlError('email', 'email')) {
-          <p class="checkout__error-text">Enter a valid email address.</p>
-          }
         </div>
 
         <div class="checkout__field">
-          <label class="checkout__label" for="company">Company</label>
+          <label class="checkout__label" for="company"
+            >Company (optional)</label
+          >
           <input
             id="company"
             class="checkout__input"
             type="text"
             formControlName="company"
           />
-          @if (hasDetailsControlError('company', 'required')) {
-          <p class="checkout__error-text">Company is required.</p>
-          }
         </div>
-
-        <div class="checkout__field">
-          <label class="checkout__label" for="teamSize">Team size</label>
-          <select
-            id="teamSize"
-            class="checkout__input"
-            formControlName="teamSize"
-          >
-            <option [ngValue]="null">Select team size</option>
-            <option [ngValue]="1">1-5</option>
-            <option [ngValue]="10">6-20</option>
-            <option [ngValue]="30">21-50</option>
-            <option [ngValue]="60">50+</option>
-          </select>
-          @if (hasDetailsControlError('teamSize', 'required')) {
-          <p class="checkout__error-text">Team size is required.</p>
-          }
-        </div>
-
-        <div class="checkout__field">
-          <label class="checkout__label" for="angularVersion"
-            >Angular version (approx.)</label
-          >
-          <input
-            id="angularVersion"
-            class="checkout__input"
-            type="text"
-            placeholder="Example: 20 or 21"
-            formControlName="angularVersion"
-          />
-          @if (hasDetailsControlError('angularVersion', 'required')) {
-          <p class="checkout__error-text">Angular version is required.</p>
-          }
-        </div>
-
-        <div class="checkout__field">
-          <label class="checkout__label" for="usesNx">Using Nx?</label>
-          <select id="usesNx" class="checkout__input" formControlName="usesNx">
-            <option value="">Select one</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-          @if (hasDetailsControlError('usesNx', 'required')) {
-          <p class="checkout__error-text">Please select yes or no.</p>
-          }
-        </div>
-
-        <div class="checkout__field">
-          <label class="checkout__label" for="notes">Optional note</label>
-          <textarea
-            id="notes"
-            class="checkout__textarea"
-            formControlName="notes"
-          ></textarea>
-        </div>
-
-        <div class="checkout__privacy">
-          <label
-            class="checkout__checkbox-label"
-            for="checkout-privacy-policy-accepted"
-          >
-            <input
-              id="checkout-privacy-policy-accepted"
-              class="checkout__checkbox"
-              type="checkbox"
-              formControlName="privacyPolicyAccepted"
-            />
-            <span>
-              I have read the
-              <a routerLink="/privacy">privacy policy</a> and understand how my
-              data is processed.
-            </span>
-          </label>
-          @if (hasDetailsControlError('privacyPolicyAccepted', 'required')) {
-          <p class="checkout__error-text">
-            You must accept the privacy policy to continue.
-          </p>
-          }
-        </div>
-      </fieldset>
-
-      <div class="checkout__actions">
-        <button
-          type="button"
-          class="checkout__button checkout__button--ghost"
-          (click)="backToReview()"
-        >
-          Back
-        </button>
-        <button
-          type="button"
-          class="checkout__button checkout__button--primary"
-          [disabled]="!canContinueFromDetails()"
-          (click)="toScheduleStep()"
-        >
-          Continue to scheduling
-        </button>
-      </div>
-    </form>
-    } @else {
-    <form class="checkout__form" [formGroup]="scheduleForm">
-      <fieldset class="checkout__fieldset">
-        <legend class="checkout__legend">
-          <shared-design-text size="xl" weight="semibold">
-            Scheduling preferences
-          </shared-design-text>
-        </legend>
-        <p class="checkout__hint">
-          <shared-design-text tone="muted" size="sm">
-            Share 1 to 3 preferred dates. We will confirm the exact appointment
-            time by email.
-          </shared-design-text>
-        </p>
-
-        <div formArrayName="preferredDates" class="checkout__date-list">
-          @for (control of preferredDateControls; track $index; let i = $index)
-          {
-          <div class="checkout__date-item">
-            <label class="checkout__label" [for]="'preferred-date-' + i"
-              >Preferred date {{ i + 1 }}</label
-            >
-            <input
-              class="checkout__input"
-              [id]="'preferred-date-' + i"
-              type="date"
-              [formControlName]="i"
-            />
-            @if (hasPreferredDateError(i)) {
-            <p class="checkout__error-text">Date is required.</p>
-            } @if (preferredDateControls.length > 1) {
-            <button
-              type="button"
-              class="checkout__button checkout__button--ghost checkout__button--small"
-              (click)="removePreferredDate(i)"
-            >
-              Remove
-            </button>
-            }
-          </div>
-          }
-        </div>
-
-        @if (preferredDateControls.length < 3) {
-        <button
-          type="button"
-          class="checkout__button checkout__button--ghost checkout__button--small"
-          (click)="addPreferredDate()"
-        >
-          Add another date
-        </button>
-        }
       </fieldset>
 
       <shared-design-surface
@@ -301,62 +138,48 @@
           >
         </h2>
         <p class="checkout__review-row">
-          <span
-            ><shared-design-text tone="muted" size="sm"
-              >Contact</shared-design-text
-            ></span
-          >
+          <span>
+            <shared-design-text tone="muted" size="sm"
+              >Items</shared-design-text
+            >
+          </span>
           <strong>
             <shared-design-text size="sm" weight="semibold">
-              {{ detailsForm.controls.name.value }}
-            </shared-design-text>
-          </strong>
-        </p>
-        <p class="checkout__review-row">
-          <span
-            ><shared-design-text tone="muted" size="sm"
-              >Email</shared-design-text
-            ></span
-          >
-          <strong>
-            <shared-design-text size="sm" weight="semibold">
-              {{ detailsForm.controls.email.value }}
-            </shared-design-text>
-          </strong>
-        </p>
-        <p class="checkout__review-row">
-          <span
-            ><shared-design-text tone="muted" size="sm"
-              >Company</shared-design-text
-            ></span
-          >
-          <strong>
-            <shared-design-text size="sm" weight="semibold">
-              {{ detailsForm.controls.company.value }}
+              {{ itemCount() }}
             </shared-design-text>
           </strong>
         </p>
         <p class="checkout__review-row">
           <span>
             <shared-design-text tone="muted" size="sm"
-              >Selected packages</shared-design-text
+              >Subtotal</shared-design-text
             >
           </span>
           <strong>
-            <shared-design-text size="sm" weight="semibold"
-              >{{ itemCount() }}</shared-design-text
-            >
+            <shared-design-text size="sm" weight="semibold">
+              {{ subtotal() | currency: 'EUR':'symbol':'1.0-0' }}
+            </shared-design-text>
           </strong>
         </p>
         <p class="checkout__review-row">
-          <span
-            ><shared-design-text tone="muted" size="sm"
-              >Subtotal</shared-design-text
-            ></span
-          >
+          <span>
+            <shared-design-text tone="muted" size="sm">Tax</shared-design-text>
+          </span>
           <strong>
             <shared-design-text size="sm" weight="semibold">
-              {{ subtotal() | currency: 'EUR':'symbol':'1.0-0' }}
+              {{ tax() | currency: 'EUR':'symbol':'1.0-0' }}
+            </shared-design-text>
+          </strong>
+        </p>
+        <p class="checkout__review-row">
+          <span>
+            <shared-design-text tone="muted" size="sm"
+              >Total</shared-design-text
+            >
+          </span>
+          <strong>
+            <shared-design-text size="sm" weight="semibold">
+              {{ total() | currency: 'EUR':'symbol':'1.0-0' }}
             </shared-design-text>
           </strong>
         </p>
@@ -374,7 +197,7 @@
         <button
           type="button"
           class="checkout__button checkout__button--ghost"
-          (click)="backToDetails()"
+          (click)="backToReview()"
           [disabled]="submitting()"
         >
           Back
@@ -385,7 +208,7 @@
           (click)="submit()"
           [disabled]="!canSubmit()"
         >
-          @if (submitting()) { Submitting... } @else { Complete checkout }
+          @if (submitting()) { Placing order... } @else { Place order }
         </button>
       </div>
     </form>

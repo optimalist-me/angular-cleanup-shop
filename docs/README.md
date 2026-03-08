@@ -31,3 +31,4 @@ Framework upgrades are **optional**, explicitly scoped, and never a prerequisite
 - [Architecture Decisions](adr/)
 - [Debt Register](debt/README.md)
 - [Measurement](measurement/)
+- [Deployment Runbook](deploy.md)

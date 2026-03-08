@@ -1,0 +1,20 @@
+{
+  "name": "infrastructure-orders-datastore",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/orders/infrastructure-orders-datastore/src",
+  "projectType": "library",
+  "tags": ["type:infrastructure", "scope:orders", "domain:orders"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/orders/infrastructure-orders-datastore",
+        "tsConfig": "libs/orders/infrastructure-orders-datastore/tsconfig.lib.json",
+        "packageJson": "libs/orders/infrastructure-orders-datastore/package.json",
+        "main": "libs/orders/infrastructure-orders-datastore/src/index.ts",
+        "assets": ["libs/orders/infrastructure-orders-datastore/*.md"]
+      }
+    }
+  }
+}

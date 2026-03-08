@@ -1,0 +1,28 @@
+{
+  "name": "models-orders",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/orders/models-orders/src",
+  "prefix": "orders",
+  "projectType": "library",
+  "tags": ["domain:orders", "type:models", "scope:lib"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/orders/models-orders/ng-package.json",
+        "tsConfig": "libs/orders/models-orders/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/orders/models-orders/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

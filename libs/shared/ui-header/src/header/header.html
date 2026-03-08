@@ -2,17 +2,17 @@
   <button
     class="header__overlay"
     type="button"
-    aria-label="Close navigation"
+    [attr.aria-label]="config.closeNavigationLabel"
     (click)="closeMenu()"
   ></button>
   <div class="header__inner">
-    <a class="header__brand" routerLink="/">
+    <a class="header__brand" [routerLink]="config.brand.route">
       <img
         class="header__brand-logo"
-        ngSrc="/images/cleanup-logo.png"
+        [ngSrc]="config.brand.logoSrc"
         width="94"
         height="92"
-        alt="Angular Governance Program logo"
+        [alt]="config.brand.logoAlt"
         priority
       />
       <span class="header__brand-copy">
@@ -22,14 +22,14 @@
           size="xl"
           weight="semibold"
         >
-          Angular Governance Program
+          {{ config.brand.title }}
         </shared-design-text>
         <shared-design-text
           class="header__brand-subtitle"
           tone="muted"
           size="sm"
         >
-          Governance-first stabilization for Angular and Nx.
+          {{ config.brand.subtitle }}
         </shared-design-text>
       </span>
     </a>
@@ -40,51 +40,55 @@
       [attr.aria-expanded]="menuOpen()"
       aria-controls="header-nav"
     >
-      Menu
+      {{ config.menuLabel }}
     </button>
     <nav class="header__nav" id="header-nav">
-      <a
-        class="header__link"
-        routerLink="/for-managers"
-        routerLinkActive="header__link--active"
-        (click)="closeMenu()"
-      >
-        For Managers
-      </a>
-      <a
-        class="header__link"
-        routerLink="/for-technical-leads"
-        routerLinkActive="header__link--active"
-        (click)="closeMenu()"
-      >
-        For Technical Leads
-      </a>
-      <a
-        class="header__link"
-        routerLink="/how-it-works"
-        routerLinkActive="header__link--active"
-        (click)="closeMenu()"
-      >
-        Engagement Model
-      </a>
-      <a
-        class="header__link"
-        routerLink="/ai-governance"
-        routerLinkActive="header__link--active"
-        (click)="closeMenu()"
-      >
-        AI Governance
-      </a>
+      @for (link of config.navigationLinks; track trackByLink($index, link)) {
+        @if (link.kind === 'internal') {
+          <a
+            class="header__link"
+            [routerLink]="link.route"
+            routerLinkActive="header__link--active"
+            (click)="closeMenu()"
+          >
+            {{ link.label }}
+          </a>
+        } @else {
+          <a
+            class="header__link"
+            [attr.href]="link.href"
+            [attr.target]="link.openInNewTab ? '_blank' : null"
+            [attr.rel]="link.openInNewTab ? 'noopener noreferrer' : null"
+            (click)="closeMenu()"
+          >
+            {{ link.label }}
+          </a>
+        }
+      }
     </nav>
     <div class="header__actions">
-      <a
-        class="header__cta"
-        routerLink="/book"
-        routerLinkActive="header__link--active"
-        (click)="closeMenu()"
-      >
-        Request executive introduction call
-      </a>
+      @if (config.primaryAction.kind === 'internal') {
+        <a
+          class="header__cta"
+          [routerLink]="config.primaryAction.route"
+          routerLinkActive="header__link--active"
+          (click)="closeMenu()"
+        >
+          {{ config.primaryAction.label }}
+        </a>
+      } @else {
+        <a
+          class="header__cta"
+          [attr.href]="config.primaryAction.href"
+          [attr.target]="config.primaryAction.openInNewTab ? '_blank' : null"
+          [attr.rel]="
+            config.primaryAction.openInNewTab ? 'noopener noreferrer' : null
+          "
+          (click)="closeMenu()"
+        >
+          {{ config.primaryAction.label }}
+        </a>
+      }
     </div>
   </div>
 </header>

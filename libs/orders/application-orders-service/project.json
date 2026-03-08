@@ -1,0 +1,20 @@
+{
+  "name": "application-orders-service",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/orders/application-orders-service/src",
+  "projectType": "library",
+  "tags": ["type:application", "scope:orders", "domain:orders"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/orders/application-orders-service",
+        "tsConfig": "libs/orders/application-orders-service/tsconfig.lib.json",
+        "packageJson": "libs/orders/application-orders-service/package.json",
+        "main": "libs/orders/application-orders-service/src/index.ts",
+        "assets": ["libs/orders/application-orders-service/*.md"]
+      }
+    }
+  }
+}

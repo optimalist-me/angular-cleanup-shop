@@ -8,25 +8,23 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
-  FormArray,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { catchError, of, startWith, take } from 'rxjs';
 import {
-  CheckoutBookingRepository,
   CheckoutCartRepository,
+  CheckoutOrderRepository,
 } from '@cleanup/data-access-checkout';
 import { type SubmitCheckoutRequest } from '@cleanup/models-checkout';
 import { SharedDesignSurface } from '@cleanup/shared-ui-design-surface';
 import { SharedDesignText } from '@cleanup/shared-ui-design-text';
 import { CheckoutLineItem, CheckoutSummary } from '@cleanup/ui-checkout';
 
-type CheckoutStep = 'review' | 'details' | 'schedule';
+type CheckoutStep = 'review' | 'details';
 
 @Component({
   selector: 'checkout-checkout',
@@ -45,7 +43,7 @@ type CheckoutStep = 'review' | 'details' | 'schedule';
 })
 export class CheckoutCheckout {
   private readonly cartRepository = inject(CheckoutCartRepository);
-  private readonly bookingsRepository = inject(CheckoutBookingRepository);
+  private readonly ordersRepository = inject(CheckoutOrderRepository);
   private readonly router = inject(Router);
 
   readonly step = signal<CheckoutStep>('review');
@@ -55,76 +53,33 @@ export class CheckoutCheckout {
   readonly items = this.cartRepository.items;
   readonly itemCount = this.cartRepository.itemCount;
   readonly subtotal = this.cartRepository.subtotal;
+  readonly tax = signal(0);
+  readonly total = computed(() => this.subtotal() + this.tax());
   readonly hasItems = computed(() => this.items().length > 0);
 
   readonly detailsForm = new FormGroup({
     name: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.maxLength(120)],
+      validators: [Validators.maxLength(120)],
     }),
     email: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.email],
+      validators: [Validators.maxLength(120), Validators.email],
     }),
     company: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.maxLength(120)],
+      validators: [Validators.maxLength(120)],
     }),
-    teamSize: new FormControl<number | null>(null, {
-      validators: [Validators.required, Validators.min(1), Validators.max(100)],
-    }),
-    angularVersion: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.maxLength(40)],
-    }),
-    usesNx: new FormControl<'yes' | 'no' | ''>('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    notes: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.maxLength(500)],
-    }),
-    privacyPolicyAccepted: new FormControl(false, {
-      nonNullable: true,
-      validators: [Validators.requiredTrue],
-    }),
-  });
-
-  readonly scheduleForm = new FormGroup({
-    preferredDates: new FormArray<FormControl<string>>(
-      [
-        new FormControl('', {
-          nonNullable: true,
-          validators: [Validators.required],
-        }),
-      ],
-      { validators: [preferredDatesValidator] },
-    ),
   });
 
   private readonly detailsStatus = toSignal(
     this.detailsForm.statusChanges.pipe(startWith(this.detailsForm.status)),
     { initialValue: this.detailsForm.status },
   );
-  private readonly scheduleStatus = toSignal(
-    this.scheduleForm.statusChanges.pipe(startWith(this.scheduleForm.status)),
-    { initialValue: this.scheduleForm.status },
-  );
 
-  readonly canContinueFromDetails = computed(
-    () => this.detailsStatus() === 'VALID',
-  );
   readonly canSubmit = computed(
-    () =>
-      this.detailsStatus() === 'VALID' &&
-      this.scheduleStatus() === 'VALID' &&
-      !this.submitting(),
+    () => this.detailsStatus() === 'VALID' && !this.submitting(),
   );
-
-  get preferredDateControls(): FormControl<string>[] {
-    return this.scheduleForm.controls.preferredDates.controls;
-  }
 
   updateQuantity(id: string, quantity: number): void {
     this.cartRepository.updateQuantity(id, quantity);
@@ -139,78 +94,35 @@ export class CheckoutCheckout {
     this.step.set('details');
   }
 
-  toScheduleStep(): void {
+  backToReview(): void {
+    this.step.set('review');
+  }
+
+  submit(): void {
     if (this.detailsForm.invalid) {
       this.detailsForm.markAllAsTouched();
       return;
     }
 
-    this.submissionError.set(null);
-    this.step.set('schedule');
-  }
-
-  backToReview(): void {
-    this.step.set('review');
-  }
-
-  backToDetails(): void {
-    this.step.set('details');
-  }
-
-  addPreferredDate(): void {
-    const dates = this.scheduleForm.controls.preferredDates;
-    if (dates.length >= 3) {
-      return;
-    }
-
-    dates.push(
-      new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required],
-      }),
-    );
-    dates.markAsDirty();
-    dates.updateValueAndValidity();
-  }
-
-  removePreferredDate(index: number): void {
-    const dates = this.scheduleForm.controls.preferredDates;
-    if (dates.length === 1) {
-      dates.at(0).setValue('');
-      dates.at(0).markAsTouched();
-      dates.updateValueAndValidity();
-      return;
-    }
-
-    dates.removeAt(index);
-    dates.markAsDirty();
-    dates.updateValueAndValidity();
-  }
-
-  submit(): void {
-    if (!this.canSubmit()) {
-      this.detailsForm.markAllAsTouched();
-      this.scheduleForm.markAllAsTouched();
-      return;
-    }
-
     const payload = this.buildRequest();
     if (!payload) {
-      this.submissionError.set('Missing required checkout details.');
+      this.submissionError.set(
+        'Your cart is empty. Add an item to place an order.',
+      );
       return;
     }
 
     this.submitting.set(true);
     this.submissionError.set(null);
 
-    this.bookingsRepository
+    this.ordersRepository
       .submit(payload)
       .pipe(
         take(1),
         catchError(() => {
           this.submitting.set(false);
           this.submissionError.set(
-            'We could not submit your request. Please try again.',
+            'We could not place your order. Please try again.',
           );
           return of(null);
         }),
@@ -221,80 +133,56 @@ export class CheckoutCheckout {
           return;
         }
 
-        if (!response?.success || !response.bookingId) {
+        if (!response.success || !response.orderId) {
           this.submissionError.set(
-            response?.message ?? 'We could not submit your request.',
+            response.message ?? 'We could not place your order.',
           );
           return;
         }
 
         this.cartRepository.clear();
-        void this.router.navigate(['/book/confirmed', response.bookingId]);
+        void this.router.navigate(['/checkout/success', response.orderId]);
       });
   }
 
-  hasDetailsControlError(
-    controlName: keyof typeof this.detailsForm.controls,
-    errorKey: string,
-  ): boolean {
-    const control = this.detailsForm.controls[controlName];
-    return Boolean(control.touched && control.hasError(errorKey));
-  }
-
-  hasPreferredDateError(index: number): boolean {
-    const control = this.scheduleForm.controls.preferredDates.at(index);
-    return Boolean(control.touched && control.invalid);
-  }
-
   private buildRequest(): SubmitCheckoutRequest | null {
-    const teamSize = this.detailsForm.controls.teamSize.value;
-    if (teamSize === null) {
+    if (!this.hasItems()) {
       return null;
     }
 
-    const usesNxValue = this.detailsForm.controls.usesNx.value;
-    if (!usesNxValue) {
-      return null;
-    }
-    const privacyPolicyAccepted =
-      this.detailsForm.controls.privacyPolicyAccepted.value;
-    if (!privacyPolicyAccepted) {
-      return null;
-    }
-
-    const preferredDates = this.scheduleForm.controls.preferredDates.controls
-      .map((control) => control.value.trim())
-      .filter((value) => value.length > 0);
-
-    if (preferredDates.length === 0 || preferredDates.length > 3) {
-      return null;
-    }
-
-    return {
-      name: this.detailsForm.controls.name.value.trim(),
-      email: this.detailsForm.controls.email.value.trim(),
-      company: this.detailsForm.controls.company.value.trim(),
-      teamSize,
-      angularVersion: this.detailsForm.controls.angularVersion.value.trim(),
-      usesNx: usesNxValue === 'yes',
-      notes: this.detailsForm.controls.notes.value.trim(),
-      preferredDates,
-      privacyPolicyAccepted,
+    const request: SubmitCheckoutRequest = {
+      items: this.items(),
+      subtotal: this.subtotal(),
+      tax: 0,
+      total: this.total(),
+      context: 'storefront',
     };
+
+    const name = normalizeOptionalString(this.detailsForm.controls.name.value);
+    const email = normalizeOptionalString(
+      this.detailsForm.controls.email.value,
+    );
+    const company = normalizeOptionalString(
+      this.detailsForm.controls.company.value,
+    );
+
+    if (name) {
+      request.name = name;
+    }
+
+    if (email) {
+      request.email = email;
+    }
+
+    if (company) {
+      request.company = company;
+    }
+
+    return request;
   }
 }
 
-const preferredDatesValidator: ValidatorFn = (control) => {
-  if (!(control instanceof FormArray)) {
-    return null;
-  }
-
-  if (control.length === 0 || control.length > 3) {
-    return { preferredDatesCount: true };
-  }
-
-  const hasEmptyDate = control.controls.some(
-    (dateControl) => dateControl.value.trim().length === 0,
-  );
-  return hasEmptyDate ? { preferredDatesRequired: true } : null;
-};
+function normalizeOptionalString(value: string): string | undefined {
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : undefined;
+}

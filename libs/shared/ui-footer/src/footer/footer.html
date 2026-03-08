@@ -3,93 +3,59 @@
     <div class="footer__brand">
       <p class="footer__title">
         <shared-design-text size="lg" weight="semibold">
-          Angular Governance Program
+          {{ config.brandTitle }}
         </shared-design-text>
       </p>
       <p class="footer__subtitle">
         <shared-design-text tone="muted" size="sm">
-          Governance-first stabilization for Angular and Nx codebases.
+          {{ config.brandSubtitle }}
         </shared-design-text>
       </p>
     </div>
     <div class="footer__links">
-      <div class="footer__column">
-        <p class="footer__heading">
-          <shared-design-text
-            tone="muted"
-            size="xs"
-            weight="medium"
-            [uppercase]="true"
-          >
-            Paths
-          </shared-design-text>
-        </p>
-        <a class="footer__link" routerLink="/for-managers">
-          <shared-design-text size="sm">For Managers</shared-design-text>
-        </a>
-        <a class="footer__link" routerLink="/for-technical-leads">
-          <shared-design-text size="sm">For Technical Leads</shared-design-text>
-        </a>
-        <a class="footer__link" routerLink="/how-it-works">
-          <shared-design-text size="sm">Engagement Model</shared-design-text>
-        </a>
-        <a class="footer__link" routerLink="/ai-governance">
-          <shared-design-text size="sm">AI Governance</shared-design-text>
-        </a>
-      </div>
-      <div class="footer__column">
-        <p class="footer__heading">
-          <shared-design-text
-            tone="muted"
-            size="xs"
-            weight="medium"
-            [uppercase]="true"
-          >
-            Engage
-          </shared-design-text>
-        </p>
-        <a class="footer__link" routerLink="/book">
-          <shared-design-text size="sm"
-            >Executive introduction call</shared-design-text
-          >
-        </a>
-        <a class="footer__link" routerLink="/privacy">
-          <shared-design-text size="sm">Privacy</shared-design-text>
-        </a>
-      </div>
-      <div class="footer__column">
-        <p class="footer__heading">
-          <shared-design-text
-            tone="muted"
-            size="xs"
-            weight="medium"
-            [uppercase]="true"
-          >
-            Trust
-          </shared-design-text>
-        </p>
-        <p class="footer__text">
-          <shared-design-text tone="muted" size="sm"
-            >Nx Partner</shared-design-text
-          >
-        </p>
-        <p class="footer__text">
-          <shared-design-text tone="muted" size="sm"
-            >Nx Certified Expert</shared-design-text
-          >
-        </p>
-        <p class="footer__text">
-          <shared-design-text tone="muted" size="sm">
-            Production-safe, incremental governance
-          </shared-design-text>
-        </p>
-      </div>
+      @for (column of config.columns; track trackByColumn($index)) {
+        <div class="footer__column">
+          <p class="footer__heading">
+            <shared-design-text
+              tone="muted"
+              size="xs"
+              weight="medium"
+              [uppercase]="true"
+            >
+              {{ column.heading }}
+            </shared-design-text>
+          </p>
+          @for (link of column.links ?? []; track trackByLink($index, link)) {
+            @if (link.kind === 'internal') {
+              <a class="footer__link" [routerLink]="link.route">
+                <shared-design-text size="sm">{{ link.label }}</shared-design-text>
+              </a>
+            } @else {
+              <a
+                class="footer__link"
+                [attr.href]="link.href"
+                [attr.target]="link.openInNewTab ? '_blank' : null"
+                [attr.rel]="link.openInNewTab ? 'noopener noreferrer' : null"
+              >
+                <shared-design-text size="sm">{{ link.label }}</shared-design-text>
+              </a>
+            }
+          }
+          @for (text of column.texts ?? []; track text) {
+            <p class="footer__text">
+              <shared-design-text tone="muted" size="sm">
+                {{ text }}
+              </shared-design-text>
+            </p>
+          }
+        </div>
+      }
     </div>
   </div>
   <div class="footer__meta">
     <p>
       <shared-design-text tone="muted" size="sm">
-        Governance-first stabilization for predictable change.
+        {{ config.metaText }}
       </shared-design-text>
     </p>
   </div>

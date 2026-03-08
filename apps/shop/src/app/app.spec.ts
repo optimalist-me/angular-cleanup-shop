@@ -1,18 +1,28 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
+import { provideSharedFooterConfig } from '@cleanup/shared-ui-footer';
+import { provideSharedHeaderConfig } from '@cleanup/shared-ui-header';
 import { App } from './app';
+import {
+  createShopFooterConfig,
+  createShopHeaderConfig,
+} from './shop-shell-content';
 
 @Component({
   template: '',
 })
 class TestRouteComponent {}
 
+const DEMO_STOREFRONT_URL = 'https://demo.angularcleanup.shop';
+
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App, TestRouteComponent],
       providers: [
+        provideSharedHeaderConfig(createShopHeaderConfig(DEMO_STOREFRONT_URL)),
+        provideSharedFooterConfig(createShopFooterConfig(DEMO_STOREFRONT_URL)),
         provideRouter([
           {
             path: '**',
@@ -59,6 +69,27 @@ describe('App', () => {
     overlay.click();
     fixture.detectChanges();
     expect(header?.classList.contains('header--open')).toBe(false);
+  });
+
+  it('should expose storefront demo links in header and footer as new-tab links', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const headerDemo = compiled.querySelector(
+      `shared-header .header__nav a[href="${DEMO_STOREFRONT_URL}"]`,
+    );
+    const footerDemo = compiled.querySelector(
+      `shared-footer .footer__link[href="${DEMO_STOREFRONT_URL}"]`,
+    );
+
+    expect(headerDemo?.textContent).toContain('Storefront Demo');
+    expect(headerDemo?.getAttribute('target')).toBe('_blank');
+    expect(headerDemo?.getAttribute('rel')).toBe('noopener noreferrer');
+    expect(footerDemo?.textContent).toContain('Storefront Demo');
+    expect(footerDemo?.getAttribute('target')).toBe('_blank');
+    expect(footerDemo?.getAttribute('rel')).toBe('noopener noreferrer');
   });
 
   it('should expose the app title', () => {

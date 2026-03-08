@@ -8,21 +8,40 @@ export type CheckoutCartItem = {
   quantity: number;
 };
 
+export type CheckoutOrder = {
+  id: string;
+  items: CheckoutCartItem[];
+  subtotal: number;
+  tax: number;
+  total: number;
+  name?: string;
+  email?: string;
+  company?: string;
+  createdAt: string;
+  context: 'storefront';
+};
+
 export type SubmitCheckoutRequest = {
-  name: string;
-  email: string;
-  company: string;
-  teamSize: number;
-  angularVersion: string;
-  usesNx: boolean;
-  notes: string;
-  preferredDates: string[];
-  privacyPolicyAccepted: boolean;
+  items: CheckoutCartItem[];
+  subtotal: number;
+  tax: number;
+  total: number;
+  name?: string;
+  email?: string;
+  company?: string;
+  context?: 'storefront';
 };
 
 export type SubmitCheckoutResponse = {
   success: boolean;
-  bookingId?: string;
-  message: string;
+  orderId?: string;
+  message?: string;
+  error?: string;
+};
+
+export type GetCheckoutOrderResponse = {
+  success: boolean;
+  order?: CheckoutOrder;
+  message?: string;
   error?: string;
 };

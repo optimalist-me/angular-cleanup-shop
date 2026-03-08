@@ -17,6 +17,7 @@ jobs:
       HETZNER_SSH_HOST: ${{ secrets.HETZNER_SSH_HOST }}
       HETZNER_SSH_USER: ${{ secrets.HETZNER_SSH_USER }}
       HETZNER_DEPLOY_PATH: ${{ secrets.HETZNER_DEPLOY_PATH }}
+      HETZNER_STOREFRONT_STATIC_PATH: ${{ secrets.HETZNER_STOREFRONT_STATIC_PATH }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -54,7 +55,13 @@ jobs:
             echo "api_affected=false" >> "$GITHUB_OUTPUT"
           fi
 
-          if echo "$AFFECTED_APPS" | jq -e 'index("shop") or index("api")' > /dev/null; then
+          if echo "$AFFECTED_APPS" | jq -e 'index("storefront")' > /dev/null; then
+            echo "storefront_affected=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "storefront_affected=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if echo "$AFFECTED_APPS" | jq -e 'index("shop") or index("api") or index("storefront")' > /dev/null; then
             echo "deploy_required=true" >> "$GITHUB_OUTPUT"
           else
             echo "deploy_required=false" >> "$GITHUB_OUTPUT"
@@ -62,11 +69,24 @@ jobs:
 
       - name: Skip deployment when no deployable app is affected
         if: ${{ steps.affected_apps.outputs.deploy_required != 'true' }}
-        run: echo "No affected deployable apps (shop/api). Skipping deployment."
+        run: echo "No affected deployable apps (shop/api/storefront). Skipping deployment."
 
-      - name: Build deployable apps
+      - name: Build affected deployable apps
         if: ${{ steps.affected_apps.outputs.deploy_required == 'true' }}
-        run: yarn nx run-many -t build -p shop,api
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ steps.affected_apps.outputs.api_affected }}" = "true" ]; then
+            yarn nx build api
+          fi
+
+          if [ "${{ steps.affected_apps.outputs.shop_affected }}" = "true" ]; then
+            yarn nx build shop
+          fi
+
+          if [ "${{ steps.affected_apps.outputs.storefront_affected }}" = "true" ]; then
+            yarn nx build storefront
+          fi
 
       - name: Generate API lockfile for remote immutable install
         if: ${{ steps.affected_apps.outputs.api_affected == 'true' }}
@@ -86,17 +106,47 @@ jobs:
           ssh-keyscan -H "$HETZNER_SSH_HOST" >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-      - name: Deploy dist/apps with rsync
-        if: ${{ steps.affected_apps.outputs.deploy_required == 'true' }}
+      - name: Deploy API artifacts
+        if: ${{ steps.affected_apps.outputs.api_affected == 'true' }}
         shell: bash
         run: |
           set -euo pipefail
           rsync -avz --delete --stats --progress \
             --filter='P **/node_modules/' \
             --filter='P **/.yarn/' \
-            --filter='P shared/data/' \
-            --filter='P shared/data/cleanup-shop.db' \
-            dist/apps/ "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}:${HETZNER_DEPLOY_PATH}/"
+            dist/apps/api/ "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}:${HETZNER_DEPLOY_PATH}/api/"
+
+      - name: Deploy shop SSR/browser artifacts
+        if: ${{ steps.affected_apps.outputs.shop_affected == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          rsync -avz --delete --stats --progress \
+            --filter='P **/node_modules/' \
+            --filter='P **/.yarn/' \
+            dist/apps/shop/ "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}:${HETZNER_DEPLOY_PATH}/shop/"
+
+      - name: Deploy storefront artifacts
+        if: ${{ steps.affected_apps.outputs.storefront_affected == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          rsync -avz --delete --stats --progress \
+            dist/apps/storefront/ "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}:${HETZNER_DEPLOY_PATH}/storefront/"
+
+      - name: Sync storefront browser build to nginx static root
+        if: ${{ steps.affected_apps.outputs.storefront_affected == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${HETZNER_STOREFRONT_STATIC_PATH:-}" ]; then
+            echo "HETZNER_STOREFRONT_STATIC_PATH is not set. Skipping static root sync."
+            exit 0
+          fi
+
+          ssh "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}" "mkdir -p \"${HETZNER_STOREFRONT_STATIC_PATH}\""
+          rsync -avz --delete --stats --progress \
+            dist/apps/storefront/browser/ "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}:${HETZNER_STOREFRONT_STATIC_PATH}/"
 
       - name: Install API dependencies remotely
         if: ${{ steps.affected_apps.outputs.api_affected == 'true' }}
@@ -105,9 +155,23 @@ jobs:
           set -euo pipefail
           ssh "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}" "cd \"${HETZNER_DEPLOY_PATH}/api\" && yarn install --immutable"
 
-      - name: Restart PM2 service
+      - name: Restart API PM2 app
+        if: ${{ steps.affected_apps.outputs.api_affected == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ssh "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}" "pm2 restart angular-cleanup-api --update-env || pm2 start \"${HETZNER_DEPLOY_PATH}/api/main.js\" --name angular-cleanup-api --time"
+
+      - name: Restart shop SSR PM2 app
+        if: ${{ steps.affected_apps.outputs.shop_affected == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ssh "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}" "PORT=4000 pm2 restart angular-cleanup-shop-ssr --update-env || PORT=4000 pm2 start \"${HETZNER_DEPLOY_PATH}/shop/server/server.mjs\" --name angular-cleanup-shop-ssr --time"
+
+      - name: Persist PM2 process list
         if: ${{ steps.affected_apps.outputs.api_affected == 'true' || steps.affected_apps.outputs.shop_affected == 'true' }}
         shell: bash
         run: |
           set -euo pipefail
-          ssh "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}" "pm2 restart angular-cleanup-shop"
+          ssh "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}" "pm2 save"

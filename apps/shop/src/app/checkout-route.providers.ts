@@ -1,26 +1,32 @@
 import { Provider } from '@angular/core';
+import { map } from 'rxjs';
 import {
-  CHECKOUT_BOOKING_PORT,
   CHECKOUT_CART_PORT,
-  CheckoutBookingRepository,
-  CheckoutBookingPort,
+  CHECKOUT_ORDER_PORT,
   CheckoutCartRepository,
-  CheckoutCartPort,
+  type CheckoutCartPort,
+  CheckoutOrderRepository,
+  type CheckoutOrderPort,
+  MAIN_DOMAIN_URL,
 } from '@cleanup/data-access-checkout';
-import { BookingsRepository } from '@cleanup/data-access-booking';
 import { CartRepository } from '@cleanup/data-access-cart';
-import { PRIVACY_POLICY_VERSION } from '@cleanup/models-booking';
+import { OrdersRepository } from '@cleanup/data-access-orders';
 import { type SubmitCheckoutRequest } from '@cleanup/models-checkout';
 
-function createCheckoutBookingPort(
-  bookingsRepository: BookingsRepository,
-): CheckoutBookingPort {
+function createCheckoutOrderPort(
+  ordersRepository: OrdersRepository,
+): CheckoutOrderPort {
   return {
     submit: (request: SubmitCheckoutRequest) =>
-      bookingsRepository.createBooking({
-        ...request,
-        privacyPolicyVersion: PRIVACY_POLICY_VERSION,
-      }),
+      ordersRepository.createOrder(request).pipe(
+        map((response) => ({
+          success: response.success,
+          orderId: response.order?.id,
+          message: response.message,
+          error: response.error,
+        })),
+      ),
+    getById: (orderId: string) => ordersRepository.getOrderById(orderId),
   };
 }
 
@@ -40,12 +46,16 @@ function createCheckoutCartPort(
 
 export function provideCheckoutRouteAdapters(): Provider[] {
   return [
-    CheckoutBookingRepository,
+    CheckoutOrderRepository,
     CheckoutCartRepository,
     {
-      provide: CHECKOUT_BOOKING_PORT,
-      useFactory: createCheckoutBookingPort,
-      deps: [BookingsRepository],
+      provide: MAIN_DOMAIN_URL,
+      useValue: 'https://angularcleanup.shop',
+    },
+    {
+      provide: CHECKOUT_ORDER_PORT,
+      useFactory: createCheckoutOrderPort,
+      deps: [OrdersRepository],
     },
     {
       provide: CHECKOUT_CART_PORT,
