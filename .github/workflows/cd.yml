@@ -167,7 +167,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          ssh "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}" "PORT=4000 pm2 restart angular-cleanup-shop-ssr --update-env || PORT=4000 pm2 start \"${HETZNER_DEPLOY_PATH}/shop/server/server.mjs\" --name angular-cleanup-shop-ssr --time"
+          ssh "${HETZNER_SSH_USER}@${HETZNER_SSH_HOST}" "PORT=4000 pm2 restart angular-cleanup-shop-ssr --update-env || PORT=4000 pm2 start /usr/bin/node --name angular-cleanup-shop-ssr --cwd \"${HETZNER_DEPLOY_PATH}/shop\" --time -- ./server/server.mjs"
 
       - name: Persist PM2 process list
         if: ${{ steps.affected_apps.outputs.api_affected == 'true' || steps.affected_apps.outputs.shop_affected == 'true' }}
