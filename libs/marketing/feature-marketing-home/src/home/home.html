@@ -1,28 +1,103 @@
 <div class="home">
   <marketing-hero />
 
-  <marketing-section
-    eyebrow="Manager outcomes"
-    title="Governance-first stabilization with measurable delivery impact."
-    subtitle="We reduce structural friction so your Angular roadmap becomes more predictable: smaller PR scope, safer upgrades, fewer cross-domain surprises."
-  >
-    <ul class="home__list">
-      <li>
-        <shared-design-text tone="muted" size="lg">
-          Lower cost of change through explicit boundaries and ownership.
-        </shared-design-text>
-      </li>
-      <li>
-        <shared-design-text tone="muted" size="lg">
-          Weekly governance reporting with baseline and trend visibility.
-        </shared-design-text>
-      </li>
-      <li>
-        <shared-design-text tone="muted" size="lg">
-          Decision logs and traceability that reduce architectural churn.
-        </shared-design-text>
-      </li>
-    </ul>
+  <marketing-section>
+    <div class="home__manager-layout">
+      <div class="home__manager-content">
+        <div class="home__manager-heading">
+          <p class="home__manager-eyebrow">
+            <shared-design-text
+              tone="muted"
+              size="sm"
+              weight="medium"
+              [uppercase]="true"
+            >
+              Manager outcomes
+            </shared-design-text>
+          </p>
+          <h2 class="home__manager-title">
+            <shared-design-text size="2xl" weight="semibold">
+              Governance-first stabilization with measurable delivery impact.
+            </shared-design-text>
+          </h2>
+          <p class="home__manager-subtitle">
+            <shared-design-text tone="muted" size="xl">
+              We reduce structural friction so your Angular roadmap becomes more
+              predictable: smaller PR scope, safer upgrades, fewer cross-domain
+              surprises.
+            </shared-design-text>
+          </p>
+        </div>
+
+        <div class="home__manager-intro">
+          <p class="home__manager-copy home__manager-copy--lead">
+            <shared-design-text tone="muted" size="lg" weight="medium">
+              Modern Angular teams already have strong tooling: Angular, Nx
+              monorepos, CI/CD pipelines, and testing frameworks.
+            </shared-design-text>
+          </p>
+          <p class="home__manager-copy">
+            <shared-design-text tone="muted" size="lg">
+              Tooling alone does not guarantee architectural stability as
+              systems grow.
+            </shared-design-text>
+          </p>
+          <p class="home__manager-copy">
+            <shared-design-text tone="muted" size="lg">
+              Angular Cleanup does not replace Angular, Nx, CI/CD, or testing.
+              It provides structural governance so those tools keep working
+              together.
+            </shared-design-text>
+          </p>
+        </div>
+        <ul class="home__list">
+          <li>
+            <shared-design-text tone="muted" size="lg">
+              Clear architectural boundaries with ownership that holds under
+              delivery pressure.
+            </shared-design-text>
+          </li>
+          <li>
+            <shared-design-text tone="muted" size="lg">
+              Controlled dependencies across domains to reduce cross-team
+              surprises.
+            </shared-design-text>
+          </li>
+          <li>
+            <shared-design-text tone="muted" size="lg">
+              Smaller change impact in day-to-day delivery and release planning.
+            </shared-design-text>
+          </li>
+          <li>
+            <shared-design-text tone="muted" size="lg">
+              Lower cognitive load for managers and technical leads when
+              assessing risk.
+            </shared-design-text>
+          </li>
+          <li>
+            <shared-design-text tone="muted" size="lg">
+              Safer upgrades backed by weekly governance reporting and decision
+              traceability.
+            </shared-design-text>
+          </li>
+        </ul>
+      </div>
+
+      <shared-design-surface
+        class="home__manager-visual"
+        tone="default"
+        padding="sm"
+        radius="lg"
+      >
+        <img
+          class="home__manager-image"
+          ngSrc="/images/tools-governance.png"
+          width="550"
+          height="1111"
+          alt="Diagram showing product delivery, Angular app, tooling layer, and Angular Cleanup structural governance."
+        />
+      </shared-design-surface>
+    </div>
   </marketing-section>
 
   <marketing-section
